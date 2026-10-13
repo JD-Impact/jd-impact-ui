@@ -73,7 +73,7 @@ addEventListener('message',event=>{{if(event.source!==parent)return;if(event.dat
     shutil.copyfile(root / 'downloads' / zip_name, docs / 'downloads' / zip_name)
     shutil.copytree(folder, docs / 'components' / slug, dirs_exist_ok=True)
     sources = {key: {'name': name, 'code': (folder / name).read_text()} for key, name in [('html', 'component.html'), ('css', css_name), ('js', js_name)]}
-    sources.update(id=slug,preview=f'components/{slug}/example.html',archive='downloads/'+zip_name,archiveName=zip_name,revision=hashlib.sha256((folder/'example.html').read_bytes()).hexdigest()[:12])
+    sources.update(id=slug,preview=f'components/{slug}/example.html',archive='downloads/'+zip_name+'?v='+hashlib.sha256((root/'downloads'/zip_name).read_bytes()).hexdigest()[:12],archiveName=zip_name,revision=hashlib.sha256((folder/'example.html').read_bytes()).hexdigest()[:12])
     (docs / source_name).write_text('window.JD_SOURCES = '+json.dumps(sources,ensure_ascii=False).replace('<',r'<')+';\n')
 
 forge = (root / 'components/download-forge/component.html').read_text().replace('>Download</span>', '>ZIP herunterladen</span>')
