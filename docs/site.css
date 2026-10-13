@@ -16,8 +16,13 @@
   body{overflow-x:hidden;background:#08090f}
   ::selection{background:#bea1ff50;color:#fff}
   .wrap{width:min(1200px,calc(100% - 96px));margin-inline:auto}
-  #matrix{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.42;mask-image:linear-gradient(90deg,#000,transparent 34%,transparent 65%,#000)}
-  .ambient{position:absolute;top:40px;left:0;right:0;height:840px;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 76% 40%,#9d61f713,transparent 55%),radial-gradient(ellipse at 14% 45%,#3b544809,transparent 55%)}
+  #matrix,#matrix-flow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.5;overflow:hidden;mask-image:linear-gradient(90deg,#000 0%,#0009 14%,#0002 35%,#0002 64%,#0009 86%,#000 100%)}
+  #matrix[data-paused="false"]{visibility:hidden}
+  #matrix-flow{opacity:1;mask-image:none}
+  .matrix-stream{position:absolute;animation:matrix-fall linear infinite;animation-duration:var(--fall-duration);animation-delay:var(--fall-delay);will-change:transform}
+  #matrix-flow[data-paused="true"] .matrix-stream{animation-play-state:paused}
+  @keyframes matrix-fall{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,var(--fall-distance),0)}}
+  .ambient{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 82% 32%,#9d61f716,transparent 52%),radial-gradient(ellipse at 9% 65%,#3fc8a80d,transparent 45%),linear-gradient(180deg,#08090f00 55%,#08090f80)}
   .header,main,.footer{position:relative;z-index:1}
   .skip{position:absolute;left:12px;top:-100px;padding:12px;background:#bea1ff;color:#120b23;z-index:10}
   .skip:focus{top:12px}
@@ -128,6 +133,7 @@
   .footer a svg{width:11px;height:11px;color:#9c7eb9}
   .footer-index{font:8px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:1.2px;color:#554561}
   @media(min-width:1600px){.hero{gap:86px}.hero h1{font-size:87px}}
+  @media(min-width:2200px){.wrap{width:min(1520px,calc(100% - 160px))}.hero{gap:110px;padding-block:90px 60px}.hero h1{font-size:104px}.intro{max-width:400px;font-size:17px}.preview-toolbar{height:60px}.preview-note{height:50px}.header{height:140px}.source-panel{height:480px}.source-panel code{font-size:13px}}
   @media(max-width:1050px){.wrap{width:calc(100% - 56px)}.hero{gap:25px;grid-template-columns:1fr 1.1fr}.hero h1{font-size:60px;letter-spacing:-3.5px}.hero-detail{margin-top:35px}.guide{gap:45px}.footer-index{display:none}}
   @media(max-width:760px){
     .wrap{width:calc(100% - 36px)}
@@ -144,8 +150,8 @@
     .download-row{display:block;padding-top:24px}.download-row h3{font-size:13px}.download-row p{font-size:11px}.secondary-link{margin-top:17px;width:100%;justify-content:center}.download-help{font-size:9px}
     .guide{grid-template-columns:1fr;gap:33px;padding-block:69px 57px}.guide-heading h2{font-size:31px}.guide-heading>p:last-child{font-size:11px;margin-top:15px}.steps li{gap:15px;padding-block:22px}.steps h3{font-size:13px}.steps p{font-size:11px}.steps pre{font-size:9px;padding:10px}.steps li:last-child{border-bottom:0}
     .footer{display:block;padding-block:24px 38px}.footer>div:nth-child(2){margin-top:21px;gap:25px}.footer p{font-size:9px}
-    #matrix{opacity:.25;mask-image:linear-gradient(90deg,#000,transparent 45%,#000)}
+    #matrix{opacity:.32;mask-image:linear-gradient(90deg,#000,#0002 36%,#0002 64%,#000)}
   }
   @media(max-width:350px){.hero h1{font-size:51px;letter-spacing:-3px}.brand{font-size:11px}.header nav{font-size:10px}.preview-toolbar button span{display:none}.preview-toolbar>span{font-size:6px}.file-tabs button{padding:0 8px;font-size:9px}.preview-note{font-size:7px}.feature-strip{font-size:7px;letter-spacing:.8px}}
-  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#matrix-flow{display:none}*,*::before,*::after{animation:none!important;transition:none!important}}
 }

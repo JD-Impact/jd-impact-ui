@@ -101,20 +101,27 @@
   const previewScript = `
     addEventListener('DOMContentLoaded', () => {
     const root = document.querySelector('[data-jd-login]');
-    root.jdLogin.open();
+    const report = text => parent.postMessage({ type: 'jd-preview-status', text }, '*');
+    const updateHint = () => report(root.dataset.mode === 'closed'
+      ? 'Hover über „Anmelden“ oder antippen. Dann beginnt die Animation.'
+      : root.dataset.mode === 'register'
+        ? 'Mit „Login“ zurückdrehen. Die eingegebenen Werte bleiben erhalten.'
+        : '„Registrieren“ dreht die Karte. Escape klappt sie wieder ein.');
+    new MutationObserver(updateHint).observe(root, { attributes: true, attributeFilter: ['data-mode'] });
+    updateHint();
     document.querySelectorAll('form').forEach(form => form.addEventListener('submit', event => {
       event.preventDefault();
-      document.querySelector('[data-preview-status]').textContent = 'Formular ausgelöst.';
+      report('Formular ausgelöst. Hier in der Vorschau werden keine Daten gesendet.');
     }));
     document.querySelector('.jd-login__forgot').addEventListener('click', event => {
       event.preventDefault();
-      document.querySelector('[data-preview-status]').textContent = 'Passwort-Link ausgewählt.';
+      report('Passwort-Link ausgewählt. Das Ziel bestimmst du in deinem Projekt.');
     });
     addEventListener('message', event => {
       if (event.source !== parent || event.data !== 'jd-preview-reset') return;
       document.querySelectorAll('form').forEach(form => form.reset());
-      document.querySelector('[data-preview-status]').textContent = '';
-      root.jdLogin.open();
+      root.jdLogin.close();
+      updateHint();
     });
     }, { once: true });
   `;
@@ -122,49 +129,88 @@
     ${files.css.code}
     html,body{margin:0;background:transparent;min-height:100%;overflow-x:hidden;color-scheme:dark}
     main{min-height:606px;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:32px 20px;box-sizing:border-box}
-    [data-preview-status]{position:absolute;bottom:5px;left:15px;right:15px;text-align:center;color:#bca4d8;font:10px Arial,sans-serif;margin:0}
     @media(max-width:350px){main{padding-inline:12px}}
-    </style></head><body><main>${files.html.code}</main><p data-preview-status role="status" aria-live="polite"></p><script>${safeScript(files.js.code)}<\/script><script>${safeScript(previewScript)}<\/script></body></html>`;
+    </style></head><body><main>${files.html.code}</main><script>${safeScript(files.js.code)}<\/script><script>${safeScript(previewScript)}<\/script></body></html>`;
+  addEventListener('message', event => {
+    if (event.source !== frame.contentWindow || event.data?.type !== 'jd-preview-status' || typeof event.data.text !== 'string') return;
+    document.getElementById('preview-instruction').textContent = event.data.text;
+  });
   document.getElementById('reset-preview').addEventListener('click', () => frame.contentWindow.postMessage('jd-preview-reset', '*'));
 
   const canvas = document.getElementById('matrix');
-  const ctx = canvas.getContext('2d', { alpha: false });
+  const flow = document.getElementById('matrix-flow');
+  const ctx = canvas.getContext('2d');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  const sourceText = files.css.code + files.js.code;
-  let width, height, columns, drops, last = 0, raf = 0;
+  const sourceText = (files.html.code + files.css.code + files.js.code).replace(/\s+/g, ' ');
+  let width, height, scale;
   let seed = 2048;
   const random = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  // Render the original characters once at native device resolution. CSS
+  // transforms move the small strips without repainting a full 4K canvas.
+  function createStrip(stream) {
+    const strip = document.createElement('canvas');
+    const length = stream.length * stream.step;
+    strip.width = Math.ceil(22 * scale);
+    strip.height = Math.ceil((length + 12) * scale);
+    const ink = strip.getContext('2d');
+    ink.scale(scale, scale);
+    ink.font = `${stream.font}px ui-monospace, SFMono-Regular, Consolas, monospace`;
+    ink.textAlign = 'center';
+    for (let row = 0; row < stream.length; row++) {
+      ink.globalAlpha = Math.pow((row + 1) / stream.length, 1.8);
+      ink.fillStyle = stream.color;
+      const character = sourceText[(stream.position + row) % sourceText.length];
+      ink.fillText(character, 11, (row + 1) * stream.step);
+    }
+    ink.globalAlpha = .95;
+    ink.fillStyle = '#e6dfff';
+    ink.fillText(sourceText[(stream.position + stream.length - 1) % sourceText.length], 11, length);
+    stream.strip = strip;
+    stream.height = length + 12;
+  }
   function resize() {
     width = innerWidth; height = innerHeight;
-    const scale = Math.min(devicePixelRatio || 1, 1.5);
+    // Native device pixels, including 3840×2160. The memory guard only
+    // applies above 32 megapixels (for unusually large/zoomed displays).
+    scale = Math.min(devicePixelRatio || 1, Math.sqrt(32000000 / (width * height)));
     canvas.width = Math.round(width * scale); canvas.height = Math.round(height * scale);
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    ctx.fillStyle = '#08090f'; ctx.fillRect(0, 0, width, height);
-    columns = Math.ceil(width / 23);
-    drops = Array.from({ length: columns }, (_, i) => ({ y: random() * height, position: Math.floor(random() * sourceText.length), speed: 20 + random() * 30, color: ['#70558b', '#365b52', '#465d74'][i % 3] }));
-    if (motion.matches) { for (let i = 0; i < 28; i++) draw(.25); }
-  }
-  function draw(dt) {
-    ctx.fillStyle = '#08090f24'; ctx.fillRect(0, 0, width, height);
-    ctx.font = '10px ui-monospace, monospace';
-    drops.forEach((drop, index) => {
-      ctx.fillStyle = drop.color;
-      const text = sourceText[drop.position % sourceText.length];
-      ctx.fillText(text === '\n' ? ';' : text, index * 23, drop.y);
-      drop.y += drop.speed * dt;
-      drop.position++;
-      if (drop.y > height + 30) drop.y = -random() * 250;
+    const gap = width < 760 ? 30 : 28;
+    const fragment = document.createDocumentFragment();
+    ctx.clearRect(0, 0, width, height);
+    Array.from({ length: Math.ceil(width / gap) }, (_, i) => {
+      const stream = {
+        x: i * gap + random() * 7,
+        y: random() * (height + 340),
+        position: Math.floor(random() * sourceText.length),
+        length: 9 + Math.floor(random() * 19),
+        step: 17, font: 12,
+        speed: 28 + random() * 44,
+        opacity: .3 + random() * .7,
+        color: ['#a78bfa', '#67d9ba', '#7bafff', '#b890df'][i % 4]
+      };
+      createStrip(stream);
+      const distance = height + stream.height;
+      const duration = distance / stream.speed;
+      const strip = stream.strip;
+      // Fade each small strip, avoiding a moving full-screen mask layer.
+      const edge = Math.abs(stream.x / width - .5) * 2;
+      const opacity = stream.opacity * (width < 760 ? .32 : .5) * (.08 + .92 * Math.pow(edge, 2.2));
+      strip.className = 'matrix-stream';
+      strip.style.cssText = `left:${stream.x}px;top:${-stream.height}px;width:22px;height:${stream.height}px;opacity:${opacity};--fall-distance:${distance}px;--fall-duration:${duration}s;--fall-delay:${-random() * duration}s`;
+      fragment.append(strip);
+      // A sharp, complete still frame for reduced-motion preferences.
+      ctx.globalAlpha = stream.opacity;
+      ctx.drawImage(strip, stream.x, stream.y - stream.height, 22, stream.height);
     });
-  }
-  function animate(time) {
-    raf = requestAnimationFrame(animate);
-    if (time - last < 55) return;
-    draw(Math.min((time - last) / 1000 || .055, .1)); last = time;
+    ctx.globalAlpha = 1;
+    flow.replaceChildren(fragment);
+    refreshMotion();
   }
   function refreshMotion() {
-    cancelAnimationFrame(raf); last = 0;
-    canvas.dataset.paused = String(motion.matches || document.hidden);
-    if (!motion.matches && !document.hidden) raf = requestAnimationFrame(animate);
+    const paused = String(motion.matches || document.hidden);
+    canvas.dataset.paused = paused;
+    flow.dataset.paused = paused;
   }
   addEventListener('resize', resize, { passive: true });
   document.addEventListener('visibilitychange', refreshMotion);

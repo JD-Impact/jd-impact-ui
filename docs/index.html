@@ -7,13 +7,14 @@
   <meta name="description" content="JD-Impact Login Motion: interaktive Vorschau, HTML, CSS und JavaScript zum Kopieren und Einbauen in deine Website.">
   <title>Login Motion — JD-Impact</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="site.css?v=2">
   <script src="source.js" defer></script>
-  <script src="site.js" defer></script>
+  <script src="site.js?v=2" defer></script>
 </head>
 <body>
   <a class="skip" href="#code">Direkt zum Code</a>
   <canvas id="matrix" aria-hidden="true"></canvas>
+  <div id="matrix-flow" aria-hidden="true"></div>
   <div class="ambient" aria-hidden="true"></div>
 
   <header class="header wrap">
@@ -44,7 +45,7 @@
           <div class="preview-grid" aria-hidden="true"></div>
           <iframe id="component-preview" title="Login Motion ausprobieren" sandbox="allow-scripts allow-forms" loading="eager"></iframe>
         </div>
-        <p class="preview-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v11h14m-5-5 5 5-5 5"/></svg> Tippe auf „Registrieren“. Lass die Karte drehen.</p>
+        <p class="preview-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v11h14m-5-5 5 5-5 5"/></svg><span id="preview-instruction" role="status" aria-live="polite">Hover über „Anmelden“ oder antippen. Dann beginnt die Animation.</span></p>
         <span class="corner-mark" aria-hidden="true">JD / 001</span>
       </div>
     </section>
