@@ -1,0 +1,165 @@
+<div class="jd-login-stage">
+<!-- CSS: login-card.css | JS: login-card.js (defer) -->
+<div class="jd-login" data-jd-login data-mode="closed">
+  <div class="jd-login__edge-glow" aria-hidden="true">
+  </div>
+  <div class="jd-login__rotator">
+    <section class="jd-login__face jd-login__front" data-login-face="login" aria-label="Anmelden">
+      <button type="button" class="jd-login__opener" data-login-open aria-expanded="false" >
+        Anmelden
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14m-5-5 5 5-5 5"/>
+        </svg>
+      </button>
+      <div class="jd-login__panel" data-login-panel="login" inert>
+        <div class="jd-login__topline">
+          <span class="jd-login__micro">
+            WELCOME BACK
+          </span>
+          <button class="jd-login__switch" data-login-switch="register" type="button">
+            <span>
+              Registrieren
+            </span>
+            <span class="jd-login__switch-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M7 17 17 7M7 7h10v10"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <h1>
+          Dein nächster Move.
+        </h1>
+        <p class="jd-login__sub">
+          Einloggen. Verbinden. Loslegen.
+        </p>
+        <form data-login-form="login" method="post" action="/login" >
+          <div class="jd-login__field">
+            <label data-login-label="login-user">
+              Benutzername
+            </label>
+            <div class="jd-login__input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="3"/>
+                <path d="M5 20v-2a7 7 0 0 1 14 0v2"/>
+              </svg>
+              <input data-login-field="login-user" name="username" placeholder="Dein Benutzername" spellcheck="false"  autocomplete="username" required>
+            </div>
+          </div>
+          <div class="jd-login__field">
+            <label data-login-label="login-pass">
+              Passwort
+            </label>
+            <div class="jd-login__input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="5" y="10" width="14" height="11" rx="2"/>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/>
+              </svg>
+              <input data-login-field="login-pass" name="password" type="password" placeholder="Dein Passwort"  autocomplete="current-password" required>
+            </div>
+          </div>
+          <div class="jd-login__row">
+            <label class="jd-login__remember">
+              <input data-login-field="remember" name="remember" type="checkbox" checked autocomplete="on">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m5 12 4 4L19 6"/>
+              </svg>
+              <span>
+                Angemeldet bleiben
+              </span>
+            </label>
+            <a class="jd-login__forgot" href="/forgot-password">
+              Passwort vergessen?
+            </a>
+          </div>
+          <button class="jd-login__cta" type="submit">
+            Anmelden
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14m-5-5 5 5-5 5"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </section>
+    <section class="jd-login__face jd-login__back" aria-label="Registrieren" aria-hidden="true" data-login-face="register" inert>
+      <div class="jd-login__panel" data-login-panel="register" inert>
+        <div class="jd-login__topline">
+          <span class="jd-login__micro">
+            JOIN THE NEXT WAVE
+          </span>
+          <button class="jd-login__switch" data-login-switch="login" type="button">
+            <span>
+              Login
+            </span>
+            <span class="jd-login__switch-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M7 17 17 7M7 7h10v10"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <h2>
+          Alles beginnt mit dir.
+        </h2>
+        <p class="jd-login__sub">
+          Deine Leute. Deine Ideen. Dein Account.
+        </p>
+        <form data-login-form="register" method="post" action="/register" >
+          <div class="jd-login__field">
+            <label data-login-label="register-user">
+              Benutzername
+            </label>
+            <div class="jd-login__input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="3"/>
+                <path d="M5 20v-2a7 7 0 0 1 14 0v2"/>
+              </svg>
+              <input data-login-field="register-user" name="username" placeholder="Wie sollen wir dich nennen?" spellcheck="false"  autocomplete="username" required>
+            </div>
+          </div>
+          <div class="jd-login__field">
+            <label data-login-label="register-email">
+              E-Mail-Adresse
+            </label>
+            <div class="jd-login__input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="m3 6 9 7 9-7"/>
+              </svg>
+              <input data-login-field="register-email" name="email" type="email" placeholder="you@example.com"  autocomplete="email" required>
+            </div>
+          </div>
+          <div class="jd-login__field">
+            <label data-login-label="register-pass">
+              Passwort
+            </label>
+            <div class="jd-login__input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="5" y="10" width="14" height="11" rx="2"/>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/>
+              </svg>
+              <input data-login-field="register-pass" name="password" type="password" placeholder="Dein neues Passwort"  autocomplete="new-password" required>
+            </div>
+          </div>
+          <button class="jd-login__cta" type="submit" >
+            Account erstellen
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+          <p class="jd-login__legal">
+            Dein Start in etwas
+            <span>
+              Neues.
+            </span>
+          </p>
+        </form>
+      </div>
+    </section>
+  </div>
+  <p class="jd-login__hint">
+    HOVER ODER KLICK
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+  </p>
+</div>
+</div>

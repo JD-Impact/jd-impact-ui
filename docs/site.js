@@ -97,50 +97,28 @@
   chooseFile('html');
 
   const frame = document.getElementById('component-preview');
-  const safeScript = source => source.replace(/<\/script/gi, '<\\/script');
-  const previewScript = `
-    addEventListener('DOMContentLoaded', () => {
-    const root = document.querySelector('[data-jd-login]');
-    const report = text => parent.postMessage({ type: 'jd-preview-status', text }, '*');
-    const updateHint = () => report(root.dataset.mode === 'closed'
-      ? 'Hover über „Anmelden“ oder antippen. Dann beginnt die Animation.'
-      : root.dataset.mode === 'register'
-        ? 'Mit „Login“ zurückdrehen. Die eingegebenen Werte bleiben erhalten.'
-        : '„Registrieren“ dreht die Karte. Escape klappt sie wieder ein.');
-    new MutationObserver(updateHint).observe(root, { attributes: true, attributeFilter: ['data-mode'] });
-    updateHint();
-    document.querySelectorAll('form').forEach(form => form.addEventListener('submit', event => {
-      event.preventDefault();
-      report('Formular ausgelöst. Hier in der Vorschau werden keine Daten gesendet.');
-    }));
-    document.querySelector('.jd-login__forgot').addEventListener('click', event => {
-      event.preventDefault();
-      report('Passwort-Link ausgewählt. Das Ziel bestimmst du in deinem Projekt.');
-    });
-    addEventListener('message', event => {
-      if (event.source !== parent || event.data !== 'jd-preview-reset') return;
-      document.querySelectorAll('form').forEach(form => form.reset());
-      root.jdLogin.close();
-      updateHint();
-    });
-    }, { once: true });
-  `;
-  frame.srcdoc = `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
-    ${files.css.code}
-    html,body{margin:0;background:transparent;min-height:100%;overflow-x:hidden;color-scheme:dark}
-    main{min-height:606px;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:32px 20px;box-sizing:border-box}
-    @media(max-width:350px){main{padding-inline:12px}}
-    </style></head><body><main>${files.html.code}</main><script>${safeScript(files.js.code)}<\/script><script>${safeScript(previewScript)}<\/script></body></html>`;
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const motionButton = document.getElementById('toggle-motion');
+  let motionOverride = null;
+  const animationsEnabled = () => motionOverride ?? !motion.matches;
+  const syncPreviewMotion = () => frame.contentWindow?.postMessage({ type: 'jd-preview-motion', enabled: animationsEnabled() }, '*');
   addEventListener('message', event => {
     if (event.source !== frame.contentWindow || event.data?.type !== 'jd-preview-status' || typeof event.data.text !== 'string') return;
     document.getElementById('preview-instruction').textContent = event.data.text;
   });
+  frame.addEventListener('load', syncPreviewMotion);
+  // The actual example from the ZIP, with the same external CSS and JS.
+  frame.src = 'components/login-motion/example.html?embed=1&v=' + files.revision;
   document.getElementById('reset-preview').addEventListener('click', () => frame.contentWindow.postMessage('jd-preview-reset', '*'));
+  motionButton.addEventListener('click', () => {
+    motionOverride = !animationsEnabled();
+    refreshMotion();
+    syncPreviewMotion();
+  });
 
   const canvas = document.getElementById('matrix');
   const flow = document.getElementById('matrix-flow');
   const ctx = canvas.getContext('2d');
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const sourceText = (files.html.code + files.css.code + files.js.code).replace(/\s+/g, ' ');
   let width, height, scale;
   let seed = 2048;
@@ -175,7 +153,7 @@
     scale = Math.min(devicePixelRatio || 1, Math.sqrt(32000000 / (width * height)));
     canvas.width = Math.round(width * scale); canvas.height = Math.round(height * scale);
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    const gap = width < 760 ? 30 : 28;
+    const gap = width < 760 ? 28 : 26;
     const fragment = document.createDocumentFragment();
     ctx.clearRect(0, 0, width, height);
     Array.from({ length: Math.ceil(width / gap) }, (_, i) => {
@@ -183,11 +161,11 @@
         x: i * gap + random() * 7,
         y: random() * (height + 340),
         position: Math.floor(random() * sourceText.length),
-        length: 9 + Math.floor(random() * 19),
-        step: 17, font: 12,
-        speed: 28 + random() * 44,
+        length: 14 + Math.floor(random() * 20),
+        step: 18, font: 13,
+        speed: 38 + random() * 42,
         opacity: .3 + random() * .7,
-        color: ['#a78bfa', '#67d9ba', '#7bafff', '#b890df'][i % 4]
+        color: ['#53ffd0', '#52caff', '#a184ff', '#ee76ef', '#ffc477'][i % 5]
       };
       createStrip(stream);
       const distance = height + stream.height;
@@ -195,7 +173,7 @@
       const strip = stream.strip;
       // Fade each small strip, avoiding a moving full-screen mask layer.
       const edge = Math.abs(stream.x / width - .5) * 2;
-      const opacity = stream.opacity * (width < 760 ? .32 : .5) * (.08 + .92 * Math.pow(edge, 2.2));
+      const opacity = stream.opacity * (width < 760 ? .7 : .9) * (.25 + .75 * Math.pow(edge, 1.8));
       strip.className = 'matrix-stream';
       strip.style.cssText = `left:${stream.x}px;top:${-stream.height}px;width:22px;height:${stream.height}px;opacity:${opacity};--fall-distance:${distance}px;--fall-duration:${duration}s;--fall-delay:${-random() * duration}s`;
       fragment.append(strip);
@@ -208,12 +186,18 @@
     refreshMotion();
   }
   function refreshMotion() {
-    const paused = String(motion.matches || document.hidden);
+    const enabled = animationsEnabled();
+    document.documentElement.dataset.jdMotion = enabled ? 'full' : 'reduced';
+    motionButton.setAttribute('aria-pressed', String(enabled));
+    motionButton.setAttribute('aria-label', enabled ? 'Animationen pausieren' : 'Animationen abspielen');
+    motionButton.querySelector('span').textContent = enabled ? 'Animationen an' : 'Abspielen';
+    motionButton.querySelector('path').setAttribute('d', enabled ? 'M8 5v14M16 5v14' : 'M8 5l11 7-11 7Z');
+    const paused = String(!enabled || document.hidden);
     canvas.dataset.paused = paused;
     flow.dataset.paused = paused;
   }
   addEventListener('resize', resize, { passive: true });
   document.addEventListener('visibilitychange', refreshMotion);
-  motion.addEventListener('change', () => { resize(); refreshMotion(); });
+  motion.addEventListener('change', () => { resize(); syncPreviewMotion(); });
   resize(); refreshMotion();
 })();

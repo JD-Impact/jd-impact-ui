@@ -28,7 +28,7 @@ Die ursprünglichen Reel-Effekte wie Code-Matrix, automatisches Tippen und küns
 <script src="login-card.js" defer></script>
 ```
 
-Die Karte initialisiert sich automatisch. Ihr äußerer Container benötigt Platz für eine bis zu 400 Pixel breite Karte. Auf schmalen Bildschirmen passt sie sich der verfügbaren Breite an. Login und Registrierung sind gleich breit; beim Flip verändert sich nur die Höhe.
+Die Karte initialisiert sich automatisch. Kopiere das vollständige HTML inklusive `jd-login-stage`: Dieser Rahmen reserviert den Platz für die Animation, damit deine Seite nicht beim Öffnen oder Flip verrutscht. Er ist bis zu 400 Pixel breit und normalerweise 660 Pixel hoch. Auf schmalen Bildschirmen passt er sich der verfügbaren Breite an. Login und Registrierung sind gleich breit; die Registrierung wächst nach unten, während ihre Oberkante am selben Platz bleibt.
 
 ## Eigene Formulare verbinden
 
@@ -76,6 +76,7 @@ Die Komponenten-Styles ändern keine allgemeinen Seiten-, Button- oder Überschr
 - Passwortmanager-Autofill und normale Browser-Formularprüfung sind aktiviert.
 - Inaktive Formularseiten sind für Tastatur und Screenreader ausgeblendet.
 - Bei reduzierter Bewegung werden die Animationen deaktiviert.
+- In den Vorschauen kannst du sie über „Animationen abspielen“ ausdrücklich einschalten. In deinem Projekt folgt die Komponente standardmäßig der Systemeinstellung. Optional erlaubt `data-jd-motion="full"` am Element mit `data-jd-login` Animationen; `data-jd-motion="reduced"` pausiert sie.
 
 ## Mehrere Karten und dynamische Inhalte
 
@@ -96,3 +97,5 @@ Die automatisch initialisierte Instanz erreichst du über `root.jdLogin`. In Rea
 ## Vorschau
 
 `example.html` und `preview.html` verhindern ausschließlich in ihrem Beispiel-Script das Absenden und zeigen „Formular ausgelöst“. Das verhindert eine Navigation zu den Beispiel-Routen beim lokalen Ausprobieren. Dieser Vorschau-Handler gehört nicht in dein echtes Projekt; der eigentliche Komponenten-Code enthält ihn nicht.
+
+Die Website-Vorschau lädt genau die `example.html`, `login-card.css` und `login-card.js` aus diesem Paket. Der Parameter `?embed=1` blendet lediglich das Logo und die Bedienleiste der Beispielseite aus. Er verändert die Karte nicht.

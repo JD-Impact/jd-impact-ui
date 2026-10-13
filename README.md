@@ -10,7 +10,7 @@ Die Code-Seite zeigt die interaktive Komponente und die drei Originaldateien. Ko
 
 Eine kompakte Login-Karte, die sich bei Hover oder Antippen öffnet. Ein dünner RGB-Rand bewegt sich um die Karte; Login und Registrierung wechseln mit einem 3D-Flip. Beide Seiten bleiben gleich breit.
 
-- **[Login-Code als ZIP herunterladen](https://raw.githubusercontent.com/JD-Impact/jd-impact-ui/v1.0.0/downloads/jd-login-component.zip)**
+- **[Aktuellen Login-Code als ZIP herunterladen](https://jd-impact.github.io/jd-impact-ui/downloads/jd-login-component.zip)**
 - **[Einbauanleitung](components/login-motion/README.md)**
 - **[Komponenten-Dateien](components/login-motion)**
 
@@ -49,4 +49,4 @@ Stichwort für diese Komponente: **LOGIN**.
 
 ## Code-Seite aktualisieren
 
-Die statische Seite liegt unter `docs/` und wird über GitHub Pages veröffentlicht. Nach Änderungen an der Login-Komponente den Inhalt der Seite mit `python scripts/build-page.py` aktualisieren. Dabei werden Code, Original-Logo und ZIP aus den vorhandenen Dateien übernommen.
+Die statische Seite liegt unter `docs/` und wird über GitHub Pages veröffentlicht. Nach Änderungen an der Login-Komponente `python scripts/build-page.py` ausführen. Das erzeugt aus denselben HTML-, CSS- und JavaScript-Dateien die Einbaubeispiele, die ZIP, die Code-Ansicht und die Dateien für die Live-Vorschau. So zeigen Website und Download denselben Komponentenstand.

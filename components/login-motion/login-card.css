@@ -1,4 +1,4 @@
-/* JD Login Motion — only styles elements inside .jd-login. */
+/* JD Login Motion — styles are scoped to the stage and card. */
 @property --jd-login-spin {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -12,6 +12,23 @@
   color-scheme: dark;
   perspective: 1400px;
   isolation: isolate;
+}
+.jd-login-stage {
+  --jd-login-stage-height: 660px;
+  position: relative;
+  width: 400px;
+  max-width: 100%;
+  height: var(--jd-login-stage-height);
+}
+.jd-login-stage > .jd-login {
+  position: absolute;
+  left: 50%;
+  top: calc((var(--jd-login-stage-height) - 88px) / 2);
+  translate: -50% 0;
+  transition: width .85s var(--jd-login-ease), height .9s var(--jd-login-ease), top .9s var(--jd-login-ease);
+}
+.jd-login-stage > .jd-login.jd-login--open {
+  top: calc((var(--jd-login-stage-height) - var(--jd-login-anchor-height,536px)) / 2);
 }
 .jd-login,.jd-login *,.jd-login *::before,.jd-login *::after {
   box-sizing: border-box;
@@ -131,6 +148,7 @@
   top:0;
   left:0;
   right:0;
+  width:var(--jd-login-panel-width,100%);
   padding:28px;
   opacity:0;
   visibility:hidden;
@@ -405,6 +423,13 @@
 .jd-login--open .jd-login__hint{
   opacity:0
 }
+.jd-login .jd-login__hint svg{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  margin-left:6px;
+  vertical-align:-1px;
+}
 .jd-login.jd-login--open {
   height:var(--jd-login-login-height,446px);
 }
@@ -465,12 +490,20 @@
   }
 }
 @media(prefers-reduced-motion:reduce) {
-  .jd-login,.jd-login *,.jd-login *::before,.jd-login *::after {
+  .jd-login:not([data-jd-motion="full"]),.jd-login:not([data-jd-motion="full"]) *,.jd-login:not([data-jd-motion="full"]) *::before,.jd-login:not([data-jd-motion="full"]) *::after {
     animation:none!important;
     transition:none!important;
   }
-  .jd-login__switch {
+  .jd-login:not([data-jd-motion="full"]) .jd-login__switch {
     opacity:1;
     transform:none;
   }
+}
+.jd-login[data-jd-motion="reduced"],.jd-login[data-jd-motion="reduced"] *,.jd-login[data-jd-motion="reduced"] *::before,.jd-login[data-jd-motion="reduced"] *::after {
+  animation:none!important;
+  transition:none!important;
+}
+.jd-login[data-jd-motion="reduced"] .jd-login__switch {
+  opacity:1;
+  transform:none;
 }

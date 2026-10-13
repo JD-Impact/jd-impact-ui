@@ -16,7 +16,7 @@
   body{overflow-x:hidden;background:#08090f}
   ::selection{background:#bea1ff50;color:#fff}
   .wrap{width:min(1200px,calc(100% - 96px));margin-inline:auto}
-  #matrix,#matrix-flow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.5;overflow:hidden;mask-image:linear-gradient(90deg,#000 0%,#0009 14%,#0002 35%,#0002 64%,#0009 86%,#000 100%)}
+  #matrix,#matrix-flow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.8;overflow:hidden;mask-image:linear-gradient(90deg,#000 0%,#000b 14%,#0005 35%,#0005 64%,#000b 86%,#000 100%)}
   #matrix[data-paused="false"]{visibility:hidden}
   #matrix-flow{opacity:1;mask-image:none}
   .matrix-stream{position:absolute;animation:matrix-fall linear infinite;animation-duration:var(--fall-duration);animation-delay:var(--fall-delay);will-change:transform}
@@ -58,7 +58,9 @@
   .preview-toolbar button{display:flex;align-items:center;gap:7px;background:none;border:0;color:#81738e;font-size:9px;padding:8px 0}
   .preview-toolbar button:hover{color:var(--purple)}
   .preview-toolbar button svg{width:13px;height:13px}
-  .preview-stage{height:606px;position:relative;background:radial-gradient(ellipse at 50% 45%,#8870c50a,transparent 70%)}
+  .preview-controls{display:flex;align-items:center;gap:15px}
+  .preview-toolbar button[aria-pressed="false"]{color:var(--purple)}
+  .preview-stage{height:700px;position:relative;background:radial-gradient(ellipse at 50% 45%,#8870c50a,transparent 70%)}
   .preview-grid{position:absolute;inset:0;opacity:.17;pointer-events:none;background-image:linear-gradient(#a89bc319 1px,transparent 1px),linear-gradient(90deg,#a89bc319 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse,#000,transparent 80%)}
   #component-preview{position:relative;display:block;width:100%;height:100%;border:0;background:transparent}
   .preview-note{height:44px;display:flex;align-items:center;justify-content:center;gap:9px;border-top:1px solid var(--line);font-size:9px;letter-spacing:.2px;color:#84768f}
@@ -142,7 +144,7 @@
     .hero h1{font-size:60px;letter-spacing:-3.8px;margin-top:24px}
     .hero .eyebrow{font-size:8px;letter-spacing:1.1px}.hero .eyebrow-divider{padding:0}
     .intro{font-size:13px;line-height:1.75;max-width:330px;margin-top:21px}.primary-link{margin-top:22px;padding:16px 18px;font-size:11px}.tech-list{margin-top:17px;font-size:7px}.hero-detail{display:none}
-    .preview-toolbar{padding-inline:15px}.preview-toolbar>span{font-size:7px;letter-spacing:.8px}.preview-toolbar button{font-size:8px}.preview-stage{height:606px}.preview-note{font-size:8px;padding:0 12px;text-align:center}
+    .preview-toolbar{padding-inline:15px}.preview-toolbar>span{font-size:7px;letter-spacing:.8px}.preview-toolbar button{font-size:8px}.preview-controls{gap:10px}.preview-stage{height:700px}.preview-note{font-size:8px;padding:0 12px;text-align:center}
     .feature-strip{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:22px 0;font-size:8px}.feature-strip i{margin-right:7px}
     .source-section{padding-top:56px}.section-heading{display:block;margin-bottom:23px}.section-heading h2{font-size:32px;margin-top:13px}.section-heading>p{font-size:11px;margin-top:15px}
     .editor-toolbar{padding:0 10px;min-height:112px;align-items:stretch;flex-wrap:wrap;gap:0}.file-tabs{width:100%;justify-content:space-between;min-height:54px}.file-tabs button{font-size:10px;padding:0 14px;min-height:54px;flex:1;justify-content:center;gap:7px}
@@ -150,8 +152,10 @@
     .download-row{display:block;padding-top:24px}.download-row h3{font-size:13px}.download-row p{font-size:11px}.secondary-link{margin-top:17px;width:100%;justify-content:center}.download-help{font-size:9px}
     .guide{grid-template-columns:1fr;gap:33px;padding-block:69px 57px}.guide-heading h2{font-size:31px}.guide-heading>p:last-child{font-size:11px;margin-top:15px}.steps li{gap:15px;padding-block:22px}.steps h3{font-size:13px}.steps p{font-size:11px}.steps pre{font-size:9px;padding:10px}.steps li:last-child{border-bottom:0}
     .footer{display:block;padding-block:24px 38px}.footer>div:nth-child(2){margin-top:21px;gap:25px}.footer p{font-size:9px}
-    #matrix{opacity:.32;mask-image:linear-gradient(90deg,#000,#0002 36%,#0002 64%,#000)}
+    #matrix{opacity:.65;mask-image:linear-gradient(90deg,#000,#0005 36%,#0005 64%,#000)}
   }
   @media(max-width:350px){.hero h1{font-size:51px;letter-spacing:-3px}.brand{font-size:11px}.header nav{font-size:10px}.preview-toolbar button span{display:none}.preview-toolbar>span{font-size:6px}.file-tabs button{padding:0 8px;font-size:9px}.preview-note{font-size:7px}.feature-strip{font-size:7px;letter-spacing:.8px}}
-  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#matrix-flow{display:none}*,*::before,*::after{animation:none!important;transition:none!important}}
+  :root[data-jd-motion="reduced"] #matrix-flow{display:none}
+  :root[data-jd-motion="reduced"] *,:root[data-jd-motion="reduced"] *::before,:root[data-jd-motion="reduced"] *::after{animation:none!important;transition:none!important}
+  @media(prefers-reduced-motion:reduce){html:not([data-jd-motion="full"]){scroll-behavior:auto}html:not([data-jd-motion="full"]) #matrix-flow{display:none}html:not([data-jd-motion="full"]) *,html:not([data-jd-motion="full"]) *::before,html:not([data-jd-motion="full"]) *::after{animation:none!important;transition:none!important}}
 }

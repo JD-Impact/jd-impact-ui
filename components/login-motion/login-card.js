@@ -37,9 +37,9 @@
         root.style.setProperty('--jd-login-mx', `${(event.clientX - bounds.left) / bounds.width * 100}%`);
         root.style.setProperty('--jd-login-my', `${(event.clientY - bounds.top) / bounds.height * 100}%`);
       });
-      on(this.opener, 'click', () => this.open({ focus: true }));
+      on(this.opener, 'click', event => this.open({ focus: event.detail === 0 }));
       root.querySelectorAll('[data-login-switch]').forEach(button => {
-        on(button, 'click', () => this.setMode(button.dataset.loginSwitch, { focus: true }));
+        on(button, 'click', event => this.setMode(button.dataset.loginSwitch, { focus: event.detail === 0 }));
       });
       on(root, 'focusin', () => clearTimeout(this.closeTimer));
       on(root, 'focusout', () => this.scheduleClose());
@@ -52,17 +52,30 @@
 
       this.observer = new ResizeObserver(() => this.measure());
       this.panels.forEach(panel => this.observer.observe(panel));
+      if (root.parentElement) this.observer.observe(root.parentElement);
       root.jdLogin = this;
       this.sync();
       this.measure();
     }
 
     measure() {
+      const parent = this.root.parentElement;
+      if (parent) {
+        const style = getComputedStyle(parent);
+        const available = parent.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        this.root.style.setProperty('--jd-login-panel-width', `${Math.max(1, Math.min(400, available) - 2)}px`);
+      }
+      let expandedHeight = 536;
       this.panels.forEach(panel => {
         const mode = panel.dataset.loginPanel;
         const minimum = mode === 'login' ? 446 : 536;
-        this.root.style.setProperty(`--jd-login-${mode}-height`, `${Math.max(minimum, Math.ceil(panel.scrollHeight))}px`);
+        const height = Math.max(minimum, Math.ceil(panel.scrollHeight));
+        this.root.style.setProperty(`--jd-login-${mode}-height`, `${height}px`);
+        expandedHeight = Math.max(expandedHeight, height);
       });
+      this.root.style.setProperty('--jd-login-anchor-height', `${expandedHeight}px`);
+      const stage = this.root.parentElement;
+      if (stage?.classList.contains('jd-login-stage')) stage.style.setProperty('--jd-login-stage-height', `${Math.max(660, expandedHeight + 104)}px`);
     }
 
     sync() {
@@ -96,7 +109,7 @@
       if (focus) {
         if (mode === 'closed') this.opener.focus();
         else {
-          const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const reduceMotion = this.root.dataset.jdMotion === 'reduced' || (matchMedia('(prefers-reduced-motion: reduce)').matches && this.root.dataset.jdMotion !== 'full');
           this.focusTimer = setTimeout(() => {
             this.root.querySelector(`[data-login-panel="${mode}"] input`)?.focus({ preventScroll: true });
           }, reduceMotion ? 0 : 950);

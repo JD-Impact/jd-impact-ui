@@ -1,0 +1,509 @@
+/* JD Login Motion — styles are scoped to the stage and card. */
+@property --jd-login-spin {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.jd-login {
+  --jd-login-ease: cubic-bezier(.22,1,.36,1);
+  --jd-login-accent: #b9a0ff;
+  font-family: Arial,Helvetica,sans-serif;
+  color: #f4f5f7;
+  color-scheme: dark;
+  perspective: 1400px;
+  isolation: isolate;
+}
+.jd-login-stage {
+  --jd-login-stage-height: 660px;
+  position: relative;
+  width: 400px;
+  max-width: 100%;
+  height: var(--jd-login-stage-height);
+}
+.jd-login-stage > .jd-login {
+  position: absolute;
+  left: 50%;
+  top: calc((var(--jd-login-stage-height) - 88px) / 2);
+  translate: -50% 0;
+  transition: width .85s var(--jd-login-ease), height .9s var(--jd-login-ease), top .9s var(--jd-login-ease);
+}
+.jd-login-stage > .jd-login.jd-login--open {
+  top: calc((var(--jd-login-stage-height) - var(--jd-login-anchor-height,536px)) / 2);
+}
+.jd-login,.jd-login *,.jd-login *::before,.jd-login *::after {
+  box-sizing: border-box;
+}
+.jd-login :where(button,input) {
+  font: inherit;
+}
+.jd-login button {
+  cursor: pointer;
+}
+.jd-login button:focus-visible,.jd-login a:focus-visible {
+  outline:2px solid var(--jd-login-accent);
+  outline-offset:4px;
+}
+.jd-login svg {
+  display:block;
+  width:18px;
+  height:18px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.jd-login{
+  position:relative;
+  width:230px;
+  height:88px;
+  max-width:100%;
+  transition:width .85s var(--jd-login-ease),height .9s var(--jd-login-ease);
+  z-index:2
+}
+.jd-login.jd-login--open{
+  width:400px;
+  height:446px
+}
+.jd-login.jd-login--register{
+  height:536px
+}
+.jd-login__rotator{
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 1.15s cubic-bezier(.65,-.12,.2,1.12)
+}
+.jd-login--register .jd-login__rotator{
+  transform:rotateY(180deg)
+}
+.jd-login__face{
+  position:absolute;
+  inset:0;
+  border:1px solid transparent;
+  border-radius:23px;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  background:linear-gradient(#0c0f14,#090b10) padding-box,conic-gradient(from var(--jd-login-spin),#aaff00,#00ffb3,#00ddff,#725bff,#ff43d0,#ff7044,#d6ff00,#aaff00) border-box;
+  animation:jd-login-spectrum 4s linear infinite;
+  box-shadow:0 32px 85px #0009;
+  overflow:hidden
+}
+.jd-login__back{
+  transform:rotateY(180deg)
+}
+.jd-login__face:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  background:radial-gradient(circle at var(--jd-login-mx,50%) var(--jd-login-my,0%),#ffffff08,transparent 55%)
+}
+.jd-login__edge-glow{
+  position:absolute;
+  inset:-2px;
+  border-radius:24px;
+  background:conic-gradient(from var(--jd-login-spin),#aaff00,#00ffb3,#00ddff,#725bff,#ff43d0,#ff7044,#d6ff00,#aaff00);
+  animation:jd-login-spectrum 4s linear infinite;
+  filter:blur(18px);
+  opacity:.12;
+  z-index:-1;
+  pointer-events:none;
+  transition:opacity .5s
+}
+.jd-login:hover .jd-login__edge-glow,.jd-login.jd-login--open .jd-login__edge-glow{
+  opacity:.25
+}
+.jd-login__opener{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:13px;
+  background:none;
+  border:0;
+  width:100%;
+  color:#f5f6f8;
+  font-size:17px;
+  font-weight:600;
+  letter-spacing:-.3px;
+  transition:opacity .2s,transform .45s var(--jd-login-ease);
+  z-index:3
+}
+.jd-login__opener svg{
+  color:#b9a0ff;
+  width:19px;
+  height:19px
+}
+.jd-login--open .jd-login__opener{
+  opacity:0;
+  transform:translateY(-24px);
+  pointer-events:none
+}
+.jd-login__panel{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  width:var(--jd-login-panel-width,100%);
+  padding:28px;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(22px);
+  transition:opacity .4s ease .25s,transform .65s var(--jd-login-ease) .2s,visibility 0s .45s
+}
+.jd-login--open .jd-login__panel{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+  transition-delay:.18s,.18s,0s
+}
+.jd-login__topline{
+  height:32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:25px
+}
+.jd-login__micro{
+  font-size:9px;
+  letter-spacing:2px;
+  color:#7d8798;
+  display:flex;
+  align-items:center;
+  gap:7px
+}
+.jd-login__micro:before{
+  content:"";
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#b9a0ff;
+  box-shadow:0 0 10px #b9a0ff
+}
+.jd-login__switch{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  flex-shrink:0;
+  height:32px;
+  padding:4px 5px 4px 12px;
+  border:1px solid #dccdff1c;
+  border-radius:999px;
+  background:linear-gradient(145deg,#ffffff09,#ffffff02);
+  box-shadow:inset 0 1px 0 #ffffff08;
+  color:#ccd4df;
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.1px;
+  line-height:1;
+  opacity:0;
+  transform:translateY(-20px) scale(.8);
+  transition:background .25s,color .25s,border-color .25s,box-shadow .25s
+}
+.jd-login__switch-icon{
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:#b9a0ff10;
+  color:#d1bfff;
+  transition:background .25s,transform .35s var(--jd-login-ease)
+}
+.jd-login__switch-icon svg{
+  width:12px;
+  height:12px;
+  stroke-width:1.8
+}
+.jd-login--open:not(.jd-login--register) .jd-login__front .jd-login__switch,.jd-login--register .jd-login__back .jd-login__switch{
+  animation:jd-login-flop .7s var(--jd-login-ease) .6s both
+}
+.jd-login__switch:hover{
+  background:#b9a0ff09;
+  color:#f3edff;
+  border-color:#b9a0ff40;
+  box-shadow:inset 0 1px 0 #ffffff0a,0 0 18px #b9a0ff08
+}
+.jd-login__switch:hover .jd-login__switch-icon{
+  background:#b9a0ff20;
+  transform:rotate(45deg)
+}
+.jd-login h1,.jd-login h2{
+  font-size:30px;
+  letter-spacing:-1.2px;
+  font-weight:600;
+  margin:0 0 7px
+}
+.jd-login__sub{
+  font-size:12px;
+  color:#707b8d;
+  margin:0 0 23px;
+  line-height:1.5
+}
+.jd-login__field{
+  position:relative;
+  margin-bottom:13px
+}
+.jd-login__field label{
+  display:block;
+  color:#9ba4b4;
+  font-size:10px;
+  margin:0 0 7px
+}
+.jd-login__input-wrap{
+  position:relative
+}
+.jd-login__field svg{
+  position:absolute;
+  top:15px;
+  left:13px;
+  width:16px;
+  height:16px;
+  color:#566173;
+  transition:color .3s
+}
+.jd-login__field input{
+  width:100%;
+  height:45px;
+  border:1px solid #ffffff0e;
+  border-radius:8px;
+  background:#05070b9c;
+  color:#f0f4fa;
+  font-size:12px;
+  outline:none;
+  padding:0 13px 0 40px;
+  caret-color:#b9a0ff;
+  transition:border-color .3s,box-shadow .3s,background .3s
+}
+.jd-login__field input::placeholder{
+  color:#394454
+}
+.jd-login__field input:focus{
+  border-color:#b9a0ff4d;
+  box-shadow:0 0 0 3px #b9a0ff05,0 0 22px #b9a0ff07;
+  background:#100b19
+}
+.jd-login__field:focus-within svg{
+  color:#b9a0ff
+}
+.jd-login__row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  color:#8190a4;
+  font-size:9px;
+  line-height:16px;
+  margin:16px 0 21px
+}
+.jd-login__remember{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  white-space:nowrap
+}
+.jd-login__remember input{
+  appearance:none;
+  -webkit-appearance:none;
+  width:14px;
+  height:14px;
+  flex:0 0 14px;
+  margin:0;
+  border:1px solid #ffffff25;
+  border-radius:4px;
+  background:#080d11;
+  cursor:pointer;
+  transition:background .2s,border-color .2s,box-shadow .2s
+}
+.jd-login__remember input:checked{
+  border-color:#b9a0ff55;
+  background:#b9a0ff10;
+  box-shadow:inset 0 1px 0 #e2d6ff0a
+}
+.jd-login__remember input:focus-visible{
+  outline:2px solid #b9a0ff;
+  outline-offset:3px
+}
+.jd-login__remember svg{
+  position:absolute;
+  left:1px;
+  top:50%;
+  transform:translateY(-50%) scale(.6);
+  width:12px;
+  height:12px;
+  color:#d9cbff;
+  stroke-width:2.3;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .2s,transform .25s var(--jd-login-ease)
+}
+.jd-login__remember input:checked+svg{
+  opacity:1;
+  transform:translateY(-50%) scale(1)
+}
+.jd-login__row>span{
+  color:#8c97aa;
+  white-space:nowrap
+}
+.jd-login__cta{
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:11px;
+  width:100%;
+  height:45px;
+  border-radius:8px;
+  border:1px solid #d5c3ff66;
+  background:#b9a0ff;
+  color:#20152f;
+  font-size:12px;
+  font-weight:700;
+  box-shadow:0 0 25px #b9a0ff10;
+  transition:background .2s,box-shadow .3s,transform .3s
+}
+.jd-login__cta svg{
+  width:15px;
+  height:15px
+}
+.jd-login__cta:hover{
+  background:#d5c3ff;
+  box-shadow:0 0 35px #b9a0ff33;
+  transform:translateY(-2px)
+}
+.jd-login__cta:before{
+  content:"";
+  position:absolute;
+  top:-20%;
+  left:-50%;
+  width:25%;
+  height:140%;
+  background:#ffffff55;
+  transform:skewX(-25deg);
+  animation:jd-login-shine 5s ease-in-out infinite
+}
+.jd-login--register .jd-login__sub{
+  margin-bottom:22px
+}
+.jd-login--register .jd-login__field{
+  margin-bottom:14px
+}
+.jd-login__legal{
+  text-align:center;
+  color:#485465;
+  font-size:9px;
+  margin:16px 0 0
+}
+.jd-login__legal span{
+  color:#a294bd
+}
+.jd-login__hint{
+  position:absolute;
+  top:calc(100% + 26px);
+  left:50%;
+  transform:translateX(-50%);
+  width:280px;
+  text-align:center;
+  pointer-events:none;
+  white-space:nowrap;
+  font-size:9px;
+  letter-spacing:1.5px;
+  color:#596273;
+  transition:opacity .4s
+}
+.jd-login--open .jd-login__hint{
+  opacity:0
+}
+.jd-login .jd-login__hint svg{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  margin-left:6px;
+  vertical-align:-1px;
+}
+.jd-login.jd-login--open {
+  height:var(--jd-login-login-height,446px);
+}
+.jd-login.jd-login--register {
+  height:var(--jd-login-register-height,536px);
+}
+.jd-login__opener[aria-expanded="true"] {
+  visibility:hidden;
+}
+.jd-login__forgot {
+  color:#8c97aa;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.jd-login__forgot:hover {
+  color:var(--jd-login-accent);
+}
+.jd-login__face.jd-login__back .jd-login__cta {
+  margin-top:22px;
+}
+@keyframes jd-login-spectrum {
+  to {
+    --jd-login-spin:360deg;
+  }
+}
+@keyframes jd-login-flop {
+  0% {
+    opacity:0;
+    transform:translateY(-18px) scale(.7) rotate(-8deg);
+  }
+  65% {
+    opacity:1;
+    transform:translateY(3px) scale(1.05) rotate(2deg);
+  }
+  100% {
+    opacity:1;
+    transform:none;
+  }
+}
+@keyframes jd-login-shine {
+  0%,65% {
+    left:-50%;
+  }
+  100% {
+    left:150%;
+  }
+}
+@media(max-width:480px) {
+  .jd-login__panel {
+    padding:25px;
+  }
+  .jd-login h1,.jd-login h2 {
+    font-size:clamp(24px,6vw,28px);
+  }
+  .jd-login__micro {
+    font-size:8px;
+    letter-spacing:1.4px;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .jd-login:not([data-jd-motion="full"]),.jd-login:not([data-jd-motion="full"]) *,.jd-login:not([data-jd-motion="full"]) *::before,.jd-login:not([data-jd-motion="full"]) *::after {
+    animation:none!important;
+    transition:none!important;
+  }
+  .jd-login:not([data-jd-motion="full"]) .jd-login__switch {
+    opacity:1;
+    transform:none;
+  }
+}
+.jd-login[data-jd-motion="reduced"],.jd-login[data-jd-motion="reduced"] *,.jd-login[data-jd-motion="reduced"] *::before,.jd-login[data-jd-motion="reduced"] *::after {
+  animation:none!important;
+  transition:none!important;
+}
+.jd-login[data-jd-motion="reduced"] .jd-login__switch {
+  opacity:1;
+  transform:none;
+}
