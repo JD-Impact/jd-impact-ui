@@ -6,7 +6,7 @@ Animierte UI-Komponenten mit HTML, CSS und JavaScript zum Einbauen in deine Webs
 
 Eine kompakte Login-Karte, die sich bei Hover oder Antippen öffnet. Ein dünner RGB-Rand bewegt sich um die Karte; Login und Registrierung wechseln mit einem 3D-Flip. Beide Seiten bleiben gleich breit.
 
-- **[Login-Code als ZIP herunterladen](https://github.com/JD-Impact/jd-impact-ui/releases/download/v1.0.0/jd-login-component.zip)**
+- **[Login-Code als ZIP herunterladen](https://raw.githubusercontent.com/JD-Impact/jd-impact-ui/v1.0.0/downloads/jd-login-component.zip)**
 - **[Einbauanleitung](components/login-motion/README.md)**
 - **[Komponenten-Dateien](components/login-motion)**
 
