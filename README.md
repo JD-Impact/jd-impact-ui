@@ -2,6 +2,10 @@
 
 Animierte UI-Komponenten mit HTML, CSS und JavaScript zum Einbauen in deine Website.
 
+**[Vorschau öffnen und Code kopieren](https://jd-impact.github.io/jd-impact-ui/)**
+
+Die Code-Seite zeigt die interaktive Komponente und die drei Originaldateien. Kopieren ist der Hauptweg; das ZIP-Paket bleibt zusätzlich verfügbar.
+
 ## Login Motion
 
 Eine kompakte Login-Karte, die sich bei Hover oder Antippen öffnet. Ein dünner RGB-Rand bewegt sich um die Karte; Login und Registrierung wechseln mit einem 3D-Flip. Beide Seiten bleiben gleich breit.
@@ -42,3 +46,7 @@ Die Komponente liefert die Optik und Effekte. Automatisch getippte Daten, künst
 **[@jd_impact](https://www.instagram.com/jd_impact/)** · JD-Impact
 
 Stichwort für diese Komponente: **LOGIN**.
+
+## Code-Seite aktualisieren
+
+Die statische Seite liegt unter `docs/` und wird über GitHub Pages veröffentlicht. Nach Änderungen an der Login-Komponente den Inhalt der Seite mit `python scripts/build-page.py` aktualisieren. Dabei werden Code, Original-Logo und ZIP aus den vorhandenen Dateien übernommen.
