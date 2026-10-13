@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JD — Login Motion</title><link rel="stylesheet" href="login-card.css?v=4fbdfa92c8a1"><style>
+<title>JD — Login Motion</title><link rel="stylesheet" href="login-card.css?v=66c0e51565a5"><style>
 html{color-scheme:dark}body{margin:0;background:#050609;color:#f4f5f7;font-family:Arial,Helvetica,sans-serif}
 .page-stage{min-height:100svh;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:100px 20px 80px}
 .page-brand{position:absolute;top:24px;left:32px;width:46px;height:64px;overflow:hidden;mix-blend-mode:screen;pointer-events:none}
@@ -15,7 +15,7 @@ body[data-embed] .page-brand,body[data-embed] .page-note,body[data-embed] .page-
 <button class="page-motion" type="button" aria-pressed="true">Animationen an</button>
 <main class="page-stage"><div class="jd-login-stage">
 <!-- CSS: login-card.css | JS: login-card.js (defer) -->
-<div class="jd-login" data-jd-login data-mode="closed">
+<div class="jd-login" data-jd-login data-mode="closed" data-jd-motion="full">
   <div class="jd-login__edge-glow" aria-hidden="true">
   </div>
   <div class="jd-login__rotator">
@@ -180,7 +180,7 @@ body[data-embed] .page-brand,body[data-embed] .page-note,body[data-embed] .page-
 </div>
 </main>
 <p class="page-note" role="status" aria-live="polite"></p>
-<script src="login-card.js?v=a2418529dd91"></script><script>
+<script src="login-card.js?v=e78d8206d265"></script><script>
 if (new URLSearchParams(location.search).has('embed')) document.body.dataset.embed = '';
 addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[data-jd-login]');
@@ -196,16 +196,14 @@ addEventListener('DOMContentLoaded', () => {
       ? 'Mit „Login“ zurückdrehen. Die Karte bleibt an derselben Stelle.'
       : '„Registrieren“ dreht die Karte. Escape klappt sie wieder ein.');
   new MutationObserver(hint).observe(root, { attributes: true, attributeFilter: ['data-mode'] });
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let override = null;
+  let enabled = true;
   const applyMotion = enabled => {
     root.dataset.jdMotion = enabled ? 'full' : 'reduced';
     toggle.setAttribute('aria-pressed', String(enabled));
     toggle.textContent = enabled ? 'Animationen an' : 'Animationen abspielen';
   };
-  applyMotion(!reduced.matches);
-  reduced.addEventListener('change', () => { if (override === null) applyMotion(!reduced.matches); });
-  toggle.addEventListener('click', () => { override = root.dataset.jdMotion !== 'full'; applyMotion(override); });
+  applyMotion(enabled);
+  toggle.addEventListener('click', () => { enabled = !enabled; applyMotion(enabled); });
   document.querySelectorAll('form').forEach(form => form.addEventListener('submit', event => {
     event.preventDefault();
     report('Formular ausgelöst. Hier in der Vorschau werden keine Daten gesendet.');
@@ -219,7 +217,7 @@ addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('form').forEach(form => form.reset());
       root.jdLogin.close(); hint();
     }
-    if (event.data?.type === 'jd-preview-motion' && typeof event.data.enabled === 'boolean') applyMotion(event.data.enabled);
+    if (event.data?.type === 'jd-preview-motion' && typeof event.data.enabled === 'boolean') { enabled = event.data.enabled; applyMotion(enabled); }
   });
   hint();
 }, { once: true });

@@ -43,16 +43,14 @@ addEventListener('DOMContentLoaded', () => {
       ? 'Mit „Login“ zurückdrehen. Die Karte bleibt an derselben Stelle.'
       : '„Registrieren“ dreht die Karte. Escape klappt sie wieder ein.');
   new MutationObserver(hint).observe(root, { attributes: true, attributeFilter: ['data-mode'] });
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let override = null;
+  let enabled = true;
   const applyMotion = enabled => {
     root.dataset.jdMotion = enabled ? 'full' : 'reduced';
     toggle.setAttribute('aria-pressed', String(enabled));
     toggle.textContent = enabled ? 'Animationen an' : 'Animationen abspielen';
   };
-  applyMotion(!reduced.matches);
-  reduced.addEventListener('change', () => { if (override === null) applyMotion(!reduced.matches); });
-  toggle.addEventListener('click', () => { override = root.dataset.jdMotion !== 'full'; applyMotion(override); });
+  applyMotion(enabled);
+  toggle.addEventListener('click', () => { enabled = !enabled; applyMotion(enabled); });
   document.querySelectorAll('form').forEach(form => form.addEventListener('submit', event => {
     event.preventDefault();
     report('Formular ausgelöst. Hier in der Vorschau werden keine Daten gesendet.');
@@ -66,7 +64,7 @@ addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('form').forEach(form => form.reset());
       root.jdLogin.close(); hint();
     }
-    if (event.data?.type === 'jd-preview-motion' && typeof event.data.enabled === 'boolean') applyMotion(event.data.enabled);
+    if (event.data?.type === 'jd-preview-motion' && typeof event.data.enabled === 'boolean') { enabled = event.data.enabled; applyMotion(enabled); }
   });
   hint();
 }, { once: true });

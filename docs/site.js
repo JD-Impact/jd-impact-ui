@@ -97,10 +97,9 @@
   chooseFile('html');
 
   const frame = document.getElementById('component-preview');
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const motionButton = document.getElementById('toggle-motion');
-  let motionOverride = null;
-  const animationsEnabled = () => motionOverride ?? !motion.matches;
+  let motionEnabled = true;
+  const animationsEnabled = () => motionEnabled;
   const syncPreviewMotion = () => frame.contentWindow?.postMessage({ type: 'jd-preview-motion', enabled: animationsEnabled() }, '*');
   addEventListener('message', event => {
     if (event.source !== frame.contentWindow || event.data?.type !== 'jd-preview-status' || typeof event.data.text !== 'string') return;
@@ -111,7 +110,7 @@
   frame.src = 'components/login-motion/example.html?embed=1&v=' + files.revision;
   document.getElementById('reset-preview').addEventListener('click', () => frame.contentWindow.postMessage('jd-preview-reset', '*'));
   motionButton.addEventListener('click', () => {
-    motionOverride = !animationsEnabled();
+    motionEnabled = !motionEnabled;
     refreshMotion();
     syncPreviewMotion();
   });
@@ -198,6 +197,5 @@
   }
   addEventListener('resize', resize, { passive: true });
   document.addEventListener('visibilitychange', refreshMotion);
-  motion.addEventListener('change', () => { resize(); syncPreviewMotion(); });
   resize(); refreshMotion();
 })();

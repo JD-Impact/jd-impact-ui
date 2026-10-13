@@ -25,10 +25,11 @@
   left: 50%;
   top: calc((var(--jd-login-stage-height) - 88px) / 2);
   translate: -50% 0;
-  transition: width .85s var(--jd-login-ease), height .9s var(--jd-login-ease), top .9s var(--jd-login-ease);
+  transition: width .42s var(--jd-login-ease), height .42s var(--jd-login-ease), top .42s var(--jd-login-ease);
 }
 .jd-login-stage > .jd-login.jd-login--open {
   top: calc((var(--jd-login-stage-height) - var(--jd-login-anchor-height,536px)) / 2);
+  transition: width .85s var(--jd-login-ease), height .9s var(--jd-login-ease), top .9s var(--jd-login-ease);
 }
 .jd-login,.jd-login *,.jd-login *::before,.jd-login *::after {
   box-sizing: border-box;
@@ -58,12 +59,13 @@
   width:230px;
   height:88px;
   max-width:100%;
-  transition:width .85s var(--jd-login-ease),height .9s var(--jd-login-ease);
+  transition:width .42s var(--jd-login-ease),height .42s var(--jd-login-ease);
   z-index:2
 }
 .jd-login.jd-login--open{
   width:400px;
-  height:446px
+  height:446px;
+  transition:width .85s var(--jd-login-ease),height .9s var(--jd-login-ease)
 }
 .jd-login.jd-login--register{
   height:536px

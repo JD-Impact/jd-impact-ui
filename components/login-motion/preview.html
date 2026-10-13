@@ -27,10 +27,11 @@
   left: 50%;
   top: calc((var(--jd-login-stage-height) - 88px) / 2);
   translate: -50% 0;
-  transition: width .85s var(--jd-login-ease), height .9s var(--jd-login-ease), top .9s var(--jd-login-ease);
+  transition: width .42s var(--jd-login-ease), height .42s var(--jd-login-ease), top .42s var(--jd-login-ease);
 }
 .jd-login-stage > .jd-login.jd-login--open {
   top: calc((var(--jd-login-stage-height) - var(--jd-login-anchor-height,536px)) / 2);
+  transition: width .85s var(--jd-login-ease), height .9s var(--jd-login-ease), top .9s var(--jd-login-ease);
 }
 .jd-login,.jd-login *,.jd-login *::before,.jd-login *::after {
   box-sizing: border-box;
@@ -60,12 +61,13 @@
   width:230px;
   height:88px;
   max-width:100%;
-  transition:width .85s var(--jd-login-ease),height .9s var(--jd-login-ease);
+  transition:width .42s var(--jd-login-ease),height .42s var(--jd-login-ease);
   z-index:2
 }
 .jd-login.jd-login--open{
   width:400px;
-  height:446px
+  height:446px;
+  transition:width .85s var(--jd-login-ease),height .9s var(--jd-login-ease)
 }
 .jd-login.jd-login--register{
   height:536px
@@ -524,7 +526,7 @@ body[data-embed] .page-brand,body[data-embed] .page-note,body[data-embed] .page-
 <button class="page-motion" type="button" aria-pressed="true">Animationen an</button>
 <main class="page-stage"><div class="jd-login-stage">
 <!-- CSS: login-card.css | JS: login-card.js (defer) -->
-<div class="jd-login" data-jd-login data-mode="closed">
+<div class="jd-login" data-jd-login data-mode="closed" data-jd-motion="full">
   <div class="jd-login__edge-glow" aria-hidden="true">
   </div>
   <div class="jd-login__rotator">
@@ -815,7 +817,7 @@ body[data-embed] .page-brand,body[data-embed] .page-note,body[data-embed] .page-
       clearTimeout(this.closeTimer);
       this.closeTimer = setTimeout(() => {
         if (this.mode === 'login' && !this.root.matches(':hover') && !this.root.contains(document.activeElement)) this.close();
-      }, 1200);
+      }, 180);
     }
 
     destroy() {
@@ -849,16 +851,14 @@ addEventListener('DOMContentLoaded', () => {
       ? 'Mit „Login“ zurückdrehen. Die Karte bleibt an derselben Stelle.'
       : '„Registrieren“ dreht die Karte. Escape klappt sie wieder ein.');
   new MutationObserver(hint).observe(root, { attributes: true, attributeFilter: ['data-mode'] });
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let override = null;
+  let enabled = true;
   const applyMotion = enabled => {
     root.dataset.jdMotion = enabled ? 'full' : 'reduced';
     toggle.setAttribute('aria-pressed', String(enabled));
     toggle.textContent = enabled ? 'Animationen an' : 'Animationen abspielen';
   };
-  applyMotion(!reduced.matches);
-  reduced.addEventListener('change', () => { if (override === null) applyMotion(!reduced.matches); });
-  toggle.addEventListener('click', () => { override = root.dataset.jdMotion !== 'full'; applyMotion(override); });
+  applyMotion(enabled);
+  toggle.addEventListener('click', () => { enabled = !enabled; applyMotion(enabled); });
   document.querySelectorAll('form').forEach(form => form.addEventListener('submit', event => {
     event.preventDefault();
     report('Formular ausgelöst. Hier in der Vorschau werden keine Daten gesendet.');
@@ -872,7 +872,7 @@ addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('form').forEach(form => form.reset());
       root.jdLogin.close(); hint();
     }
-    if (event.data?.type === 'jd-preview-motion' && typeof event.data.enabled === 'boolean') applyMotion(event.data.enabled);
+    if (event.data?.type === 'jd-preview-motion' && typeof event.data.enabled === 'boolean') { enabled = event.data.enabled; applyMotion(enabled); }
   });
   hint();
 }, { once: true });

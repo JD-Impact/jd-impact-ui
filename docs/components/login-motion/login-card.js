@@ -124,7 +124,7 @@
       clearTimeout(this.closeTimer);
       this.closeTimer = setTimeout(() => {
         if (this.mode === 'login' && !this.root.matches(':hover') && !this.root.contains(document.activeElement)) this.close();
-      }, 1200);
+      }, 180);
     }
 
     destroy() {

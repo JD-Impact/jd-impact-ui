@@ -75,8 +75,8 @@ Die Komponenten-Styles ändern keine allgemeinen Seiten-, Button- oder Überschr
 - Formularwerte bleiben beim Schließen und Wiederöffnen erhalten.
 - Passwortmanager-Autofill und normale Browser-Formularprüfung sind aktiviert.
 - Inaktive Formularseiten sind für Tastatur und Screenreader ausgeblendet.
-- Bei reduzierter Bewegung werden die Animationen deaktiviert.
-- In den Vorschauen kannst du sie über „Animationen abspielen“ ausdrücklich einschalten. In deinem Projekt folgt die Komponente standardmäßig der Systemeinstellung. Optional erlaubt `data-jd-motion="full"` am Element mit `data-jd-login` Animationen; `data-jd-motion="reduced"` pausiert sie.
+- Die Animationen starten direkt beim Laden. Über die Vorschau-Bedienleiste kannst du sie pausieren.
+- Das HTML enthält dafür `data-jd-motion="full"` am Element mit `data-jd-login`. Mit `data-jd-motion="reduced"` pausierst du die Animationen. Entfernst du das Attribut, folgt die Komponente der Systemeinstellung für reduzierte Bewegung.
 
 ## Mehrere Karten und dynamische Inhalte
 
