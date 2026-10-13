@@ -1,0 +1,50 @@
+{
+  "login.html": {
+    "description": "JD-Impact Login Motion: interaktive Vorschau, HTML, CSS und JavaScript zum Kopieren und Einbauen in deine Website.",
+    "title": "Login Motion — JD-Impact",
+    "source_script": "source.js?v=6",
+    "number": "001",
+    "component_name": "LOGIN MOTION",
+    "hero_title": "Eine Karte.<br><span>Zwei Seiten.</span>",
+    "intro": "Kompakt im ersten Moment. Ein Login beim Hover. Ein Flip zur Registrierung. Und jetzt: auf deiner Website.",
+    "preview_title": "Login Motion ausprobieren",
+    "preview_hint": "Hover über „Anmelden“ oder antippen. Dann beginnt die Animation.",
+    "features": "<span><i>01</i> HOVER TO OPEN</span><span><i>02</i> 3D FLIP</span><span><i>03</i> RGB BORDER</span><span><i>04</i> COPY & BUILD</span>",
+    "code_title": "Dein nächster Move.",
+    "guide_steps": "\n        <li><span class=\"step-number\">01</span><div><h3>CSS einbinden</h3><p>Den CSS-Code als <code>login-card.css</code> speichern und im Seitenkopf laden.</p><pre><code>&lt;link rel=\"stylesheet\" href=\"login-card.css\"&gt;</code></pre></div></li>\n        <li><span class=\"step-number\">02</span><div><h3>Die Karte platzieren</h3><p>Das HTML-Snippet dort einfügen, wo der Login stehen soll.</p></div></li>\n        <li><span class=\"step-number\">03</span><div><h3>Effekte aktivieren</h3><p>Den JavaScript-Code als <code>login-card.js</code> speichern und einbinden.</p><pre><code>&lt;script src=\"login-card.js\" defer&gt;&lt;/script&gt;</code></pre></div></li>\n        <li><span class=\"step-number\">04</span><div><h3>An dein Projekt anpassen</h3><p>Texte, Farben und Formularziele anpassen. Für Anmeldung und Registrierung dein vorhandenes System verwenden.</p></div></li>\n      ",
+    "github_path": "components/login-motion",
+    "fallback_zip": "downloads/jd-login-component.zip"
+  },
+  "download.html": {
+    "description": "JD-Impact Download Forge: interaktive Vorschau, HTML, CSS und JavaScript zum Kopieren und Einbauen in deine Website.",
+    "title": "Download Forge — JD-Impact",
+    "source_script": "forge-source.js?v=6",
+    "number": "002",
+    "component_name": "DOWNLOAD FORGE",
+    "hero_title": "Ein Klick.<br><span>Eine Datei.</span>",
+    "intro": "Eine Kapsel öffnet sich. Echte Bytes werden geladen. Eine Datei hebt ab. Mach aus einem Download einen kleinen Auftritt.",
+    "preview_title": "Download Forge ausprobieren",
+    "preview_hint": "Klicke auf „Download testen“. Die Animation lädt eine echte Beispieldatei.",
+    "features": "<span><i>01</i> REAL DOWNLOAD</span><span><i>02</i> BYTE PROGRESS</span><span><i>03</i> PARTICLES</span><span><i>04</i> COPY & BUILD</span>",
+    "code_title": "Dein Download. Dein Effekt.",
+    "guide_steps": "<li><span class=\"step-number\">01</span><div><h3>Styles laden</h3><p><code>forge.css</code> einbinden und das HTML-Snippet platzieren.</p><pre><code>&lt;link rel=\"stylesheet\" href=\"forge.css\"&gt;</code></pre></div></li><li><span class=\"step-number\">02</span><div><h3>JavaScript einbinden</h3><p>Das Script nach dem Komponenten-HTML laden.</p><pre><code>&lt;script src=\"forge.js\"&gt;&lt;/script&gt;</code></pre></div></li><li><span class=\"step-number\">03</span><div><h3>Deine Datei verbinden</h3><p>URL und Dateiname setzen. Die Animation lädt die tatsächlichen Bytes.</p><pre><code>new DownloadForge(document.querySelector('[data-download-forge]'), {\n  url: '/downloads/deine-datei.zip',\n  filename: 'deine-datei.zip'\n});</code></pre></div></li><li><span class=\"step-number\">04</span><div><h3>In deinem Projekt nutzen</h3><p>Abbrechen, Fehler und Wiederholen sind eingebaut. Bei fremden Download-URLs muss der Server Fetch-Zugriff erlauben.</p></div></li>",
+    "github_path": "components/download-forge",
+    "fallback_zip": "downloads/jd-download-forge-component.zip"
+  },
+  "switch.html": {
+    "description": "JD-Impact Theme Switch: interaktive Vorschau, HTML, CSS und JavaScript zum Kopieren und Einbauen in deine Website.",
+    "title": "Theme Switch — JD-Impact",
+    "source_script": "switch-source.js?v=5",
+    "number": "003",
+    "component_name": "THEME SWITCH",
+    "hero_title": "Ein Slider.<br><span>Zwei Looks.</span>",
+    "intro": "Klicken oder ziehen. Von hell zu dunkel – mit einem Knopf, der wie eine Feder reagiert. Ein kleiner Switch für einen großen Unterschied.",
+    "preview_title": "Theme Switch ausprobieren",
+    "preview_hint": "Klicken, ziehen oder Pfeiltasten benutzen. Der Look wechselt wirklich.",
+    "features": "<span><i>01</i> CLICK & DRAG</span><span><i>02</i> SPRING MOTION</span><span><i>03</i> LIGHT / DARK</span><span><i>04</i> COPY & BUILD</span>",
+    "code_title": "Dein nächster Move.",
+    "guide_steps": "<li><span class=\"step-number\">01</span><div><h3>Die Komponente einfügen</h3><p>CSS laden und das HTML dort einfügen, wo dein Theme-Schalter stehen soll.</p><pre><code>&lt;link rel=\"stylesheet\" href=\"theme-switch.css\"&gt;</code></pre></div></li><li><span class=\"step-number\">02</span><div><h3>Feder und Bedienung aktivieren</h3><p>JavaScript mit <code>defer</code> laden. Klick, Ziehen und Pfeiltasten funktionieren direkt.</p><pre><code>&lt;script src=\"theme-switch.js\" defer&gt;&lt;/script&gt;</code></pre></div></li><li><span class=\"step-number\">03</span><div><h3>Deine Farben verbinden</h3><p>Der Schalter setzt <code>data-theme</code> am HTML-Element. Deine Seite entscheidet über die Farben.</p><pre><code>:root { --bg: #f3eee5; --fg: #352a44; }\n:root[data-theme=\"dark\"] { --bg: #08090f; --fg: #f2effa; }\nbody { background: var(--bg); color: var(--fg); }</code></pre></div></li><li><span class=\"step-number\">04</span><div><h3>Anpassen und weitermachen</h3><p>Farben und Größe stehen im CSS. Die Auswahl wird im Browser gespeichert, wenn Local Storage verfügbar ist.</p></div></li>",
+    "github_path": "components/theme-switch",
+    "fallback_zip": "downloads/jd-theme-switch-component.zip"
+  }
+}

@@ -4,6 +4,7 @@ import base64, hashlib, json, re, shutil, subprocess, sys, zipfile
 
 root = Path(__file__).resolve().parents[1]
 docs = root / 'docs'
+subprocess.run([sys.executable, str(root / 'scripts/build-layout.py')], check=True)
 subprocess.run([sys.executable, str(root / 'scripts/build-page.py')], check=True)
 logo = base64.b64encode((docs / 'jd-logo.jpg').read_bytes()).decode()
 catalog = [

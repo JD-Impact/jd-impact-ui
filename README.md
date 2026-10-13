@@ -55,4 +55,6 @@ Stichwort für diese Komponente: **LOGIN**.
 
 ## Code-Seite aktualisieren
 
+Alle Komponentenseiten verwenden dieselbe Vorlage in `templates/component-page.html` und dieselbe `docs/site.css`. Das Layout der Login-Seite ist der Standard: Header, Matrix-Hintergrund, Vorschau, Code-Bereich, Download, Instagram und Einbauanleitung. Komponentenspezifische Texte und Links stehen in `templates/component-pages.json`; die Optik der Komponenten selbst bleibt unabhängig davon.
+
 Die statische Seite liegt unter `docs/` und wird über GitHub Pages veröffentlicht. Nach Änderungen an der Login-Komponente `python scripts/build-library.py` ausführen. Das erzeugt aus denselben HTML-, CSS- und JavaScript-Dateien die Einbaubeispiele, die ZIP, die Code-Ansicht und die Dateien für die Live-Vorschau. So zeigen Website und Download denselben Komponentenstand.
