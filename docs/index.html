@@ -1,95 +1,33 @@
 <!doctype html>
 <html lang="de" data-jd-motion="full">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#08090f">
-  <meta name="description" content="JD-Impact Login Motion: interaktive Vorschau, HTML, CSS und JavaScript zum Kopieren und Einbauen in deine Website.">
-  <title>Login Motion — JD-Impact</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="site.css?v=4">
-  <script src="source.js?v=4" defer></script>
-  <script src="site.js?v=4" defer></script>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08090f"><meta name="description" content="JD-Impact: animierte UI-Komponenten mit HTML, CSS und JavaScript. Ausprobieren, Code kopieren und in dein Projekt einbauen.">
+  <title>JD-Impact — Kleine Komponenten. Große Wirkung.</title>
+  <script>if(/^[1-4]$/.test(new URLSearchParams(location.search).get('v')||''))location.replace('login.html'+location.search+location.hash);</script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="site.css?v=5">
+  <script src="matrix-source.js?v=5" defer></script><script src="matrix.js?v=5" defer></script>
 </head>
-<body>
-  <a class="skip" href="#code">Direkt zum Code</a>
-  <canvas id="matrix" aria-hidden="true"></canvas>
-  <div id="matrix-flow" aria-hidden="true"></div>
-  <div class="ambient" aria-hidden="true"></div>
-
+<body class="home-page">
+  <a class="skip" href="#components">Zu den Komponenten</a><canvas id="matrix" aria-hidden="true"></canvas><div id="matrix-flow" aria-hidden="true"></div><div class="ambient" aria-hidden="true"></div>
   <header class="header wrap">
-    <a class="brand" href="#" aria-label="JD-Impact Startseite">
-      <span class="logo"><img src="jd-logo.jpg" alt="" width="1280" height="1280"></span>
-      <span>JD<span class="brand-dash">—</span>IMPACT<small>CREATIVE COMPONENTS</small></span>
-    </a>
-    <nav aria-label="Hauptnavigation">
-      <a href="#code">Code holen <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-      <a class="nav-github" href="https://github.com/JD-Impact/jd-impact-ui" target="_blank" rel="noopener noreferrer">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-    </nav>
+    <a class="brand" href="index.html" aria-label="JD-Impact Startseite"><span class="logo"><img src="jd-logo.jpg" alt="" width="1280" height="1280"></span><span>JD<span class="brand-dash">—</span>IMPACT<small>CREATIVE COMPONENTS</small></span></a>
+    <nav aria-label="Hauptnavigation"><a href="#components">Komponenten</a><a class="nav-instagram" href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer" aria-label="JD-Impact auf Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg><span>Instagram</span></a><a class="nav-github" href="https://github.com/JD-Impact/jd-impact-ui" target="_blank" rel="noopener noreferrer">GitHub</a></nav>
   </header>
-
   <main>
-    <section class="hero wrap" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot"></span> COMPONENT 001 <span class="eyebrow-divider">/</span> LOGIN MOTION</p>
-        <h1 id="hero-title">Eine Karte.<br><span>Zwei Seiten.</span></h1>
-        <p class="intro">Kompakt im ersten Moment. Ein Login beim Hover. Ein Flip zur Registrierung. Und jetzt: auf deiner Website.</p>
-        <a class="primary-link" href="#code">Hol dir den Code <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
-        <div class="tech-list" aria-label="Technologien"><span>HTML</span><span>CSS</span><span>JAVASCRIPT</span></div>
-        <div class="hero-detail"><span class="detail-line" aria-hidden="true"></span><p>Ein kleiner Effekt.<br><strong>Ein ganz anderer erster Eindruck.</strong></p></div>
-      </div>
-
-      <div class="preview-shell" id="preview">
-        <div class="preview-toolbar"><span><i aria-hidden="true"></i> INTERAKTIVE VORSCHAU</span><div class="preview-controls"><button id="toggle-motion" type="button" aria-pressed="true" aria-label="Animationen pausieren"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span>Animationen an</span></button><button id="reset-preview" type="button" aria-label="Vorschau neu starten"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 2 8M4 4v6h6"/></svg><span>Neu starten</span></button></div></div>
-        <div class="preview-stage">
-          <div class="preview-grid" aria-hidden="true"></div>
-          <iframe id="component-preview" title="Login Motion ausprobieren" sandbox="allow-scripts allow-forms" loading="eager"></iframe>
-        </div>
-        <p class="preview-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v11h14m-5-5 5 5-5 5"/></svg><span id="preview-instruction" role="status" aria-live="polite">Hover über „Anmelden“ oder antippen. Dann beginnt die Animation.</span></p>
-        <span class="corner-mark" aria-hidden="true">JD / 001</span>
+    <section class="home-hero wrap" aria-labelledby="home-title">
+      <div class="home-copy"><p class="eyebrow"><span class="status-dot"></span> JD / CODE IN MOTION</p><h1 id="home-title">Kleiner Code.<br><span>Große Wirkung.</span></h1><p class="home-intro">Buttons, die mehr können. Interfaces, die im Kopf bleiben. Animierte Komponenten für dein nächstes Webprojekt.</p><a class="primary-link" href="#components">Finde deinen nächsten Effekt <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a><div class="tech-list"><span>HTML</span><span>CSS</span><span>JAVASCRIPT</span></div></div>
+      <div class="home-art" aria-hidden="true"><div class="identity-orbit"></div><div class="identity-mark"><img src="jd-logo.jpg" alt="" width="1280" height="1280"></div><span class="art-label art-label--top">DESIGNED TO MOVE</span><span class="art-label art-label--bottom">MADE TO USE</span><span class="art-dot art-dot--one"></span><span class="art-dot art-dot--two"></span></div>
+    </section>
+    <div class="home-principles wrap"><span>Ausprobieren</span><i aria-hidden="true">→</i><span>Code mitnehmen</span><i aria-hidden="true">→</i><span>Deins machen</span><small>Ohne Framework. Ohne externe Bibliotheken.</small></div>
+    <section class="collection wrap" id="components" aria-labelledby="collection-title"><div class="section-heading"><div><p class="eyebrow">DIE KOMPONENTEN</p><h2 id="collection-title">Welcher Effekt wird deiner?</h2></div><p>Die Vorschau zeigt den Code,<br>den du auch herunterladen kannst.</p></div>
+      <div class="component-grid">
+        <a class="component-card" href="login.html"><div class="card-preview card-preview--login"><span class="card-index">01 / LOGIN</span><img src="assets/login-card.png" alt="Login Motion mit dünnem RGB-Rand und Login-Formular" width="800" height="892" loading="lazy"></div><div class="card-copy"><h3>Login Motion <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></h3><p>Hover. Öffnen. Flip.<br>Eine Karte für Login und Registrierung.</p><span>HOVER · 3D FLIP · RGB BORDER</span></div></a>
+        <a class="component-card" href="download.html"><div class="card-preview card-preview--forge"><span class="card-index">02 / DOWNLOAD</span><img src="assets/download-card.png" alt="Download Forge: geöffnete Download-Kapsel mit Datei und Fortschrittsring" width="700" height="568" loading="lazy"></div><div class="card-copy"><h3>Download Forge <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></h3><p>Ein Download als kleiner Auftritt.<br>Mit echten Bytes und sichtbarem Fortschritt.</p><span>DOWNLOAD · PROGRESS · PARTICLES</span></div></a>
+        <a class="component-card" href="switch.html"><div class="card-preview card-preview--switch"><span class="card-index">03 / THEME</span><img src="assets/theme-switch.png" alt="Magnetischer Hell-Dunkel-Schalter mit Sonne und Mond" width="472" height="172" loading="lazy"></div><div class="card-copy"><h3>Theme Switch <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></h3><p>Ein Slider. Zwei Looks.<br>Ziehen, loslassen und die Feder wirken lassen.</p><span>DRAG · SPRING · LIGHT / DARK</span></div></a>
       </div>
     </section>
-
-    <div class="feature-strip wrap" aria-label="Eigenschaften"><span><i>01</i> HOVER TO OPEN</span><span><i>02</i> 3D FLIP</span><span><i>03</i> RGB BORDER</span><span><i>04</i> COPY & BUILD</span></div>
-
-    <section class="source-section wrap" id="code" aria-labelledby="code-title">
-      <div class="section-heading"><div><p class="eyebrow">VOM REEL IN DEIN PROJEKT</p><h2 id="code-title">Dein nächster Move.</h2></div><p>Drei Dateien. Dein Style.<br>Originalcode direkt zum Kopieren.</p></div>
-      <div class="editor">
-        <div class="editor-toolbar">
-          <div class="file-tabs" role="tablist" aria-label="Code-Datei auswählen">
-            <button id="tab-html" type="button" role="tab" aria-selected="true" aria-controls="source-panel" data-code-file="html"><span class="file-icon html-icon" aria-hidden="true">&lt;/&gt;</span> HTML</button>
-            <button id="tab-css" type="button" role="tab" aria-selected="false" aria-controls="source-panel" tabindex="-1" data-code-file="css"><span class="file-icon css-icon" aria-hidden="true">#</span> CSS</button>
-            <button id="tab-js" type="button" role="tab" aria-selected="false" aria-controls="source-panel" tabindex="-1" data-code-file="js"><span class="file-icon js-icon" aria-hidden="true">JS</span> JavaScript</button>
-          </div>
-          <button id="copy-code" class="copy-button" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg><span>Code kopieren</span></button>
-        </div>
-        <div class="editor-path"><span id="filename">component.html</span><span id="line-count"></span></div>
-        <div id="source-panel" class="source-panel" role="tabpanel" aria-labelledby="tab-html" tabindex="0"><pre><code id="source-code"></code></pre></div>
-        <div class="editor-status"><span><i aria-hidden="true"></i> ORIGINAL JD-IMPACT CODE</span><span id="copy-status" role="status" aria-live="polite">Datei auswählen, kopieren, einbauen.</span></div>
-      </div>
-
-      <div id="manual-copy" class="manual-copy" hidden>
-        <label for="manual-code">Hier ist dein Code zum manuellen Kopieren.</label>
-        <p>Halte den markierten Text gedrückt und wähle „Kopieren“.</p>
-        <textarea id="manual-code" readonly spellcheck="false" aria-label="Vollständiger Code zum manuellen Kopieren"></textarea>
-        <button id="manual-mark" type="button">Alles markieren</button>
-      </div>
-
-      <div class="download-row"><div><h3>Lieber das ganze Paket?</h3><p>Alle Dateien, Vorschau und Einbauanleitung in einer ZIP.</p></div><a id="zip-download" class="secondary-link" href="downloads/jd-login-component.zip" download="jd-login-component.zip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 17v4h14v-4"/></svg> ZIP herunterladen</a></div>
-      <details class="download-help"><summary>Der ZIP-Download startet nicht?</summary><p>Öffne diese Seite über das Browser-Menü in Safari oder Chrome und tippe dort auf den Download. Den Code kannst du hier auch ohne ZIP kopieren.</p></details>
-    </section>
-
-    <section class="guide wrap" aria-labelledby="guide-title">
-      <div class="guide-heading"><p class="eyebrow">KOPIEREN. EINBAUEN. DEINS.</p><h2 id="guide-title">Ein kleiner Einbau.<br>Eine große Wirkung.</h2><p>Die Optik kommt von uns.<br>Dein Projekt macht den Rest.</p></div>
-      <ol class="steps">
-        <li><span class="step-number">01</span><div><h3>CSS einbinden</h3><p>Den CSS-Code als <code>login-card.css</code> speichern und im Seitenkopf laden.</p><pre><code>&lt;link rel="stylesheet" href="login-card.css"&gt;</code></pre></div></li>
-        <li><span class="step-number">02</span><div><h3>Die Karte platzieren</h3><p>Das HTML-Snippet dort einfügen, wo der Login stehen soll.</p></div></li>
-        <li><span class="step-number">03</span><div><h3>Effekte aktivieren</h3><p>Den JavaScript-Code als <code>login-card.js</code> speichern und einbinden.</p><pre><code>&lt;script src="login-card.js" defer&gt;&lt;/script&gt;</code></pre></div></li>
-        <li><span class="step-number">04</span><div><h3>An dein Projekt anpassen</h3><p>Texte, Farben und Formularziele anpassen. Für Anmeldung und Registrierung dein vorhandenes System verwenden.</p></div></li>
-      </ol>
-    </section>
+    <section class="instagram-band wrap" aria-labelledby="instagram-title"><div class="instagram-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></div><div><p class="eyebrow">@JD_IMPACT</p><h2 id="instagram-title">Der nächste Effekt?<br>Auf Instagram.</h2><p>Die Komponenten in Bewegung. Neue Ideen für dein Projekt.<br>Schau dir die Reels an und bleib dabei.</p></div><a class="instagram-link" href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer">JD-Impact auf Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></section>
   </main>
-
-  <footer class="footer wrap"><div><strong>JD—IMPACT</strong><p>UI, die du weiterbauen kannst.</p></div><div><a href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer">Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a><a href="https://github.com/JD-Impact/jd-impact-ui/tree/main/components/login-motion" target="_blank" rel="noopener noreferrer">Code auf GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div><span class="footer-index">END OF FILE / 001</span></footer>
-</body>
-</html>
+  <footer class="footer wrap"><div><strong>JD—IMPACT</strong><p>UI, die du weiterbauen kannst.</p></div><div><a href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://github.com/JD-Impact/jd-impact-ui" target="_blank" rel="noopener noreferrer">GitHub</a></div><span class="footer-index">CODE IN MOTION</span></footer>
+</body></html>

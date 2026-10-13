@@ -103,6 +103,7 @@
       if (!['closed', 'login', 'register'].includes(mode)) return;
       clearTimeout(this.closeTimer);
       clearTimeout(this.focusTimer);
+      this.focusTimer = null;
       this.mode = mode;
       this.sync();
       this.measure();
@@ -111,6 +112,7 @@
         else {
           const reduceMotion = this.root.dataset.jdMotion === 'reduced' || (matchMedia('(prefers-reduced-motion: reduce)').matches && this.root.dataset.jdMotion !== 'full');
           this.focusTimer = setTimeout(() => {
+            this.focusTimer = null;
             this.root.querySelector(`[data-login-panel="${mode}"] input`)?.focus({ preventScroll: true });
           }, reduceMotion ? 0 : 950);
         }
@@ -123,7 +125,7 @@
     scheduleClose() {
       clearTimeout(this.closeTimer);
       this.closeTimer = setTimeout(() => {
-        if (this.mode === 'login' && !this.root.matches(':hover') && !this.root.contains(document.activeElement)) this.close();
+        if (this.mode === 'login' && this.focusTimer === null && !this.root.matches(':hover') && !this.root.contains(document.activeElement)) this.close();
       }, 180);
     }
 

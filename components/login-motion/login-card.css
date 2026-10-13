@@ -87,7 +87,7 @@
   border-radius:23px;
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
-  background:linear-gradient(#0c0f14,#090b10) padding-box,conic-gradient(from var(--jd-login-spin),#aaff00,#00ffb3,#00ddff,#725bff,#ff43d0,#ff7044,#d6ff00,#aaff00) border-box;
+  background:linear-gradient(#0c0f14,#0c0f14) padding-box,conic-gradient(from var(--jd-login-spin),#aaff00,#00ffb3,#00ddff,#725bff,#ff43d0,#ff7044,#d6ff00,#aaff00) border-box;
   animation:jd-login-spectrum 4s linear infinite;
   box-shadow:0 32px 85px #0009;
   overflow:hidden
@@ -109,7 +109,11 @@
   border-radius:24px;
   background:conic-gradient(from var(--jd-login-spin),#aaff00,#00ffb3,#00ddff,#725bff,#ff43d0,#ff7044,#d6ff00,#aaff00);
   animation:jd-login-spectrum 4s linear infinite;
-  filter:blur(18px);
+  filter:blur(22px);
+  mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22128%22%20height%3D%22128%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%22.85%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20values%3D%220%200%200%200%201%200%200%200%200%201%200%200%200%200%201%20.16%200%200%200%20.84%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22128%22%20height%3D%22128%22%20filter%3D%22url%28%23n%29%22%2F%3E%3C%2Fsvg%3E");
+  mask-size:128px 128px;
+  mask-repeat:repeat;
+  mask-clip:no-clip;
   opacity:.12;
   z-index:-1;
   pointer-events:none;

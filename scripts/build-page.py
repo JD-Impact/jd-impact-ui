@@ -20,6 +20,7 @@ sources = {
     ]
 }
 sources['revision'] = hashlib.sha256((component / 'example.html').read_bytes()).hexdigest()[:12]
+sources.update(id='login-motion',preview='components/login-motion/example.html',archive='downloads/jd-login-component.zip',archiveName='jd-login-component.zip')
 (destination / 'source.js').write_text(
     '/* Generated from components/login-motion. Run scripts/build-page.py to refresh. */\n'
     'window.JD_SOURCES = ' + json.dumps(sources, ensure_ascii=False).replace('<', '\\u003c') + ';\n'

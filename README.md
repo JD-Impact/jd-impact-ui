@@ -2,9 +2,15 @@
 
 Animierte UI-Komponenten mit HTML, CSS und JavaScript zum Einbauen in deine Website.
 
-**[Vorschau öffnen und Code kopieren](https://jd-impact.github.io/jd-impact-ui/)**
+**[Vorschau öffnen und Code kopieren](https://jd-impact.github.io/jd-impact-ui/login.html)**
 
-Die Code-Seite zeigt die interaktive Komponente und die drei Originaldateien. Kopieren ist der Hauptweg; das ZIP-Paket bleibt zusätzlich verfügbar.
+Die [Startseite](https://jd-impact.github.io/jd-impact-ui/) stellt alle Komponenten vor. Jede Detailseite bietet die tatsächliche Vorschau, die drei Originaldateien zum Kopieren und einen animierten ZIP-Download mit Download Forge.
+
+## Komponenten
+
+- [Login Motion](https://jd-impact.github.io/jd-impact-ui/login.html): Hover, RGB-Rand und 3D-Flip.
+- [Download Forge](https://jd-impact.github.io/jd-impact-ui/download.html): echter Download mit Fortschritt und Partikeln.
+- [Theme Switch](https://jd-impact.github.io/jd-impact-ui/switch.html): Hell/Dunkel mit Drag und Federbewegung.
 
 ## Login Motion
 
@@ -49,4 +55,4 @@ Stichwort für diese Komponente: **LOGIN**.
 
 ## Code-Seite aktualisieren
 
-Die statische Seite liegt unter `docs/` und wird über GitHub Pages veröffentlicht. Nach Änderungen an der Login-Komponente `python scripts/build-page.py` ausführen. Das erzeugt aus denselben HTML-, CSS- und JavaScript-Dateien die Einbaubeispiele, die ZIP, die Code-Ansicht und die Dateien für die Live-Vorschau. So zeigen Website und Download denselben Komponentenstand.
+Die statische Seite liegt unter `docs/` und wird über GitHub Pages veröffentlicht. Nach Änderungen an der Login-Komponente `python scripts/build-library.py` ausführen. Das erzeugt aus denselben HTML-, CSS- und JavaScript-Dateien die Einbaubeispiele, die ZIP, die Code-Ansicht und die Dateien für die Live-Vorschau. So zeigen Website und Download denselben Komponentenstand.

@@ -36,6 +36,7 @@
     document.getElementById('source-panel').scrollTop = 0;
     document.getElementById('source-panel').scrollLeft = 0;
     document.getElementById('filename').textContent = file.name;
+    document.getElementById('filename').dataset.folder = files.id;
     const lines = file.code.split('\n');
     document.getElementById('line-count').textContent = `${lines.length} ZEILEN`;
     const fragment = document.createDocumentFragment();
@@ -107,7 +108,7 @@
   });
   frame.addEventListener('load', syncPreviewMotion);
   // The actual example from the ZIP, with the same external CSS and JS.
-  frame.src = 'components/login-motion/example.html?embed=1&v=' + files.revision;
+  frame.src = files.preview + '?embed=1&v=' + files.revision;
   document.getElementById('reset-preview').addEventListener('click', () => frame.contentWindow.postMessage('jd-preview-reset', '*'));
   motionButton.addEventListener('click', () => {
     motionEnabled = !motionEnabled;
@@ -115,87 +116,22 @@
     syncPreviewMotion();
   });
 
-  const canvas = document.getElementById('matrix');
-  const flow = document.getElementById('matrix-flow');
-  const ctx = canvas.getContext('2d');
-  const sourceText = (files.html.code + files.css.code + files.js.code).replace(/\s+/g, ' ');
-  let width, height, scale;
-  let seed = 2048;
-  const random = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
-  // Render the original characters once at native device resolution. CSS
-  // transforms move the small strips without repainting a full 4K canvas.
-  function createStrip(stream) {
-    const strip = document.createElement('canvas');
-    const length = stream.length * stream.step;
-    strip.width = Math.ceil(22 * scale);
-    strip.height = Math.ceil((length + 12) * scale);
-    const ink = strip.getContext('2d');
-    ink.scale(scale, scale);
-    ink.font = `${stream.font}px ui-monospace, SFMono-Regular, Consolas, monospace`;
-    ink.textAlign = 'center';
-    for (let row = 0; row < stream.length; row++) {
-      ink.globalAlpha = Math.pow((row + 1) / stream.length, 1.8);
-      ink.fillStyle = stream.color;
-      const character = sourceText[(stream.position + row) % sourceText.length];
-      ink.fillText(character, 11, (row + 1) * stream.step);
-    }
-    ink.globalAlpha = .95;
-    ink.fillStyle = '#e6dfff';
-    ink.fillText(sourceText[(stream.position + stream.length - 1) % sourceText.length], 11, length);
-    stream.strip = strip;
-    stream.height = length + 12;
-  }
-  function resize() {
-    width = innerWidth; height = innerHeight;
-    // Native device pixels, including 3840×2160. The memory guard only
-    // applies above 32 megapixels (for unusually large/zoomed displays).
-    scale = Math.min(devicePixelRatio || 1, Math.sqrt(32000000 / (width * height)));
-    canvas.width = Math.round(width * scale); canvas.height = Math.round(height * scale);
-    ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    const gap = width < 760 ? 28 : 26;
-    const fragment = document.createDocumentFragment();
-    ctx.clearRect(0, 0, width, height);
-    Array.from({ length: Math.ceil(width / gap) }, (_, i) => {
-      const stream = {
-        x: i * gap + random() * 7,
-        y: random() * (height + 340),
-        position: Math.floor(random() * sourceText.length),
-        length: 14 + Math.floor(random() * 20),
-        step: 18, font: 13,
-        speed: 38 + random() * 42,
-        opacity: .3 + random() * .7,
-        color: ['#53ffd0', '#52caff', '#a184ff', '#ee76ef', '#ffc477'][i % 5]
-      };
-      createStrip(stream);
-      const distance = height + stream.height;
-      const duration = distance / stream.speed;
-      const strip = stream.strip;
-      // Fade each small strip, avoiding a moving full-screen mask layer.
-      const edge = Math.abs(stream.x / width - .5) * 2;
-      const opacity = stream.opacity * (width < 760 ? .7 : .9) * (.25 + .75 * Math.pow(edge, 1.8));
-      strip.className = 'matrix-stream';
-      strip.style.cssText = `left:${stream.x}px;top:${-stream.height}px;width:22px;height:${stream.height}px;opacity:${opacity};--fall-distance:${distance}px;--fall-duration:${duration}s;--fall-delay:${-random() * duration}s`;
-      fragment.append(strip);
-      // A sharp, complete still frame for reduced-motion preferences.
-      ctx.globalAlpha = stream.opacity;
-      ctx.drawImage(strip, stream.x, stream.y - stream.height, 22, stream.height);
-    });
-    ctx.globalAlpha = 1;
-    flow.replaceChildren(fragment);
-    refreshMotion();
-  }
   function refreshMotion() {
-    const enabled = animationsEnabled();
-    document.documentElement.dataset.jdMotion = enabled ? 'full' : 'reduced';
-    motionButton.setAttribute('aria-pressed', String(enabled));
-    motionButton.setAttribute('aria-label', enabled ? 'Animationen pausieren' : 'Animationen abspielen');
-    motionButton.querySelector('span').textContent = enabled ? 'Animationen an' : 'Abspielen';
-    motionButton.querySelector('path').setAttribute('d', enabled ? 'M8 5v14M16 5v14' : 'M8 5l11 7-11 7Z');
-    const paused = String(!enabled || document.hidden);
-    canvas.dataset.paused = paused;
-    flow.dataset.paused = paused;
+    document.documentElement.dataset.jdMotion = motionEnabled ? 'full' : 'reduced';
+    motionButton.setAttribute('aria-pressed', String(motionEnabled));
+    motionButton.setAttribute('aria-label', motionEnabled ? 'Animationen pausieren' : 'Animationen abspielen');
+    motionButton.querySelector('span').textContent = motionEnabled ? 'Animationen an' : 'Abspielen';
+    motionButton.querySelector('path').setAttribute('d', motionEnabled ? 'M8 5v14M16 5v14' : 'M8 5l11 7-11 7Z');
+    packageForge?.setMotion(motionEnabled);
+    document.dispatchEvent(new CustomEvent('jd-motion', {detail:{enabled:motionEnabled}}));
   }
-  addEventListener('resize', resize, { passive: true });
-  document.addEventListener('visibilitychange', refreshMotion);
-  resize(); refreshMotion();
+  const mount = document.querySelector('#download-zone [data-download-forge]');
+  const packageForge = mount ? new DownloadForge(mount, {url:files.archive,filename:files.archiveName,label:'ZIP herunterladen'}) : null;
+  mount?.addEventListener('forgestart', () => {
+    document.getElementById('download-zone').classList.add('is-active');
+    const promo=document.querySelector('.download-crosspromo');
+    promo.inert=false;promo.setAttribute('aria-hidden','false');
+  });
+  const fallback=document.getElementById('direct-zip');if(fallback){fallback.href=files.archive;fallback.download=files.archiveName;}
+  refreshMotion();
 })();
