@@ -45,10 +45,13 @@ forge.destroy(); // beendet Animationen, Beobachter und Event-Handler
 
 Mehrere Instanzen sind möglich, jeweils mit eigenem Root-Element. `forgedownload` meldet die Übergabe an den Browser, nicht die spätere Bestätigung eines Speicherdialogs.
 
-## Demo und Reel
-`index.html` lädt das echte Komponenten-Code-Paket aus einem lokalen Byte-Stream. Dieser wird für die sichtbare Demo in 16 Blöcken mit je 250 ms Abstand gelesen. Die angezeigten Bytes und Prozentwerte stammen aus diesem Stream. Beim Einbau mit `url` gibt es diese Demo-Drosselung nicht.
+## Fertiges Beispiel ausprobieren
 
-`reel.html` verwendet dieselbe Funktion und zeigt den tatsächlichen Komponenten-Code als JD-/RGB-Matrix-Hintergrund. „Reel abspielen“ startet einen echten Download. Escape setzt die Aufnahme zurück und bricht einen laufenden Transfer ab.
+`example.html` lädt dieselben Dateien `component.html`, `forge.css` und `forge.js`, aus denen die Website-Vorschau besteht. Das Komponenten-HTML ist bereits in das Beispiel eingefügt. „Download testen“ lädt die beiliegende Datei `demo-download.zip` wirklich herunter.
+
+Starte im entpackten Ordner einen lokalen Webserver, beispielsweise mit `python -m http.server 8000`, und öffne `http://localhost:8000/example.html`. Alternativ kannst du den Ordner auf deinen Webspace hochladen. Die Datei wird per Fetch geladen, deshalb braucht das Beispiel eine HTTP- oder HTTPS-Adresse.
+
+`preview.html` enthält HTML, CSS und JavaScript zusammen in einer Datei. Für den Beispieldownload muss `demo-download.zip` daneben liegen. Ersetze beim Einbau `url` und `filename` durch deine eigene Datei; der Button und die Animation bleiben dieselben.
 
 ## Sichtbare Animation auch bei kleinen Dateien
 
