@@ -44,7 +44,8 @@ class DownloadForge {
  }
  async start(){
   if(this.destroyed||this.state==='loading'||this.state==='complete')return;
-  this.reset();this.setState('loading');this.label.textContent='DATA FORGE';this.announcement.textContent='Download wird geladen.';this.controller=new AbortController();const signal=this.controller.signal;const started=performance.now();
+  const preview=this.options.preview===true;
+  this.reset();this.setState('loading');this.label.textContent=preview?'VORSCHAU':'DATA FORGE';this.announcement.textContent=preview?'Animationsvorschau läuft.':'Download wird geladen.';this.controller=new AbortController();const signal=this.controller.signal;const started=performance.now();
   this.root.dispatchEvent(new CustomEvent('forgestart',{bubbles:true}));
   this.detail.textContent='Verbindung wird aufgebaut.';const chunks=[];let contentType='application/octet-stream';
   try{
@@ -57,17 +58,18 @@ class DownloadForge {
     while(true){const {done,value}=await this.reader.read();if(signal.aborted)throw new DOMException('Abgebrochen','AbortError');if(done)break;chunks.push(value);this.received+=value.byteLength;this.spark();this.report()}
     this.reader.releaseLock();this.reader=null;
    }else{const data=new Uint8Array(await response.arrayBuffer());if(signal.aborted)throw new DOMException('Abgebrochen','AbortError');chunks.push(data);this.received=data.byteLength;this.spark(30);this.report()}
-   const remaining=Math.max(0,Number(this.options.minimumDuration??1400)-(performance.now()-started));
+   const remaining=Math.max(0,Number(this.options.minimumDuration??0)-(performance.now()-started));
    if(remaining)await new Promise((resolve,reject)=>{const onAbort=()=>{clearTimeout(timer);reject(new DOMException('Abgebrochen','AbortError'))};const timer=setTimeout(()=>{signal.removeEventListener('abort',onAbort);resolve()},remaining);signal.addEventListener('abort',onAbort,{once:true});if(signal.aborted)onAbort()});
    if(signal.aborted)throw new DOMException('Abgebrochen','AbortError');
-   const blob=new Blob(chunks,{type:contentType});this.progress=1;this.percent.textContent='100%';this.percent.setAttribute('aria-valuenow','100');this.ring.style.strokeDashoffset='0';this.fill.style.clipPath='inset(0% 0 0 0)';this.setState('complete');this.label.textContent='DOWNLOAD BEREIT';this.detail.textContent=`${this.bytes(blob.size)} · ${this.filename}`;this.cancelButton.textContent='Schließen';this.spark(44,true);
-   this.save(blob);this.announcement.textContent='Datei an den Browser übergeben.';
-   this.root.dispatchEvent(new CustomEvent('forgedownload',{bubbles:true,detail:{filename:this.filename,size:blob.size}}));
-   this.collapseTimer=setTimeout(()=>{this.reset();this.label.textContent='Nochmal downloaden';this.meta.textContent='DOWNLOAD BEREIT'},1600);
+   const blob=new Blob(chunks,{type:contentType});this.progress=1;this.percent.textContent='100%';this.percent.setAttribute('aria-valuenow','100');this.ring.style.strokeDashoffset='0';this.fill.style.clipPath='inset(0% 0 0 0)';this.setState('complete');this.label.textContent=preview?'VORSCHAU FERTIG':'DOWNLOAD BEREIT';this.detail.textContent=preview?'Animation abgeschlossen. Keine Datei gespeichert.':`${this.bytes(blob.size)} · ${this.filename}`;this.cancelButton.textContent='Schließen';this.spark(44,true);
+   if(!preview)this.save(blob);
+   this.announcement.textContent=preview?'Vorschau abgeschlossen. Keine Datei gespeichert.':'Datei an den Browser übergeben.';
+   this.root.dispatchEvent(new CustomEvent(preview?'forgepreviewcomplete':'forgedownload',{bubbles:true,detail:{filename:this.filename,size:blob.size}}));
+   this.collapseTimer=setTimeout(()=>{this.reset();this.label.textContent=preview?'Nochmal testen':'Nochmal downloaden';this.meta.textContent=preview?'ANIMATION / VORSCHAU':'DOWNLOAD BEREIT'},1600);
   }catch(error){
    if(this.reader){try{await this.reader.cancel()}catch{}this.reader=null}
    if(this.destroyed)return;
-   if(signal.aborted||error.name==='AbortError'){this.setState('idle');this.reset();this.label.textContent='Download abgebrochen';this.meta.textContent='ERNEUT STARTEN';this.announcement.textContent='Download abgebrochen.'}
+   if(signal.aborted||error.name==='AbortError'){this.setState('idle');this.reset();this.label.textContent=preview?'Vorschau abgebrochen':'Download abgebrochen';this.meta.textContent='ERNEUT STARTEN';this.announcement.textContent=preview?'Vorschau abgebrochen.':'Download abgebrochen.'}
    else{this.setState('error');this.label.textContent='Erneut versuchen';this.percent.textContent='Download fehlgeschlagen';this.percent.removeAttribute('role');this.percent.removeAttribute('aria-valuenow');this.detail.textContent='Datei konnte nicht geladen werden.';this.cancelButton.textContent='Schließen';this.announcement.textContent='Download fehlgeschlagen. Erneut versuchen.';this.root.dispatchEvent(new CustomEvent('forgeerror',{bubbles:true,detail:{message:error.message}}))}
   }
  }

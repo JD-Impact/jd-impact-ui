@@ -12,9 +12,33 @@ html[data-theme="light"] body{background:#f3eee5;color:#352a44}html[data-theme="
  <div class="forge-bottom"><div><div class="forge-percent" role="progressbar" aria-label="Download-Fortschritt" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">0%</div><div class="forge-detail">Datei wird geladen.</div></div><button class="forge-cancel" type="button">Abbrechen</button></div>
  <span class="forge-announcement" role="status" aria-live="polite"></span>
 </div>
-</main><p class="page-note" role="status" aria-live="polite"></p><script src="forge.js?v=461b0670d1b1"></script><script>if(new URLSearchParams(location.search).has('embed'))document.body.dataset.embed='';
-addEventListener('DOMContentLoaded',()=>{const root=document.querySelector('[data-download-forge]');const instance = new DownloadForge(root, {url:'demo-download.zip',filename:'jd-forge-demo.zip',label:'Download testen'});
+</main><p class="page-note" role="status" aria-live="polite"></p><script src="forge.js?v=ff5fb2b13808"></script><script>if(new URLSearchParams(location.search).has('embed'))document.body.dataset.embed='';
+addEventListener('DOMContentLoaded',()=>{const root=document.querySelector('[data-download-forge]');const preview=document.body.hasAttribute('data-embed');
+const previewLoad=signal=>{
+  let timer,cleanup=()=>{};
+  const chunkSize=256*1024,chunkCount=24;
+  const body=new ReadableStream({
+    start(controller){
+      let sent=0;
+      const stop=()=>{clearTimeout(timer);signal.removeEventListener('abort',abort)};
+      const abort=()=>{stop();controller.error(new DOMException('Abgebrochen','AbortError'))};
+      cleanup=stop;
+      const next=()=>{
+        if(signal.aborted){abort();return}
+        controller.enqueue(new Uint8Array(chunkSize));sent++;
+        if(sent===chunkCount){stop();controller.close()}else timer=setTimeout(next,250);
+      };
+      signal.addEventListener('abort',abort,{once:true});
+      if(signal.aborted)abort();else timer=setTimeout(next,250);
+    },
+    cancel(){cleanup()}
+  });
+  return new Response(body,{headers:{'Content-Length':String(chunkSize*chunkCount)}});
+};
+const instance=new DownloadForge(root,preview
+  ? {preview:true,load:previewLoad,filename:'vorschau.zip',label:'Animation testen',minimumDuration:0}
+  : {url:'demo-download.zip',filename:'jd-forge-demo.zip',label:'Download testen',minimumDuration:0});
 const report=text=>{document.querySelector('.page-note').textContent=text;if(parent!==window)parent.postMessage({type:'jd-preview-status',text},'*')};
-root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));
-addEventListener('message',event=>{if(event.source!==parent)return;if(event.data==='jd-preview-reset'){instance.abort(); if(instance.state!=='loading')instance.reset();report('Klicken. Die Kapsel öffnet sich und lädt eine echte Beispieldatei.')}if(event.data?.type==='jd-preview-motion'){instance.setMotion(event.data.enabled);}});report('Klicken. Die Kapsel öffnet sich und lädt eine echte Beispieldatei.');
+root.addEventListener('forgepreviewcomplete',()=>report('Vorschau abgeschlossen. Es wurde keine Datei heruntergeladen.'));root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));
+addEventListener('message',event=>{if(event.source!==parent)return;if(event.data==='jd-preview-reset'){instance.abort(); if(instance.state!=='loading')instance.reset();report(preview ? 'Animation testen: sechs Sekunden Vorschau, ohne Dateidownload.' : 'Download testen lädt die beiliegende Beispieldatei wirklich herunter.')}if(event.data?.type==='jd-preview-motion'){instance.setMotion(event.data.enabled);}});report(preview ? 'Animation testen: sechs Sekunden Vorschau, ohne Dateidownload.' : 'Download testen lädt die beiliegende Beispieldatei wirklich herunter.');
 },{once:true});</script></body></html>

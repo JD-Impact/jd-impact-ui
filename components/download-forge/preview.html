@@ -99,7 +99,8 @@ class DownloadForge {
  }
  async start(){
   if(this.destroyed||this.state==='loading'||this.state==='complete')return;
-  this.reset();this.setState('loading');this.label.textContent='DATA FORGE';this.announcement.textContent='Download wird geladen.';this.controller=new AbortController();const signal=this.controller.signal;const started=performance.now();
+  const preview=this.options.preview===true;
+  this.reset();this.setState('loading');this.label.textContent=preview?'VORSCHAU':'DATA FORGE';this.announcement.textContent=preview?'Animationsvorschau läuft.':'Download wird geladen.';this.controller=new AbortController();const signal=this.controller.signal;const started=performance.now();
   this.root.dispatchEvent(new CustomEvent('forgestart',{bubbles:true}));
   this.detail.textContent='Verbindung wird aufgebaut.';const chunks=[];let contentType='application/octet-stream';
   try{
@@ -112,17 +113,18 @@ class DownloadForge {
     while(true){const {done,value}=await this.reader.read();if(signal.aborted)throw new DOMException('Abgebrochen','AbortError');if(done)break;chunks.push(value);this.received+=value.byteLength;this.spark();this.report()}
     this.reader.releaseLock();this.reader=null;
    }else{const data=new Uint8Array(await response.arrayBuffer());if(signal.aborted)throw new DOMException('Abgebrochen','AbortError');chunks.push(data);this.received=data.byteLength;this.spark(30);this.report()}
-   const remaining=Math.max(0,Number(this.options.minimumDuration??1400)-(performance.now()-started));
+   const remaining=Math.max(0,Number(this.options.minimumDuration??0)-(performance.now()-started));
    if(remaining)await new Promise((resolve,reject)=>{const onAbort=()=>{clearTimeout(timer);reject(new DOMException('Abgebrochen','AbortError'))};const timer=setTimeout(()=>{signal.removeEventListener('abort',onAbort);resolve()},remaining);signal.addEventListener('abort',onAbort,{once:true});if(signal.aborted)onAbort()});
    if(signal.aborted)throw new DOMException('Abgebrochen','AbortError');
-   const blob=new Blob(chunks,{type:contentType});this.progress=1;this.percent.textContent='100%';this.percent.setAttribute('aria-valuenow','100');this.ring.style.strokeDashoffset='0';this.fill.style.clipPath='inset(0% 0 0 0)';this.setState('complete');this.label.textContent='DOWNLOAD BEREIT';this.detail.textContent=`${this.bytes(blob.size)} · ${this.filename}`;this.cancelButton.textContent='Schließen';this.spark(44,true);
-   this.save(blob);this.announcement.textContent='Datei an den Browser übergeben.';
-   this.root.dispatchEvent(new CustomEvent('forgedownload',{bubbles:true,detail:{filename:this.filename,size:blob.size}}));
-   this.collapseTimer=setTimeout(()=>{this.reset();this.label.textContent='Nochmal downloaden';this.meta.textContent='DOWNLOAD BEREIT'},1600);
+   const blob=new Blob(chunks,{type:contentType});this.progress=1;this.percent.textContent='100%';this.percent.setAttribute('aria-valuenow','100');this.ring.style.strokeDashoffset='0';this.fill.style.clipPath='inset(0% 0 0 0)';this.setState('complete');this.label.textContent=preview?'VORSCHAU FERTIG':'DOWNLOAD BEREIT';this.detail.textContent=preview?'Animation abgeschlossen. Keine Datei gespeichert.':`${this.bytes(blob.size)} · ${this.filename}`;this.cancelButton.textContent='Schließen';this.spark(44,true);
+   if(!preview)this.save(blob);
+   this.announcement.textContent=preview?'Vorschau abgeschlossen. Keine Datei gespeichert.':'Datei an den Browser übergeben.';
+   this.root.dispatchEvent(new CustomEvent(preview?'forgepreviewcomplete':'forgedownload',{bubbles:true,detail:{filename:this.filename,size:blob.size}}));
+   this.collapseTimer=setTimeout(()=>{this.reset();this.label.textContent=preview?'Nochmal testen':'Nochmal downloaden';this.meta.textContent=preview?'ANIMATION / VORSCHAU':'DOWNLOAD BEREIT'},1600);
   }catch(error){
    if(this.reader){try{await this.reader.cancel()}catch{}this.reader=null}
    if(this.destroyed)return;
-   if(signal.aborted||error.name==='AbortError'){this.setState('idle');this.reset();this.label.textContent='Download abgebrochen';this.meta.textContent='ERNEUT STARTEN';this.announcement.textContent='Download abgebrochen.'}
+   if(signal.aborted||error.name==='AbortError'){this.setState('idle');this.reset();this.label.textContent=preview?'Vorschau abgebrochen':'Download abgebrochen';this.meta.textContent='ERNEUT STARTEN';this.announcement.textContent=preview?'Vorschau abgebrochen.':'Download abgebrochen.'}
    else{this.setState('error');this.label.textContent='Erneut versuchen';this.percent.textContent='Download fehlgeschlagen';this.percent.removeAttribute('role');this.percent.removeAttribute('aria-valuenow');this.detail.textContent='Datei konnte nicht geladen werden.';this.cancelButton.textContent='Schließen';this.announcement.textContent='Download fehlgeschlagen. Erneut versuchen.';this.root.dispatchEvent(new CustomEvent('forgeerror',{bubbles:true,detail:{message:error.message}}))}
   }
  }
@@ -135,8 +137,32 @@ class DownloadForge {
 }
 window.DownloadForge=DownloadForge;
 </script><script>if(new URLSearchParams(location.search).has('embed'))document.body.dataset.embed='';
-addEventListener('DOMContentLoaded',()=>{const root=document.querySelector('[data-download-forge]');const instance = new DownloadForge(root, {url:'demo-download.zip',filename:'jd-forge-demo.zip',label:'Download testen'});
+addEventListener('DOMContentLoaded',()=>{const root=document.querySelector('[data-download-forge]');const preview=document.body.hasAttribute('data-embed');
+const previewLoad=signal=>{
+  let timer,cleanup=()=>{};
+  const chunkSize=256*1024,chunkCount=24;
+  const body=new ReadableStream({
+    start(controller){
+      let sent=0;
+      const stop=()=>{clearTimeout(timer);signal.removeEventListener('abort',abort)};
+      const abort=()=>{stop();controller.error(new DOMException('Abgebrochen','AbortError'))};
+      cleanup=stop;
+      const next=()=>{
+        if(signal.aborted){abort();return}
+        controller.enqueue(new Uint8Array(chunkSize));sent++;
+        if(sent===chunkCount){stop();controller.close()}else timer=setTimeout(next,250);
+      };
+      signal.addEventListener('abort',abort,{once:true});
+      if(signal.aborted)abort();else timer=setTimeout(next,250);
+    },
+    cancel(){cleanup()}
+  });
+  return new Response(body,{headers:{'Content-Length':String(chunkSize*chunkCount)}});
+};
+const instance=new DownloadForge(root,preview
+  ? {preview:true,load:previewLoad,filename:'vorschau.zip',label:'Animation testen',minimumDuration:0}
+  : {url:'demo-download.zip',filename:'jd-forge-demo.zip',label:'Download testen',minimumDuration:0});
 const report=text=>{document.querySelector('.page-note').textContent=text;if(parent!==window)parent.postMessage({type:'jd-preview-status',text},'*')};
-root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));
-addEventListener('message',event=>{if(event.source!==parent)return;if(event.data==='jd-preview-reset'){instance.abort(); if(instance.state!=='loading')instance.reset();report('Klicken. Die Kapsel öffnet sich und lädt eine echte Beispieldatei.')}if(event.data?.type==='jd-preview-motion'){instance.setMotion(event.data.enabled);}});report('Klicken. Die Kapsel öffnet sich und lädt eine echte Beispieldatei.');
+root.addEventListener('forgepreviewcomplete',()=>report('Vorschau abgeschlossen. Es wurde keine Datei heruntergeladen.'));root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));
+addEventListener('message',event=>{if(event.source!==parent)return;if(event.data==='jd-preview-reset'){instance.abort(); if(instance.state!=='loading')instance.reset();report(preview ? 'Animation testen: sechs Sekunden Vorschau, ohne Dateidownload.' : 'Download testen lädt die beiliegende Beispieldatei wirklich herunter.')}if(event.data?.type==='jd-preview-motion'){instance.setMotion(event.data.enabled);}});report(preview ? 'Animation testen: sechs Sekunden Vorschau, ohne Dateidownload.' : 'Download testen lädt die beiliegende Beispieldatei wirklich herunter.');
 },{once:true});</script></body></html>

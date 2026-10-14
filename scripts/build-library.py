@@ -44,12 +44,36 @@ for slug, css_name, js_name, source_name, zip_name in catalog:
             z.writestr(entry, 'Download Forge: Dieser echte Beispieldownload wurde mit HTML, CSS und JavaScript geladen.\n')
         extra.append(sample)
         content = html
-        initialize = "const instance = new DownloadForge(root, {url:'demo-download.zip',filename:'jd-forge-demo.zip',label:'Download testen'});"
+        initialize = '''const preview=document.body.hasAttribute('data-embed');
+const previewLoad=signal=>{
+  let timer,cleanup=()=>{};
+  const chunkSize=256*1024,chunkCount=24;
+  const body=new ReadableStream({
+    start(controller){
+      let sent=0;
+      const stop=()=>{clearTimeout(timer);signal.removeEventListener('abort',abort)};
+      const abort=()=>{stop();controller.error(new DOMException('Abgebrochen','AbortError'))};
+      cleanup=stop;
+      const next=()=>{
+        if(signal.aborted){abort();return}
+        controller.enqueue(new Uint8Array(chunkSize));sent++;
+        if(sent===chunkCount){stop();controller.close()}else timer=setTimeout(next,250);
+      };
+      signal.addEventListener('abort',abort,{once:true});
+      if(signal.aborted)abort();else timer=setTimeout(next,250);
+    },
+    cancel(){cleanup()}
+  });
+  return new Response(body,{headers:{'Content-Length':String(chunkSize*chunkCount)}});
+};
+const instance=new DownloadForge(root,preview
+  ? {preview:true,load:previewLoad,filename:'vorschau.zip',label:'Animation testen',minimumDuration:0}
+  : {url:'demo-download.zip',filename:'jd-forge-demo.zip',label:'Download testen',minimumDuration:0});'''
         root_selector = '[data-download-forge]'
         reset = "instance.abort(); if(instance.state!=='loading')instance.reset();"
         motion = 'instance.setMotion(event.data.enabled);'
-        hint = 'Klicken. Die Kapsel öffnet sich und lädt eine echte Beispieldatei.'
-        events = "root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));"
+        hint = 'Animation testen: sechs Sekunden Vorschau, ohne Dateidownload.'
+        events = "root.addEventListener('forgepreviewcomplete',()=>report('Vorschau abgeschlossen. Es wurde keine Datei heruntergeladen.'));root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));"
     else:
         content = '<div class="theme-example"><h2>Ein Klick. Zwei Looks.</h2>' + html + '<div class="theme-surface"><small>DEIN INTERFACE</small><p>Ein neuer Look. Derselbe Code.</p><span></span><span></span></div></div>'
         initialize = "const instance=root.jdThemeSwitch; const initialTheme=instance.getTheme();"
@@ -58,11 +82,14 @@ for slug, css_name, js_name, source_name, zip_name in catalog:
         motion = 'instance.setMotion(event.data.enabled);'
         hint = 'Klicken, ziehen oder Pfeiltasten benutzen. Der Look wechselt wirklich.'
         events = "root.addEventListener('themechange',event=>report(event.detail.theme==='dark'?'Dunkler Modus.':'Heller Modus.'));"
+    hint_expression = "'" + hint + "'"
+    if slug == 'download-forge':
+        hint_expression = 'preview ? ' + hint_expression + " : 'Download testen lädt die beiliegende Beispieldatei wirklich herunter.'"
     helper = f'''if(new URLSearchParams(location.search).has('embed'))document.body.dataset.embed='';
 addEventListener('DOMContentLoaded',()=>{{const root=document.querySelector('{root_selector}');{initialize}
 const report=text=>{{document.querySelector('.page-note').textContent=text;if(parent!==window)parent.postMessage({{type:'jd-preview-status',text}},'*')}};
 {events}
-addEventListener('message',event=>{{if(event.source!==parent)return;if(event.data==='jd-preview-reset'){{{reset}report('{hint}')}}if(event.data?.type==='jd-preview-motion'){{{motion}}}}});report('{hint}');
+addEventListener('message',event=>{{if(event.source!==parent)return;if(event.data==='jd-preview-reset'){{{reset}report({hint_expression})}}if(event.data?.type==='jd-preview-motion'){{{motion}}}}});report({hint_expression});
 }},{{once:true}});'''
     for name, standalone in [('example.html', False), ('preview.html', True)]:
         css_ref = '<style>' + css + '</style>' if standalone else f'<link rel="stylesheet" href="{css_name}?v={hashlib.sha256(css.encode()).hexdigest()[:12]}">'

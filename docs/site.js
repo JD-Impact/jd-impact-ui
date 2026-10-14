@@ -126,7 +126,7 @@
     document.dispatchEvent(new CustomEvent('jd-motion', {detail:{enabled:motionEnabled}}));
   }
   const mount = document.querySelector('#download-zone [data-download-forge]');
-  const packageForge = mount ? new DownloadForge(mount, {url:files.archive,filename:files.archiveName,label:'ZIP herunterladen'}) : null;
+  const packageForge = mount ? new DownloadForge(mount, {url:files.archive,filename:files.archiveName,label:'ZIP herunterladen',minimumDuration:0}) : null;
   mount?.addEventListener('forgestart', () => {
     document.getElementById('download-zone').classList.add('is-active');
     const promo=document.querySelector('.download-crosspromo');

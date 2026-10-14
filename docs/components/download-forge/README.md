@@ -53,8 +53,10 @@ Starte im entpackten Ordner einen lokalen Webserver, beispielsweise mit `python 
 
 `preview.html` enthält HTML, CSS und JavaScript zusammen in einer Datei. Für den Beispieldownload muss `demo-download.zip` daneben liegen. Ersetze beim Einbau `url` und `filename` durch deine eigene Datei; der Button und die Animation bleiben dieselben.
 
+Die eingebettete Website-Vorschau (`example.html?embed`) verwendet dieselbe Komponente mit `preview: true` und einem lokalen Demo-Stream: 24 Datenblöcke in etwa sechs Sekunden. So kannst du Öffnen, Fortschritt, Partikel und Abschluss in Ruhe testen. Dabei wird keine Datei an den Browser übergeben. Abbrechen und Neustarten funktionieren auch in der Vorschau. Bei Abschluss wird `forgepreviewcomplete` ausgelöst; `forgedownload` bleibt echten Downloads vorbehalten.
+
 ## Sichtbare Animation auch bei kleinen Dateien
 
-Die Datei wird sofort geladen. Die Animation bleibt standardmäßig mindestens 1400 ms geöffnet, bevor die fertige Datei an den Browser übergeben wird. Der Prozentwert basiert weiterhin auf den tatsächlich geladenen Bytes. Mit `minimumDuration: 0` kannst du diese Präsentationszeit deaktivieren. Abbrechen funktioniert auch während dieser kurzen Präsentation.
+Bei echten Downloads wird die Datei sofort geladen und an den Browser übergeben, sobald alle Bytes eingetroffen sind. Es gibt standardmäßig keine zusätzliche Mindestwartezeit. Fortschritt und Dauer folgen der tatsächlichen Datei und Verbindung. Wenn du für dein eigenes Projekt eine Mindestdauer möchtest, kannst du beispielsweise `minimumDuration: 1400` setzen. Diese Einstellung verzögert nur die Übergabe der fertigen Datei; der Prozentwert basiert weiterhin auf den tatsächlich geladenen Bytes. Abbrechen funktioniert auch während dieser optionalen Wartezeit.
 
 `forgestart`, `forgeprogress`, `forgedownload` und `forgeerror` melden den Ablauf. `forge.setMotion(false)` pausiert Effekte; `true` schaltet sie ein.
