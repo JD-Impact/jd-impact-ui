@@ -178,7 +178,7 @@
   .home-principles{display:flex;align-items:center;gap:25px;border-block:1px solid var(--line);padding-block:25px;font:10px ui-monospace,monospace;color:#c5b6d7}
   .home-principles i{font-style:normal;color:var(--purple)}.home-principles small{font:10px Arial,sans-serif;color:#8e809e;margin-left:auto}
   .collection{padding-top:90px;scroll-margin-top:28px}
-  .component-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+  .component-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
   .component-card{display:block;border:1px solid #bca1e727;background:#0f0f16;border-radius:16px;overflow:hidden;transition:transform .3s,border-color .3s}
   .component-card:hover{transform:translateY(-6px);border-color:#bca1e75c}
   .card-preview{height:275px;display:grid;place-items:center;position:relative;border-bottom:1px solid var(--line);padding:37px 24px 15px;background:#101019}

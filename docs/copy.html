@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de" data-jd-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08090f">
+  <meta name="description" content="JD-Impact Copy Button: echter Kopier-Button mit Scan-Effekt. Ausprobieren, HTML, CSS und JavaScript kopieren oder als ZIP herunterladen.">
+  <title>Copy Button — JD-Impact</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="site.css?v=9">
+  <script src="copy-source.js?v=9" defer></script>
+  <link rel="stylesheet" href="components/download-forge/forge.css?v=5">
+  <script src="components/download-forge/forge.js?v=8" defer></script>
+  <script src="matrix.js?v=5" defer></script>
+  <script src="site.js?v=8" defer></script>
+</head>
+<body>
+  <a class="skip" href="#code">Direkt zum Code</a>
+  <canvas id="matrix" aria-hidden="true"></canvas>
+  <div id="matrix-flow" aria-hidden="true"></div>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="header wrap">
+    <a class="brand" href="index.html" aria-label="JD-Impact Startseite">
+      <span class="logo"><img src="jd-logo.jpg" alt="" width="1280" height="1280"></span>
+      <span>JD<span class="brand-dash">—</span>IMPACT<small>CREATIVE COMPONENTS</small></span>
+    </a>
+    <nav aria-label="Hauptnavigation"><a href="index.html#components">Komponenten</a><a class="nav-code" href="#code">Code ansehen</a><a class="nav-instagram" href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer" aria-label="JD-Impact auf Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg><span>Instagram</span></a></nav>
+  </header>
+
+  <main>
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> COMPONENT 004 <span class="eyebrow-divider">/</span> COPY BUTTON</p>
+        <h1 id="hero-title">Ein Klick.<br><span>Schon kopiert.</span></h1>
+        <p class="intro">Eine Lichtlinie scannt den Text. Das Clipboard wird zum Haken. Und dein Code, Link oder Gutschein landet sofort in der Zwischenablage.</p>
+        <a class="primary-link" href="#code">Code ansehen &amp; kopieren <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+        <div class="tech-list" aria-label="Technologien"><span>HTML</span><span>CSS</span><span>JAVASCRIPT</span></div>
+        <div class="hero-detail"><span class="detail-line" aria-hidden="true"></span><p>Ein kleiner Effekt.<br><strong>Ein ganz anderer erster Eindruck.</strong></p></div>
+      </div>
+
+      <div class="preview-shell" id="preview">
+        <div class="preview-toolbar"><span><i aria-hidden="true"></i> INTERAKTIVE VORSCHAU</span><div class="preview-controls"><button id="toggle-motion" type="button" aria-pressed="true" aria-label="Animationen pausieren"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span>Animationen an</span></button><button id="reset-preview" type="button" aria-label="Vorschau neu starten"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 2 8M4 4v6h6"/></svg><span>Neu starten</span></button></div></div>
+        <div class="preview-stage">
+          <iframe id="component-preview" title="Copy Button ausprobieren" loading="eager"></iframe>
+        </div>
+        <p class="preview-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v11h14m-5-5 5 5-5 5"/></svg><span id="preview-instruction" role="status" aria-live="polite">Klicken oder Enter drücken. Der Text wird wirklich kopiert.</span></p>
+        <span class="corner-mark" aria-hidden="true">JD / 004</span>
+      </div>
+    </section>
+
+    <div class="feature-strip wrap" aria-label="Eigenschaften"><span><i>01</i> REAL CLIPBOARD</span><span><i>02</i> SCAN EFFECT</span><span><i>03</i> KEYBOARD READY</span><span><i>04</i> COPY & BUILD</span></div>
+
+    <section class="source-section wrap" id="code" aria-labelledby="code-title">
+      <div class="section-heading"><div><p class="eyebrow">VOM REEL IN DEIN PROJEKT</p><h2 id="code-title">Dein Text. Ein Klick.</h2></div><p>Drei Dateien. Dein Style.<br>Originalcode direkt zum Kopieren.</p></div>
+      <div class="editor">
+        <div class="editor-toolbar">
+          <div class="file-tabs" role="tablist" aria-label="Code-Datei auswählen">
+            <button id="tab-html" type="button" role="tab" aria-selected="true" aria-controls="source-panel" data-code-file="html"><span class="file-icon html-icon" aria-hidden="true">&lt;/&gt;</span> HTML</button>
+            <button id="tab-css" type="button" role="tab" aria-selected="false" aria-controls="source-panel" tabindex="-1" data-code-file="css"><span class="file-icon css-icon" aria-hidden="true">#</span> CSS</button>
+            <button id="tab-js" type="button" role="tab" aria-selected="false" aria-controls="source-panel" tabindex="-1" data-code-file="js"><span class="file-icon js-icon" aria-hidden="true">JS</span> JavaScript</button>
+          </div>
+          <button id="copy-code" class="copy-button" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg><span>Code kopieren</span></button>
+        </div>
+        <div class="editor-path"><span id="filename">component.html</span><span id="line-count"></span></div>
+        <div id="source-panel" class="source-panel" role="tabpanel" aria-labelledby="tab-html" tabindex="0"><pre><code id="source-code"></code></pre></div>
+        <div class="editor-status"><span><i aria-hidden="true"></i> ORIGINAL JD-IMPACT CODE</span><span id="copy-status" role="status" aria-live="polite">Datei auswählen, kopieren, einbauen.</span></div>
+      </div>
+
+      <div id="manual-copy" class="manual-copy" hidden>
+        <label for="manual-code">Hier ist dein Code zum manuellen Kopieren.</label>
+        <p>Halte den markierten Text gedrückt und wähle „Kopieren“.</p>
+        <textarea id="manual-code" readonly spellcheck="false" aria-label="Vollständiger Code zum manuellen Kopieren"></textarea>
+        <button id="manual-mark" type="button">Alles markieren</button>
+      </div>
+
+      <!-- JD-DOWNLOAD-START --><section class="download-zone" id="download-zone" aria-label="Komponenten-Paket herunterladen"><div class="download-heading"><p class="eyebrow">DAS GANZE PAKET</p><h3>Eine ZIP. Alles drin.</h3><p>HTML, CSS, JavaScript und ein fertiges Einbaubeispiel.</p></div><div class="download-mount"><div class="download-forge" data-download-forge data-state="idle" data-jd-motion="full">
+ <button class="forge-launch" type="button"><span class="forge-launch-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 17v4h14v-4"/></svg></span><span><span class="forge-launch-label">ZIP herunterladen</span><span class="forge-launch-meta">DATA / FORGE</span></span><span class="forge-corner" aria-hidden="true"><i></i><i></i><i></i></span></button>
+ <div class="forge-machine" aria-hidden="true"><div class="forge-blueprint"></div><svg class="forge-ring" viewBox="0 0 180 180"><circle class="forge-ring-track" cx="90" cy="90" r="73"/><circle class="forge-ring-progress" cx="90" cy="90" r="73" pathLength="100"/></svg><div class="forge-arm forge-arm--left"></div><div class="forge-arm forge-arm--right"></div><div class="forge-file"><svg viewBox="0 0 52 66"><path d="M5 2h29l13 13v48H5Z M34 2v13h13 M13 25h25M13 31h18M13 53h25"/></svg><svg class="forge-file-fill" viewBox="0 0 52 66"><path d="M5 2h29l13 13v48H5Z M34 2v13h13 M13 25h25M13 31h18M13 53h25"/></svg><span class="forge-filetype">ZIP</span></div><div class="forge-hatch"><i></i><i></i></div></div>
+ <canvas class="forge-particles" aria-hidden="true"></canvas>
+ <div class="forge-bottom"><div><div class="forge-percent" role="progressbar" aria-label="Download-Fortschritt" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">0%</div><div class="forge-detail">Datei wird geladen.</div></div><button class="forge-cancel" type="button">Abbrechen</button></div>
+ <span class="forge-announcement" role="status" aria-live="polite"></span>
+</div>
+</div><div class="download-crosspromo" aria-hidden="true" inert><div><strong>Möchtest du auch diese Animation haben?</strong><a href="download.html#code">Download Forge zum Einbauen <span aria-hidden="true">→</span></a></div></div></section><!-- JD-DOWNLOAD-END -->
+      <details class="download-help"><summary>Der ZIP-Download startet nicht?</summary><p>Öffne diese Seite über das Browser-Menü in Safari oder Chrome und tippe dort auf den Download. Den Code kannst du hier auch ohne ZIP kopieren. <a id="direct-zip" href="downloads/jd-copy-button-component.zip" download>Direkter ZIP-Link</a></p></details>
+    </section>
+
+<section class="instagram-band wrap" aria-labelledby="instagram-title"><div class="instagram-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></div><div><p class="eyebrow">@JD_IMPACT</p><h2 id="instagram-title">Der nächste Effekt?<br>Auf Instagram.</h2><p>Die Komponenten in Bewegung. Neue Ideen für dein Projekt.<br>Schau dir die Reels an und bleib dabei.</p></div><a class="instagram-link" href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer">JD-Impact auf Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></section>
+    <section class="guide wrap" aria-labelledby="guide-title">
+      <div class="guide-heading"><p class="eyebrow">KOPIEREN. EINBAUEN. DEINS.</p><h2 id="guide-title">Ein kleiner Einbau.<br>Eine große Wirkung.</h2><p>Die Optik kommt von uns.<br>Dein Projekt macht den Rest.</p></div>
+      <ol class="steps"><li><span class="step-number">01</span><div><h3>CSS laden</h3><p>Styles einbinden und das HTML-Snippet an der gewünschten Stelle platzieren.</p><pre><code>&lt;link rel="stylesheet" href="copy-button.css"&gt;</code></pre></div></li><li><span class="step-number">02</span><div><h3>Den Kopier-Button aktivieren</h3><p>Das Script nach dem Komponenten-HTML laden und die Instanz erstellen.</p><pre><code>&lt;script src="copy-button.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+const copy = new CopyButton(document.querySelector('[data-jd-copy]'));
+&lt;/script&gt;</code></pre></div></li><li><span class="step-number">03</span><div><h3>Deinen Text verbinden</h3><p>Den Text in <code>data-copy-value</code> ersetzen oder später aus deinem Projekt setzen.</p><pre><code>copy.setText('Dein Code, Link oder Gutschein');</code></pre></div></li><li><span class="step-number">04</span><div><h3>Direkt verwenden</h3><p>HTTPS oder localhost für die Clipboard-API verwenden. Tastatur, Rückmeldung und ein manueller Fallback sind bereits eingebaut.</p></div></li></ol>
+    </section>
+  </main>
+
+  <footer class="footer wrap"><div><strong>JD—IMPACT</strong><p>UI, die du weiterbauen kannst.</p></div><div><a href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer">Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a><a href="https://github.com/JD-Impact/jd-impact-ui/tree/main/components/copy-button" target="_blank" rel="noopener noreferrer">Code auf GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div><span class="footer-index">END OF FILE / 004</span></footer>
+</body>
+</html>

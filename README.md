@@ -47,6 +47,13 @@ Das Paket enthält eine einzelne `preview.html` zum direkten Öffnen sowie `exam
 
 Die Komponente liefert die Optik und Effekte. Automatisch getippte Daten, künstlicher Mauszeiger und Matrix-Hintergrund gehören zur Reel-Präsentation.
 
+## Komponenten
+
+- [Login Motion](components/login-motion): Hover-Login und Registrierung mit 3D-Flip.
+- [Download Forge](components/download-forge): echte Downloads mit bytebasiertem Fortschritt.
+- [Theme Switch](components/theme-switch): Hell-Dunkel-Schalter mit Drag und Federanimation.
+- [Copy Button](components/copy-button): echte Clipboard-Funktion mit Scan-Effekt und manuellem Fallback.
+
 ## Instagram
 
 **[@jd_impact](https://www.instagram.com/jd_impact/)** · JD-Impact

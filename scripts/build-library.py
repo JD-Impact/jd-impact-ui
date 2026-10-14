@@ -10,6 +10,7 @@ logo = base64.b64encode((docs / 'jd-logo.jpg').read_bytes()).decode()
 catalog = [
     ('download-forge', 'forge.css', 'forge.js', 'forge-source.js', 'jd-download-forge-component.zip'),
     ('theme-switch', 'theme-switch.css', 'theme-switch.js', 'switch-source.js', 'jd-theme-switch-component.zip'),
+    ('copy-button', 'copy-button.css', 'copy-button.js', 'copy-source.js', 'jd-copy-button-component.zip'),
 ]
 host = '''html{color-scheme:dark}body{margin:0;background:#08090f;color:#f2effa;font-family:Arial,sans-serif}
 .page-stage{min-height:100svh;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:80px 20px;box-sizing:border-box}
@@ -19,6 +20,8 @@ body[data-embed]{background:transparent}body[data-embed] .page-stage{padding:20p
 .theme-example{text-align:center;display:grid;justify-items:center;gap:32px;width:100%;max-width:380px}.theme-example h2{font:500 26px Arial,sans-serif;letter-spacing:-1px;margin:0}.theme-surface{padding:24px;width:100%;border:1px solid #bea1ff22;border-radius:18px;background:#14111c;display:grid;gap:16px;text-align:left}.theme-surface small{font-size:10px;letter-spacing:2px;color:#ac99c8}.theme-surface p{font-size:14px;margin:0;color:#d6c7e6}.theme-surface span{display:block;width:75%;height:5px;border-radius:4px;background:#bea1ff40}
 html[data-theme="light"] body{background:#f3eee5;color:#352a44}html[data-theme="light"] .theme-surface{background:#fffaf0;border-color:#bdac9244}html[data-theme="light"] .theme-surface p{color:#665773}html[data-theme="light"] .theme-surface small{color:#947aaa}html[data-theme="light"] body[data-embed]{background:#f3eee5}
 '''
+
+copy_host = '.copy-demo,.copy-demo *{box-sizing:border-box}.copy-demo{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;width:360px;max-width:100%}.copy-example-label{font:11px/1.8 Arial,sans-serif;color:#a091b3}.copy-example-label input{display:block;width:100%;min-width:0;margin-top:9px;padding:12px;border:1px solid #b9a0ff30;border-radius:9px;background:#090b10;color:#d7cbe8;font:11px Arial,sans-serif}.copy-example-label input:focus-visible{outline:2px solid #b9a0ff;outline-offset:3px}\n'
 
 def safe_script(text):
     return re.sub(r'</script', r'<\/script', text, flags=re.I)
@@ -74,6 +77,14 @@ const instance=new DownloadForge(root,preview
         motion = 'instance.setMotion(event.data.enabled);'
         hint = 'Animation testen: sechs Sekunden Vorschau, ohne Dateidownload.'
         events = "root.addEventListener('forgepreviewcomplete',()=>report('Vorschau abgeschlossen. Es wurde keine Datei heruntergeladen.'));root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));"
+    elif slug == 'copy-button':
+        content = '<div class="copy-demo">' + html + '<label class="copy-example-label">Dein Text zum Ausprobieren<input id="copy-example-text" type="text" autocomplete="off" spellcheck="false"></label></div>'
+        initialize = "const instance=new CopyButton(root);const input=document.getElementById('copy-example-text');const defaultText=instance.getText();input.value=defaultText;input.addEventListener('input',()=>instance.setText(input.value));"
+        root_selector = '[data-jd-copy]'
+        reset = 'instance.setText(defaultText);input.value=defaultText;'
+        motion = 'instance.setMotion(event.data.enabled);'
+        hint = 'Klicken oder Enter drücken. Der Text wird wirklich kopiert.'
+        events = "root.addEventListener('copycomplete',()=>report('Kopiert. Der Text liegt wirklich in deiner Zwischenablage.'));root.addEventListener('copyerror',()=>report('Kopieren blockiert. Nutze das markierbare Textfeld in der Vorschau.'));"
     else:
         content = '<div class="theme-example"><h2>Ein Klick. Zwei Looks.</h2>' + html + '<div class="theme-surface"><small>DEIN INTERFACE</small><p>Ein neuer Look. Derselbe Code.</p><span></span><span></span></div></div>'
         initialize = "const instance=root.jdThemeSwitch; const initialTheme=instance.getTheme();"
@@ -94,7 +105,7 @@ addEventListener('message',event=>{{if(event.source!==parent)return;if(event.dat
     for name, standalone in [('example.html', False), ('preview.html', True)]:
         css_ref = '<style>' + css + '</style>' if standalone else f'<link rel="stylesheet" href="{css_name}?v={hashlib.sha256(css.encode()).hexdigest()[:12]}">'
         js_ref = '<script>' + safe_script(js) + '</script>' if standalone else f'<script src="{js_name}?v={hashlib.sha256(js.encode()).hexdigest()[:12]}"></script>'
-        document = f'''<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JD — {slug}</title>{css_ref}<style>{host}</style></head><body><div class="page-brand"><img src="data:image/jpeg;base64,{logo}" alt="JD-Impact"></div><main class="page-stage">{content}</main><p class="page-note" role="status" aria-live="polite"></p>{js_ref}<script>{safe_script(helper)}</script></body></html>'''
+        document = f'''<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JD — {slug}</title>{css_ref}<style>{host}{copy_host if slug == 'copy-button' else ''}</style></head><body><div class="page-brand"><img src="data:image/jpeg;base64,{logo}" alt="JD-Impact"></div><main class="page-stage">{content}</main><p class="page-note" role="status" aria-live="polite"></p>{js_ref}<script>{safe_script(helper)}</script></body></html>'''
         (folder / name).write_text(document)
     files = [folder / name for name in ['component.html', css_name, js_name, 'README.md', 'example.html', 'preview.html']] + extra
     archive(root / 'downloads' / zip_name, files)
@@ -105,7 +116,7 @@ addEventListener('message',event=>{{if(event.source!==parent)return;if(event.dat
     (docs / source_name).write_text('window.JD_SOURCES = '+json.dumps(sources,ensure_ascii=False).replace('<',r'<')+';\n')
 
 forge = (root / 'components/download-forge/component.html').read_text().replace('>Download</span>', '>ZIP herunterladen</span>')
-for page in ['login.html', 'download.html', 'switch.html']:
+for page in json.loads((root/'templates/component-pages.json').read_text()):
     file = docs / page
     content = file.read_text()
     promo = '<strong>Möchtest du auch diese Animation haben?</strong><a href="download.html#code">Download Forge zum Einbauen <span aria-hidden="true">→</span></a>' if page != 'download.html' else '<strong>Dein nächster Effekt wartet schon.</strong><a href="index.html#components">Alle Komponenten entdecken <span aria-hidden="true">→</span></a>'
@@ -113,8 +124,8 @@ for page in ['login.html', 'download.html', 'switch.html']:
     content = re.sub(r'<!-- JD-DOWNLOAD-START -->.*?<!-- JD-DOWNLOAD-END -->', lambda _: widget, content, flags=re.S)
     file.write_text(content)
 matrix = ''
-for slug, css_name, js_name in [('login-motion','login-card.css','login-card.js'),('download-forge','forge.css','forge.js'),('theme-switch','theme-switch.css','theme-switch.js')]:
+for slug, css_name, js_name in [('login-motion','login-card.css','login-card.js'),('download-forge','forge.css','forge.js'),('theme-switch','theme-switch.css','theme-switch.js'),('copy-button','copy-button.css','copy-button.js')]:
     folder = root / 'components' / slug
     matrix += '\n'.join((folder/name).read_text() for name in ['component.html',css_name,js_name])
 (docs/'matrix-source.js').write_text('window.JD_MATRIX_SOURCE = '+json.dumps(matrix,ensure_ascii=False).replace('<',r'<')+';\n')
-print('Three reusable components, exact examples, archives, code views and shared download widgets built.')
+print('Reusable components, exact examples, archives, code views and shared download widgets built.')

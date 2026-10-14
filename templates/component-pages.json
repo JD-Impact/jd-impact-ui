@@ -46,5 +46,21 @@
     "guide_steps": "<li><span class=\"step-number\">01</span><div><h3>Die Komponente einfügen</h3><p>CSS laden und das HTML dort einfügen, wo dein Theme-Schalter stehen soll.</p><pre><code>&lt;link rel=\"stylesheet\" href=\"theme-switch.css\"&gt;</code></pre></div></li><li><span class=\"step-number\">02</span><div><h3>Feder und Bedienung aktivieren</h3><p>JavaScript mit <code>defer</code> laden. Klick, Ziehen und Pfeiltasten funktionieren direkt.</p><pre><code>&lt;script src=\"theme-switch.js\" defer&gt;&lt;/script&gt;</code></pre></div></li><li><span class=\"step-number\">03</span><div><h3>Deine Farben verbinden</h3><p>Der Schalter setzt <code>data-theme</code> am HTML-Element. Deine Seite entscheidet über die Farben.</p><pre><code>:root { --bg: #f3eee5; --fg: #352a44; }\n:root[data-theme=\"dark\"] { --bg: #08090f; --fg: #f2effa; }\nbody { background: var(--bg); color: var(--fg); }</code></pre></div></li><li><span class=\"step-number\">04</span><div><h3>Anpassen und weitermachen</h3><p>Farben und Größe stehen im CSS. Die Auswahl wird im Browser gespeichert, wenn Local Storage verfügbar ist.</p></div></li>",
     "github_path": "components/theme-switch",
     "fallback_zip": "downloads/jd-theme-switch-component.zip"
+  },
+  "copy.html": {
+    "description": "JD-Impact Copy Button: echter Kopier-Button mit Scan-Effekt. Ausprobieren, HTML, CSS und JavaScript kopieren oder als ZIP herunterladen.",
+    "title": "Copy Button — JD-Impact",
+    "source_script": "copy-source.js?v=9",
+    "number": "004",
+    "component_name": "COPY BUTTON",
+    "hero_title": "Ein Klick.<br><span>Schon kopiert.</span>",
+    "intro": "Eine Lichtlinie scannt den Text. Das Clipboard wird zum Haken. Und dein Code, Link oder Gutschein landet sofort in der Zwischenablage.",
+    "preview_title": "Copy Button ausprobieren",
+    "preview_hint": "Klicken oder Enter drücken. Der Text wird wirklich kopiert.",
+    "features": "<span><i>01</i> REAL CLIPBOARD</span><span><i>02</i> SCAN EFFECT</span><span><i>03</i> KEYBOARD READY</span><span><i>04</i> COPY & BUILD</span>",
+    "code_title": "Dein Text. Ein Klick.",
+    "guide_steps": "<li><span class=\"step-number\">01</span><div><h3>CSS laden</h3><p>Styles einbinden und das HTML-Snippet an der gewünschten Stelle platzieren.</p><pre><code>&lt;link rel=\"stylesheet\" href=\"copy-button.css\"&gt;</code></pre></div></li><li><span class=\"step-number\">02</span><div><h3>Den Kopier-Button aktivieren</h3><p>Das Script nach dem Komponenten-HTML laden und die Instanz erstellen.</p><pre><code>&lt;script src=\"copy-button.js\"&gt;&lt;/script&gt;\n&lt;script&gt;\nconst copy = new CopyButton(document.querySelector('[data-jd-copy]'));\n&lt;/script&gt;</code></pre></div></li><li><span class=\"step-number\">03</span><div><h3>Deinen Text verbinden</h3><p>Den Text in <code>data-copy-value</code> ersetzen oder später aus deinem Projekt setzen.</p><pre><code>copy.setText('Dein Code, Link oder Gutschein');</code></pre></div></li><li><span class=\"step-number\">04</span><div><h3>Direkt verwenden</h3><p>HTTPS oder localhost für die Clipboard-API verwenden. Tastatur, Rückmeldung und ein manueller Fallback sind bereits eingebaut.</p></div></li>",
+    "github_path": "components/copy-button",
+    "fallback_zip": "downloads/jd-copy-button-component.zip"
   }
 }
