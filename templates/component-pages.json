@@ -50,11 +50,11 @@
   "copy.html": {
     "description": "JD-Impact Copy Button: echter Kopier-Button mit Scan-Effekt. Ausprobieren, HTML, CSS und JavaScript kopieren oder als ZIP herunterladen.",
     "title": "Copy Button — JD-Impact",
-    "source_script": "copy-source.js?v=9",
+    "source_script": "copy-source.js?v=10",
     "number": "004",
     "component_name": "COPY BUTTON",
     "hero_title": "Ein Klick.<br><span>Schon kopiert.</span>",
-    "intro": "Eine Lichtlinie scannt den Text. Das Clipboard wird zum Haken. Und dein Code, Link oder Gutschein landet sofort in der Zwischenablage.",
+    "intro": "Ein Kopier-Button mit Scan-Licht und einem Haken als Bestätigung. Dein Code, Link oder Gutschein landet sofort in der Zwischenablage.",
     "preview_title": "Copy Button ausprobieren",
     "preview_hint": "Klicken oder Enter drücken. Der Text wird wirklich kopiert.",
     "features": "<span><i>01</i> REAL CLIPBOARD</span><span><i>02</i> SCAN EFFECT</span><span><i>03</i> KEYBOARD READY</span><span><i>04</i> COPY & BUILD</span>",

@@ -1,11 +1,11 @@
 # JD-Impact — Copy Button
 
-Ein Kopier-Button mit Scan-Licht, Clipboard-zu-Haken-Animation und echter Rückmeldung. Keine Bibliotheken.
+Ein Kopier-Button mit Scan-Licht direkt auf dem Button, Clipboard-zu-Haken-Animation und echter Rückmeldung. Keine Bibliotheken.
 
 ## Einbauen
 
 1. `copy-button.css` im Seitenkopf laden.
-2. `component.html` an deiner gewünschten Stelle einfügen. Den Text im Element `data-copy-value` ersetzen.
+2. `component.html` an deiner gewünschten Stelle einfügen. Den Text im unsichtbaren Element `data-copy-value` ersetzen.
 3. Nach dem HTML JavaScript laden und initialisieren:
 
 ```html
@@ -23,7 +23,7 @@ Der Text wird sofort über die Clipboard-API kopiert; der Scan verzögert das Ko
 
 ## Beispiel
 
-Starte im entpackten Ordner beispielsweise `python -m http.server 8000` und öffne `http://localhost:8000/example.html`. Über das zusätzliche Eingabefeld kannst du eigenen Text testen. `preview.html` enthält dieselbe Komponente in einer Datei.
+Starte im entpackten Ordner beispielsweise `python -m http.server 8000` und öffne `http://localhost:8000/example.html`. Unter „Anderen Text ausprobieren“ kannst du eigenen Text testen. `preview.html` enthält dieselbe Komponente in einer Datei.
 
 ## API
 

@@ -21,7 +21,7 @@ body[data-embed]{background:transparent}body[data-embed] .page-stage{padding:20p
 html[data-theme="light"] body{background:#f3eee5;color:#352a44}html[data-theme="light"] .theme-surface{background:#fffaf0;border-color:#bdac9244}html[data-theme="light"] .theme-surface p{color:#665773}html[data-theme="light"] .theme-surface small{color:#947aaa}html[data-theme="light"] body[data-embed]{background:#f3eee5}
 '''
 
-copy_host = '.copy-demo,.copy-demo *{box-sizing:border-box}.copy-demo{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;width:360px;max-width:100%}.copy-example-label{font:11px/1.8 Arial,sans-serif;color:#a091b3}.copy-example-label input{display:block;width:100%;min-width:0;margin-top:9px;padding:12px;border:1px solid #b9a0ff30;border-radius:9px;background:#090b10;color:#d7cbe8;font:11px Arial,sans-serif}.copy-example-label input:focus-visible{outline:2px solid #b9a0ff;outline-offset:3px}\n'
+copy_host = '.copy-demo,.copy-demo *{box-sizing:border-box}.copy-demo{position:relative;width:360px;max-width:100%;height:80px}.copy-demo>.jd-copy{margin-inline:auto}.copy-demo:has([data-state="error"]){height:auto}.copy-example-options{position:absolute;top:145px;left:0;right:0;width:100%;font:11px/1.8 Arial,sans-serif;color:#a091b3}.copy-demo:has([data-state="error"]) .copy-example-options{position:static;margin-top:26px}.copy-example-options summary{cursor:pointer;text-align:center;margin-bottom:14px}.copy-example-label{font:11px/1.8 Arial,sans-serif;color:#a091b3}.copy-example-label input{display:block;width:100%;min-width:0;margin-top:9px;padding:12px;border:1px solid #b9a0ff30;border-radius:9px;background:#090b10;color:#d7cbe8;font:11px Arial,sans-serif}.copy-example-label input:focus-visible{outline:2px solid #b9a0ff;outline-offset:3px}\n'
 
 def safe_script(text):
     return re.sub(r'</script', r'<\/script', text, flags=re.I)
@@ -78,7 +78,7 @@ const instance=new DownloadForge(root,preview
         hint = 'Animation testen: sechs Sekunden Vorschau, ohne Dateidownload.'
         events = "root.addEventListener('forgepreviewcomplete',()=>report('Vorschau abgeschlossen. Es wurde keine Datei heruntergeladen.'));root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));"
     elif slug == 'copy-button':
-        content = '<div class="copy-demo">' + html + '<label class="copy-example-label">Dein Text zum Ausprobieren<input id="copy-example-text" type="text" autocomplete="off" spellcheck="false"></label></div>'
+        content = '<div class="copy-demo">' + html + '<details class="copy-example-options"><summary>Anderen Text ausprobieren</summary><label class="copy-example-label">Dein Text<input id="copy-example-text" type="text" autocomplete="off" spellcheck="false"></label></details></div>'
         initialize = "const instance=new CopyButton(root);const input=document.getElementById('copy-example-text');const defaultText=instance.getText();input.value=defaultText;input.addEventListener('input',()=>instance.setText(input.value));"
         root_selector = '[data-jd-copy]'
         reset = 'instance.setText(defaultText);input.value=defaultText;'
