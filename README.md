@@ -11,6 +11,8 @@ Die [Startseite](https://jd-impact.github.io/jd-impact-ui/) stellt alle Komponen
 - [Login Motion](https://jd-impact.github.io/jd-impact-ui/login.html): Hover, RGB-Rand und 3D-Flip.
 - [Download Forge](https://jd-impact.github.io/jd-impact-ui/download.html): echter Download mit Fortschritt und Partikeln.
 - [Theme Switch](https://jd-impact.github.io/jd-impact-ui/switch.html): Hell/Dunkel mit Drag und Federbewegung.
+- [Copy Button](https://jd-impact.github.io/jd-impact-ui/copy.html): echter Kopier-Button mit Scan-Effekt.
+- [Order Truck](https://jd-impact.github.io/jd-impact-ui/order.html): Bestell-Button mit Paket, Laderampe und losfahrendem LKW.
 
 ## Login Motion
 
@@ -53,6 +55,7 @@ Die Komponente liefert die Optik und Effekte. Automatisch getippte Daten, künst
 - [Download Forge](components/download-forge): echte Downloads mit bytebasiertem Fortschritt.
 - [Theme Switch](components/theme-switch): Hell-Dunkel-Schalter mit Drag und Federanimation.
 - [Copy Button](components/copy-button): echte Clipboard-Funktion mit Scan-Effekt und manuellem Fallback.
+- [Order Truck](components/order-truck): animierte Bestellbestätigung mit Paket, LKW und Callback fürs eigene Bestellsystem.
 
 ## Instagram
 

@@ -1,0 +1,32 @@
+<div class="jd-order" data-order-truck data-state="idle">
+  <button class="jd-order__button" type="button" data-order-trigger>
+    <span class="jd-order__label" data-order-label>Jetzt bestellen <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+    <svg class="jd-order__scene" viewBox="0 0 360 112" aria-hidden="true">
+      <defs><linearGradient id="jd-truck-metal" x2="0" y2="1"><stop stop-color="#e0d8f7"/><stop offset="1" stop-color="#8f84aa"/></linearGradient></defs>
+      <g class="jd-order__road"><path d="M0 93H360" stroke="#706482" stroke-width="1"/><path class="jd-order__dashes" d="M-360 103H720" stroke="#8b7b9e" stroke-width="2" stroke-dasharray="24 22"/></g>
+      <g class="jd-order__vehicle">
+        <g class="jd-order__package"><rect x="38" y="62" width="24" height="24" rx="2" fill="#e8b77a"/><path d="M38 69H62M50 62V72" stroke="#a77643" stroke-width="2"/><path d="M43 77h5m-5 3h8" stroke="#85603b" stroke-width="1.4"/><path d="M47 62h6v8h-6z" fill="#f7d7aa"/></g>
+        <path class="jd-order__ramp" d="M112 87L143 74" stroke="#c2afdc" stroke-width="3" stroke-linecap="round"/>
+        <g class="jd-order__body">
+          <path d="M145 75H276V81H145Z" fill="#62576d"/>
+          <rect x="140" y="24" width="22" height="51" rx="2" fill="#211a2d" stroke="#d0c1e3" stroke-width="2"/>
+          <rect x="160" y="24" width="79" height="51" rx="3" fill="url(#jd-truck-metal)"/>
+          <path d="M168 30H230M168 34H230" stroke="#f0e7ff" stroke-opacity=".45"/>
+          <path d="M184 49h20m-5-5 5 5-5 5" stroke="#514161" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M240 42H260L276 60V77H240Z" fill="#b69bf0"/>
+          <path d="M246 47H257L268 60H246Z" fill="#272739"/><path d="M248 49h6l8 9h-14z" fill="#86c6d0" fill-opacity=".5"/>
+          <path d="M243 65h5" stroke="#72558e" stroke-width="2" stroke-linecap="round"/>
+          <rect x="272" y="65" width="5" height="7" rx="1" fill="#fff3b2"/>
+          <path class="jd-order__beam" d="M277 66L346 52V85L277 72Z" fill="#f9e6a7" fill-opacity=".13"/>
+          <rect x="138" y="68" width="3" height="5" rx="1" fill="#ff8b89"/>
+          <g class="jd-order__wheel" style="transform-origin:166px 82px"><circle cx="166" cy="82" r="10" fill="#101016"/><circle cx="166" cy="82" r="5" fill="#afa3c0"/><path d="M162 82h8m-4-4v8" stroke="#4e435a" stroke-width="2"/></g>
+          <g class="jd-order__wheel" style="transform-origin:254px 82px"><circle cx="254" cy="82" r="10" fill="#101016"/><circle cx="254" cy="82" r="5" fill="#afa3c0"/><path d="M250 82h8m-4-4v8" stroke="#4e435a" stroke-width="2"/></g>
+          <g class="jd-order__door"><rect x="140" y="25" width="20" height="49" rx="1" fill="#b4a8c9"/><path d="M143 32h14m-14 7h14m-14 7h14m-14 7h14m-14 7h14m-14 7h14" stroke="#81718f"/><path d="M147 69h6" stroke="#4d405d" stroke-width="2"/></g>
+        </g>
+      </g>
+      <g class="jd-order__speed" stroke="#bba0eb" stroke-width="2" stroke-linecap="round"><path d="M90 44h32M77 57h43M98 70h24"/></g>
+    </svg>
+    <span class="jd-order__success" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg><span data-order-success>Bestellung bestätigt</span></span>
+  </button>
+  <span class="jd-order__status" data-order-status role="status" aria-live="polite"></span>
+</div>

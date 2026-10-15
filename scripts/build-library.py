@@ -11,6 +11,7 @@ catalog = [
     ('download-forge', 'forge.css', 'forge.js', 'forge-source.js', 'jd-download-forge-component.zip'),
     ('theme-switch', 'theme-switch.css', 'theme-switch.js', 'switch-source.js', 'jd-theme-switch-component.zip'),
     ('copy-button', 'copy-button.css', 'copy-button.js', 'copy-source.js', 'jd-copy-button-component.zip'),
+    ('order-truck', 'order-truck.css', 'order-truck.js', 'order-source.js', 'jd-order-truck-component.zip'),
 ]
 host = '''html{color-scheme:dark}body{margin:0;background:#08090f;color:#f2effa;font-family:Arial,sans-serif}
 .page-stage{min-height:100svh;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:80px 20px;box-sizing:border-box}
@@ -77,6 +78,14 @@ const instance=new DownloadForge(root,preview
         motion = 'instance.setMotion(event.data.enabled);'
         hint = 'Animation testen: sechs Sekunden Vorschau, ohne Dateidownload.'
         events = "root.addEventListener('forgepreviewcomplete',()=>report('Vorschau abgeschlossen. Es wurde keine Datei heruntergeladen.'));root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));"
+    elif slug == 'order-truck':
+        content = html
+        initialize = "const instance=new OrderTruck(root);"
+        root_selector = '[data-order-truck]'
+        reset = 'instance.reset();'
+        motion = 'instance.setMotion(event.data.enabled);'
+        hint = 'Bestell-Button testen: Paket einladen, Klappe zu, LKW los. Nur eine Demo.'
+        events = "root.addEventListener('ordercomplete',()=>report('Demo abgeschlossen. Es wurde nichts bestellt. Neu starten zum Wiederholen.'));"
     elif slug == 'copy-button':
         content = '<div class="copy-demo">' + html + '<details class="copy-example-options"><summary>Anderen Text ausprobieren</summary><label class="copy-example-label">Dein Text<input id="copy-example-text" type="text" autocomplete="off" spellcheck="false"></label></details></div>'
         initialize = "const instance=new CopyButton(root);const input=document.getElementById('copy-example-text');const defaultText=instance.getText();input.value=defaultText;input.addEventListener('input',()=>instance.setText(input.value));"
@@ -124,7 +133,7 @@ for page in json.loads((root/'templates/component-pages.json').read_text()):
     content = re.sub(r'<!-- JD-DOWNLOAD-START -->.*?<!-- JD-DOWNLOAD-END -->', lambda _: widget, content, flags=re.S)
     file.write_text(content)
 matrix = ''
-for slug, css_name, js_name in [('login-motion','login-card.css','login-card.js'),('download-forge','forge.css','forge.js'),('theme-switch','theme-switch.css','theme-switch.js'),('copy-button','copy-button.css','copy-button.js')]:
+for slug, css_name, js_name in [('login-motion','login-card.css','login-card.js'),('download-forge','forge.css','forge.js'),('theme-switch','theme-switch.css','theme-switch.js'),('copy-button','copy-button.css','copy-button.js'),('order-truck','order-truck.css','order-truck.js')]:
     folder = root / 'components' / slug
     matrix += '\n'.join((folder/name).read_text() for name in ['component.html',css_name,js_name])
 (docs/'matrix-source.js').write_text('window.JD_MATRIX_SOURCE = '+json.dumps(matrix,ensure_ascii=False).replace('<',r'<')+';\n')

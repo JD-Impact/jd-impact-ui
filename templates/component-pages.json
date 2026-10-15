@@ -62,5 +62,21 @@
     "guide_steps": "<li><span class=\"step-number\">01</span><div><h3>CSS laden</h3><p>Styles einbinden und das HTML-Snippet an der gewünschten Stelle platzieren.</p><pre><code>&lt;link rel=\"stylesheet\" href=\"copy-button.css\"&gt;</code></pre></div></li><li><span class=\"step-number\">02</span><div><h3>Den Kopier-Button aktivieren</h3><p>Das Script nach dem Komponenten-HTML laden und die Instanz erstellen.</p><pre><code>&lt;script src=\"copy-button.js\"&gt;&lt;/script&gt;\n&lt;script&gt;\nconst copy = new CopyButton(document.querySelector('[data-jd-copy]'));\n&lt;/script&gt;</code></pre></div></li><li><span class=\"step-number\">03</span><div><h3>Deinen Text verbinden</h3><p>Den Text in <code>data-copy-value</code> ersetzen oder später aus deinem Projekt setzen.</p><pre><code>copy.setText('Dein Code, Link oder Gutschein');</code></pre></div></li><li><span class=\"step-number\">04</span><div><h3>Direkt verwenden</h3><p>HTTPS oder localhost für die Clipboard-API verwenden. Tastatur, Rückmeldung und ein manueller Fallback sind bereits eingebaut.</p></div></li>",
     "github_path": "components/copy-button",
     "fallback_zip": "downloads/jd-copy-button-component.zip"
+  },
+  "order.html": {
+    "description": "JD-Impact Order Truck: animierter Bestell-Button mit Paket und LKW. Interaktive Demo und Originalcode für deine Website.",
+    "title": "Order Truck — JD-Impact",
+    "source_script": "order-source.js?v=11",
+    "number": "005",
+    "component_name": "ORDER TRUCK",
+    "hero_title": "Paket rein.<br><span>LKW los.</span>",
+    "intro": "Das Paket rollt ins offene Heck. Die Klappe schließt sich. Der LKW fährt los. Ein Bestell-Button, der aus einer Bestätigung einen kleinen Auftritt macht.",
+    "preview_title": "Order Truck ausprobieren",
+    "preview_hint": "Bestell-Button testen: Paket einladen, Klappe zu, LKW los. Nur eine Demo.",
+    "features": "<span><i>01</i> PACKAGE LOADING</span><span><i>02</i> TRUCK MOTION</span><span><i>03</i> CONFIRM CALLBACK</span><span><i>04</i> COPY & BUILD</span>",
+    "code_title": "Dein Shop. Sein Auftritt.",
+    "guide_steps": "<li><span class=\"step-number\">01</span><div><h3>Button platzieren</h3><p><code>order-truck.css</code> laden und das HTML-Snippet einfügen.</p><pre><code>&lt;link rel=\"stylesheet\" href=\"order-truck.css\"&gt;</code></pre></div></li><li><span class=\"step-number\">02</span><div><h3>Animation aktivieren</h3><p>Script einbinden und den Button initialisieren. Ohne Callback ist es eine reine Demo.</p><pre><code>&lt;script src=\"order-truck.js\"&gt;&lt;/script&gt;\n&lt;script&gt;\nconst order = new OrderTruck(document.querySelector('[data-order-truck]'));\n&lt;/script&gt;</code></pre></div></li><li><span class=\"step-number\">03</span><div><h3>Deine Bestellung verbinden</h3><p>Dein Bestellsystem im <code>confirm</code>-Callback aufrufen. Erst bei Erfolg startet die Szene; Fehler erlauben einen neuen Versuch.</p><pre><code>const order = new OrderTruck(element, {\n  confirm: () =&gt; deinBestellsystem.bestellen()\n});</code></pre></div></li><li><span class=\"step-number\">04</span><div><h3>Deins machen</h3><p>Text, Breite und Farben anpassen. Mit <code>order.reset()</code> erneut abspielen. Tastatur und reduzierte Bewegung sind eingebaut.</p></div></li>",
+    "github_path": "components/order-truck",
+    "fallback_zip": "downloads/jd-order-truck-component.zip"
   }
 }
