@@ -84,8 +84,8 @@ const instance=new DownloadForge(root,preview
         root_selector = '[data-order-truck]'
         reset = 'instance.reset();'
         motion = 'instance.setMotion(event.data.enabled);'
-        hint = 'Bestell-Button testen: Paket einladen, Klappe zu, LKW los. Nur eine Demo.'
-        events = "root.addEventListener('ordercomplete',()=>report('Demo abgeschlossen. Es wurde nichts bestellt. Neu starten zum Wiederholen.'));"
+        hint = 'Anklicken: Anfahren, Heckklappe öffnen, einladen, schließen und losfahren. Keine echte Bestellung.'
+        events = "root.addEventListener('ordercomplete',()=>report('Noch einmal ansehen? Den Button erneut anklicken.'));"
     elif slug == 'copy-button':
         content = '<div class="copy-demo">' + html + '<details class="copy-example-options"><summary>Anderen Text ausprobieren</summary><label class="copy-example-label">Dein Text<input id="copy-example-text" type="text" autocomplete="off" spellcheck="false"></label></details></div>'
         initialize = "const instance=new CopyButton(root);const input=document.getElementById('copy-example-text');const defaultText=instance.getText();input.value=defaultText;input.addEventListener('input',()=>instance.setText(input.value));"

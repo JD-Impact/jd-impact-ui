@@ -1,6 +1,6 @@
 # Order Truck · JD-Impact
 
-Ein Bestell-Button: LKW kommt an, Paket fährt über die Rampe ins offene Heck, Rolltor schließt sich, Licht geht an und der LKW fährt los. Keine Bibliotheken.
+Ein Bestell-Button: LKW kommt mit geschlossener Heckklappe an, hält, öffnet und senkt die Ladebühne. Das Paket rollt auf die Bühne, wird angehoben und in den Laderaum geschoben. Die Heckklappe schließt sich; erst dann fährt der LKW los. Keine Bibliotheken.
 
 ## Ausprobieren
 
@@ -32,6 +32,6 @@ const order = new OrderTruck(document.querySelector('[data-order-truck]'), {
 
 Die Animation startet erst, wenn `confirm` erfolgreich aufgelöst wurde. Ablehnen/Fehler zeigt „Erneut versuchen“. Das Beispiel ersetzt keine Bezahlung oder Shop-Logik. Die LKW-Szene ist eine visuelle Bestellbestätigung, kein tatsächlicher Versandstatus.
 
-`order.reset()` setzt den Effekt zurück, `order.setMotion(false)` reduziert Bewegung, `order.destroy()` entfernt Listener und Timer. Events: `orderanimationstart`, `ordercomplete` (`detail.demo`, `detail.result`), `ordererror`. Während der Bestätigung und Animation werden weitere Klicks blockiert. Reset verwirft verspätete UI-Antworten, storniert aber keine bereits an deinen Server gesendete Bestellung.
+`order.reset()` setzt den Effekt zurück, `order.setMotion(false)` reduziert Bewegung, `order.destroy()` entfernt Listener und Timer. Events: `orderanimationstart`, `ordercomplete` (`detail.demo`, `detail.result`), `ordererror`. Während der Bestätigung und Animation werden weitere Klicks blockiert. Die reine Vorschau ist nach Abschluss direkt erneut anklickbar. Mit `confirm` bleibt eine bestätigte Bestellung gesperrt, damit kein zweiter Kauf ausgelöst wird. Reset verwirft verspätete UI-Antworten, storniert aber keine bereits an deinen Server gesendete Bestellung.
 
-Breite über `.jd-order`, Akzentfarbe über `--order-accent` anpassen. Die SVG-Verlaufs-ID `jd-truck-metal` beim mehrfachen Einfügen pro Instanz eindeutig umbenennen. Tastatur und reduzierte Bewegung sind berücksichtigt.
+Breite über `.jd-order`, Akzentfarbe über `--order-accent` anpassen. Tastatur und reduzierte Bewegung sind berücksichtigt.

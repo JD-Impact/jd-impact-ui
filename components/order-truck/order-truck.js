@@ -10,7 +10,7 @@ class OrderTruck {
   }
   setState(state) {
     this.state = state; this.root.dataset.state = state;
-    this.button.disabled = ['pending','running','complete'].includes(state);
+    this.button.disabled = (['pending','running'].includes(state) || (state === 'complete' && Boolean(this.options.confirm)));
     this.root.setAttribute('aria-busy', String(['pending','running'].includes(state)));
   }
   setMotion(enabled) {
@@ -19,10 +19,10 @@ class OrderTruck {
   }
   reset() {
     clearTimeout(this.timer); this.operation++; this.setState('idle');
-    this.label.innerHTML = this.initialLabel; this.status.textContent = '';
+    this.label.innerHTML = this.initialLabel; this.status.textContent = ''; this.button.removeAttribute('aria-label');
   }
   async run() {
-    if (this.destroyed || ['pending','running','complete'].includes(this.state)) return false;
+    if (this.destroyed || ['pending','running'].includes(this.state) || (this.state === 'complete' && this.options.confirm)) return false;
     this.reset(); const operation = this.operation; let result;
     if (this.options.confirm) {
       this.setState('pending'); this.label.textContent = 'Wird bestätigt …';
@@ -35,16 +35,17 @@ class OrderTruck {
       }
     }
     if (this.destroyed || operation !== this.operation) return false;
-    this.success.textContent = this.options.confirm ? 'Bestellung bestätigt' : 'Demo abgeschlossen';
-    this.status.textContent = 'Paket wird eingeladen …'; void this.root.offsetWidth; this.setState('running');
+    this.success.textContent = 'Bestellung bestätigt';
+    this.status.textContent = ''; void this.root.offsetWidth; this.setState('running');
     this.root.dispatchEvent(new CustomEvent('orderanimationstart', {bubbles:true}));
     const reduced = this.root.dataset.jdMotion === 'reduced' || matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.finish = () => {
       if (this.destroyed || operation !== this.operation) return;
-      this.setState('complete'); this.status.textContent = this.options.confirm ? 'Bestellung bestätigt.' : 'Vorschau – es wurde nichts bestellt.';
+      this.setState('complete'); this.status.textContent = '';
+      this.button.setAttribute('aria-label', 'Bestellung bestätigt');
       this.root.dispatchEvent(new CustomEvent('ordercomplete', {bubbles:true, detail:{demo:!this.options.confirm, result}}));
     };
-    this.timer = setTimeout(this.finish, reduced ? 100 : 6400);
+    this.timer = setTimeout(this.finish, reduced ? 100 : 8200);
     return true;
   }
   destroy() { this.destroyed = true; this.operation++; clearTimeout(this.timer); this.button.removeEventListener('click', this.onClick); delete this.root.jdOrderTruck; }
