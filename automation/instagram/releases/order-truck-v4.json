@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "order-truck-v4",
+  "title": "Order Truck · Paket rein. LKW los.",
+  "instagramUsername": "jd_impact",
+  "videoUrl": "https://jd-impact.github.io/jd-impact-ui/reels/order-truck/v4/reel.mp4",
+  "coverUrl": "https://jd-impact.github.io/jd-impact-ui/reels/order-truck/v4/cover.png",
+  "videoSha256": "a21ad821f0f561891239f37c0c79c6f12474aef187129d1925ba3d6d92017f0a",
+  "coverSha256": "109dd14c44884ece9dcc8f90cca7b0f98de31bbfcced19e65238513b7174a8c3",
+  "caption": "Dieser Bestell-Button liefert ab. 📦🚚\n\nEin Klick – und aus dem Button wird eine kleine Ladeszene: Der LKW hält, öffnet die Ladebühne und senkt sie zum Paket. Paket aufnehmen, hochheben, einladen. Dann schließt sich die Heckklappe, und der LKW fährt los.\n\nEin UI-Effekt für deinen Onlineshop, gebaut mit HTML, CSS & JavaScript. Ohne Libraries. Den Button kannst du an deine eigene Bestellbestätigung hängen.\n\n💬 Kommentiere „ORDER“ oder schick mir das Wort per DM. Ich sende dir den kompletten Code kostenlos.\n\nSpeichern für dein nächstes Webprojekt.\nFolge @jd_impact für weitere UI-Effekte zum Einbauen.\n\n#webdesign #cssanimation #javascript #frontend #uidesign",
+  "codeUrl": "https://jd-impact.github.io/jd-impact-ui/order.html?v=14",
+  "keywords": [
+    "ORDER",
+    "BESTELLEN"
+  ],
+  "dmMessage": "Hey! Hier ist der Order-Truck-Button 📦🚚\nAuf der Seite kannst du die Animation testen und den kompletten HTML-, CSS- und JavaScript-Code kostenlos holen. Viel Spaß beim Einbauen!",
+  "dmButtonTitle": "Code & Vorschau öffnen",
+  "publicReply": "Der Code ist in deinen DMs 📩 Schau auch in deine Nachrichtenanfragen.",
+  "publicReplyPolicy": "after_dm",
+  "alsoMatchInDms": true,
+  "matchMode": "word",
+  "repeatPolicy": {
+    "mode": "once"
+  },
+  "linkTracking": false,
+  "shareToFeed": true,
+  "timezone": "Europe/Berlin",
+  "authorization": {
+    "publicationApproved": false,
+    "connectionConfigured": false
+  },
+  "localAssets": {
+    "video": "docs/reels/order-truck/v4/reel.mp4",
+    "cover": "docs/reels/order-truck/v4/cover.png"
+  }
+}
