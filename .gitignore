@@ -1,3 +1,10 @@
 .DS_Store
 Thumbs.db
 node_modules/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.secrets/
+*.state.json

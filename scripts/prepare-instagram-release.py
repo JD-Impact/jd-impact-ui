@@ -23,6 +23,8 @@ def validate_release(release):
         raise ValueError('Mindestens ein eindeutiges Stichwort ist erforderlich.')
     if len(release['caption']) > 2200 or len(release['dmMessage']) > 640:
         raise ValueError('Instagram-/DM-Text überschreitet das dokumentierte Limit.')
+    if not 1 <= len(release['dmButtonTitle']) <= 20:
+        raise ValueError('DM-Button benötigt einen Titel mit höchstens 20 Zeichen.')
     for field in ['videoUrl', 'coverUrl', 'codeUrl']:
         url = urlparse(release[field])
         if url.scheme != 'https' or url.hostname != 'jd-impact.github.io' or not url.path.startswith('/jd-impact-ui/'):

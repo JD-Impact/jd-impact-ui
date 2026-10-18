@@ -14,7 +14,7 @@
     "BESTELLEN"
   ],
   "dmMessage": "Hey! Hier ist der Order-Truck-Button 📦🚚\nAuf der Seite kannst du die Animation testen und den kompletten HTML-, CSS- und JavaScript-Code kostenlos holen. Viel Spaß beim Einbauen!",
-  "dmButtonTitle": "Code & Vorschau öffnen",
+  "dmButtonTitle": "Code & Vorschau",
   "publicReply": "Der Code ist in deinen DMs 📩 Schau auch in deine Nachrichtenanfragen.",
   "publicReplyPolicy": "after_dm",
   "alsoMatchInDms": true,
@@ -27,7 +27,7 @@
   "timezone": "Europe/Berlin",
   "authorization": {
     "publicationApproved": false,
-    "connectionConfigured": false
+    "connectionConfigured": true
   },
   "localAssets": {
     "video": "docs/reels/order-truck/v4/reel.mp4",

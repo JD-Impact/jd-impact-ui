@@ -63,6 +63,8 @@ Die Komponente liefert die Optik und Effekte. Automatisch getippte Daten, künst
 
 Stichwort für diese Komponente: **LOGIN**.
 
+Der private Veröffentlichungsablauf für Reels und passende Code-DMs ist in [Instagram-Automation](automation/instagram/README.md) beschrieben. Die Zernio-Anbindung läuft ausschließlich serverseitig; Schlüssel gehören weder in die Komponenten noch in die öffentliche Website.
+
 ## Code-Seite aktualisieren
 
 Alle Komponentenseiten verwenden dieselbe Vorlage in `templates/component-page.html` und dieselbe `docs/site.css`. Das Layout der Login-Seite ist der Standard: Header, Matrix-Hintergrund, Vorschau, Code-Bereich, Download, Instagram und Einbauanleitung. Komponentenspezifische Texte und Links stehen in `templates/component-pages.json`; die Optik der Komponenten selbst bleibt unabhängig davon.

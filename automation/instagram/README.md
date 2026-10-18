@@ -1,13 +1,44 @@
 # JD-Impact · Instagram-Veröffentlichung
 
-Stand: Vorbereitung. Die Zernio-Verbindung in Make und der tatsächliche API-Durchlauf fehlen noch. Es wurde kein Reel auf Instagram veröffentlicht und keine DM-Automation aktiviert.
+Stand: Direkte Zernio-Integration eingerichtet und gegen die echte API geprüft. Das Order-Truck-Reel liegt mit Video, Cover und Caption als Entwurf vor; die zugehörige Kommentar-/DM-Regel ist pausiert. Es wurde kein Reel auf Instagram veröffentlicht und keine DM verschickt. Make ist für diesen direkten Ablauf nicht erforderlich; die zuvor vorbereitete Make-Variante bleibt optional.
 
-## Ablauf nach der einmaligen Verbindung
+## Direkter Ablauf mit Zernio
+
+`scripts/zernio_instagram.py` verwendet die offizielle REST-API mit der Python-Standardbibliothek. Es läuft ausschließlich außerhalb des Browsers. Keine zusätzlichen Pakete nötig. Der Schlüssel kommt aus `ZERNIO_API_KEY` oder einer privaten Datei außerhalb des Repositories (`--api-key-file`). `.env`-Dateien sind von Git ausgeschlossen. Einen im Chat geteilten Schlüssel nach der Einrichtung ersetzen.
+
+```bash
+# Voraussetzung: ZERNIO_API_KEY über die private Laufzeitkonfiguration setzen.
+python scripts/zernio_instagram.py accounts
+python scripts/zernio_instagram.py prepare
+python scripts/zernio_instagram.py status
+```
+
+`prepare` prüft zuerst das aktive Instagram-Konto und dessen Rechte, erstellt ausschließlich einen Entwurf und bindet die pausierte Regel an genau diesen Beitrag. Es verwendet dasselbe Release-Manifest wie der Make-Generator, einschließlich Video, Cover, Caption, Stichwörtern und Code-Link. Der Entwurf wird nach dem Schreiben erneut gelesen; eine gekürzte DM-Button-Beschriftung berücksichtigt Metas Limit von 20 Zeichen.
+
+IDs und Wiederaufnahmestatus liegen standardmäßig in `../jd-instagram-setup/<releaseId>.state.json` mit Dateirechten 0600, außerhalb des öffentlichen Repositories. Mit `--state-dir` lässt sich ein anderer privater Ordner wählen. Den Ordner bei Umzügen mitnehmen; für regelmäßigen Betrieb einen dauerhaften privaten Datenträger und einen Secret Store verwenden. Der Veröffentlichungsstatus enthält keinen API-Schlüssel.
+
+Wiederholte Vorbereitung verwendet vorhandene IDs. Nach einem Fehler beim Erstellen der Regel bleibt der Entwurf erhalten; vor einem erneuten Regel-Schreibaufruf werden bereits passende Regeln gesucht. Ein geändertes Release darf den alten Status nicht überschreiben. Gleichzeitige CLI-Aufrufe für dasselbe Release werden gesperrt.
+
+Erst nach der Freigabe des konkreten Reels veröffentlichen:
+
+```bash
+python scripts/zernio_instagram.py publish --confirm-publish order-truck-v4
+```
+
+Dieser Schritt prüft das gespeicherte Zielkonto, den Entwurf, das Cover und die gebundene Regel erneut, aktiviert die DM-Regel und veröffentlicht anschließend den vorhandenen Entwurf. `publishing`, `partial` oder `failed` sind keine erfolgreiche Veröffentlichung. Ein erneuter Aufruf veröffentlicht einen Beitrag in diesen Zuständen nicht nochmals; den bestehenden Beitrag mit `status` prüfen. Erfolg erfordert `published` und einen Instagram-Permalink. Die tatsächliche Veröffentlichung und Zustellung von Kommentar-/DM-Antworten wurden noch nicht live getestet.
+
+Tests mit lokaler HTTP-API, ohne Instagram-Aufrufe:
+
+```bash
+python -m unittest discover -s scripts -p 'test_*.py'
+```
+
+## Optionale Make-Variante
 
 1. Freigegebenes Reel, Cover, Caption, Stichwörter und Code-Link in einem Release-Manifest erfassen.
 2. Die öffentlich abrufbaren Mediendateien unter `docs/reels/<komponente>/<version>/` bereitstellen. Alternativ ist künftig der dokumentierte Zernio-Medienupload möglich; Freigabelinks aus Cloud-Laufwerken funktionieren nicht.
 3. In Zernio das eigene Instagram-Konto `jd_impact` mit Posting-, Kommentar- und Nachrichtenrechten verbinden.
-4. Den API-Schlüssel ausschließlich in der sicheren Make-Verbindung hinterlegen. Keine Schlüssel in Git, JSON-Dateien oder Chat speichern.
+4. Für diese Variante den API-Schlüssel ausschließlich in der sicheren Make-Verbindung hinterlegen. Keine Schlüssel in Git, öffentlichen JSON-Dateien oder Chat speichern.
 5. Über die Make-Verbindung die tatsächliche Account-ID, Profile-ID und Kontoberechtigungen lesen und `jd_impact` eindeutig zuordnen.
 6. `scripts/prepare-instagram-release.py` erzeugt daraus die beiden Make-Workflows und die Eingaben für das konkrete Release. Die Verbindungs-ID kommt aus Make, Account-/Profile-ID aus Zernio. Die erzeugte Datei mit diesen privaten Konfigurationswerten außerhalb des Repositories speichern.
 7. Die Workflows über die Make-Tools speichern und die Modulkonfiguration sowie echte API-Antworten prüfen. Der universelle Make-Knoten verwendet noch den kompatiblen Namen `make-nodes-late` und die alte Basis-URL `getlate.dev/api/v1`.
@@ -31,13 +62,14 @@ Die Workflows werden vom Generator zunächst deaktiviert angelegt. Der erste ech
 
 ## Wiederaufnahme bei Fehlern
 
-Der Entwurf nutzt einen stabilen Idempotency-Key aus Zielkonto, Medien und Caption. Vorbereitung bei unklarer Antwort nicht blind neu ausführen: zuerst vorhandenen Entwurf und gebundene Regeln in Zernio/Make prüfen und vorhandene IDs verwenden. Nach einem Teilfehler wird der bestehende Entwurf weiterverwendet. Die Make-Verbindung und die Ausführung müssen mit echten API-Antworten getestet werden, bevor die Automatisierung als fertig gilt.
+Der Entwurf nutzt einen stabilen Idempotency-Key aus Zielkonto, Medien und Caption. Vorbereitung bei unklarer Antwort nicht blind neu ausführen: zuerst vorhandenen Entwurf und gebundene Regeln in Zernio/Make prüfen und vorhandene IDs verwenden. Nach einem Teilfehler wird der bestehende Entwurf weiterverwendet. Die optionale Make-Verbindung ist weiterhin ausstehend und wurde nicht im Echtbetrieb getestet; der direkte Ablauf oben wurde mit einem Entwurf geprüft.
 
 ## Kostenquelle und technische Quellen
 
-Am 19.10.2026 nennt Zernio zwei kostenlose Konten und 10.000 gesendete Nachrichten pro Monat; Make nennt im Free-Tarif 1.000 Credits. Den tatsächlichen Kontotarif und Verbrauch vor Aktivierung prüfen. Keine kostenpflichtigen Upgrades oder automatischen Nachkäufe einrichten.
+Die geprüfte Zernio-Dokumentation nennt zwei kostenlose Konten und 10.000 gesendete Nachrichten pro Monat; Make nennt im Free-Tarif 1.000 Credits. Beim Einrichtungstest meldete die Zernio-API Zugriff, null bisherige Ausgaben und deaktivierte automatische Upgrades. Keine kostenpflichtigen Upgrades oder automatischen Nachkäufe einrichten. Späteren Tarif und Verbrauch vor Aktivierung prüfen.
 
 - https://zernio.com/pricing
+- https://zernio.com/agent-quickstart.md
 - https://www.make.com/pricing
 - https://docs.zernio.com/posts/create-post
 - https://docs.zernio.com/posts/update-post
