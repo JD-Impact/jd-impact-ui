@@ -80,7 +80,11 @@ const instance=new DownloadForge(root,preview
         events = "root.addEventListener('forgepreviewcomplete',()=>report('Vorschau abgeschlossen. Es wurde keine Datei heruntergeladen.'));root.addEventListener('forgedownload',()=>report('Die Beispieldatei wurde an den Browser übergeben.'));"
     elif slug == 'order-truck':
         content = html
-        initialize = "const instance=new OrderTruck(root);"
+        initialize = """const instance=new OrderTruck(root);
+if(document.body.hasAttribute('data-embed')){
+  const fit=()=>root.style.setProperty('--jd-order-preview-scale',String(Math.min(1.45,(innerWidth-48)/360)));
+  addEventListener('resize',fit);fit();
+}"""
         root_selector = '[data-order-truck]'
         reset = 'instance.reset();'
         motion = 'instance.setMotion(event.data.enabled);'
@@ -114,7 +118,8 @@ addEventListener('message',event=>{{if(event.source!==parent)return;if(event.dat
     for name, standalone in [('example.html', False), ('preview.html', True)]:
         css_ref = '<style>' + css + '</style>' if standalone else f'<link rel="stylesheet" href="{css_name}?v={hashlib.sha256(css.encode()).hexdigest()[:12]}">'
         js_ref = '<script>' + safe_script(js) + '</script>' if standalone else f'<script src="{js_name}?v={hashlib.sha256(js.encode()).hexdigest()[:12]}"></script>'
-        document = f'''<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JD — {slug}</title>{css_ref}<style>{host}{copy_host if slug == 'copy-button' else ''}</style></head><body><div class="page-brand"><img src="data:image/jpeg;base64,{logo}" alt="JD-Impact"></div><main class="page-stage">{content}</main><p class="page-note" role="status" aria-live="polite"></p>{js_ref}<script>{safe_script(helper)}</script></body></html>'''
+        order_host = 'body[data-embed] .page-stage{overflow:hidden}body[data-embed] .jd-order{width:360px;max-width:none;transform:scale(var(--jd-order-preview-scale,1));transform-origin:center}' if slug == 'order-truck' else ''
+        document = f'''<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JD — {slug}</title>{css_ref}<style>{host}{copy_host if slug == 'copy-button' else ''}{order_host}</style></head><body><div class="page-brand"><img src="data:image/jpeg;base64,{logo}" alt="JD-Impact"></div><main class="page-stage">{content}</main><p class="page-note" role="status" aria-live="polite"></p>{js_ref}<script>{safe_script(helper)}</script></body></html>'''
         (folder / name).write_text(document)
     files = [folder / name for name in ['component.html', css_name, js_name, 'README.md', 'example.html', 'preview.html']] + extra
     archive(root / 'downloads' / zip_name, files)

@@ -1,6 +1,11 @@
 /* Order Truck — a reusable visual confirmation. No payment or order is created here. */
 class OrderTruck {
   constructor(root, options = {}) {
+    if (!root?.querySelector) throw new TypeError('OrderTruck benötigt das Element mit data-order-truck.');
+    if (root.jdOrderTruck && !root.jdOrderTruck.destroyed) {
+      Object.assign(root.jdOrderTruck.options, options);
+      return root.jdOrderTruck;
+    }
     this.root = root; this.options = options; this.state = 'idle'; this.operation = 0; this.destroyed = false;
     this.button = root.querySelector('[data-order-trigger]'); this.label = root.querySelector('[data-order-label]');
     this.status = root.querySelector('[data-order-status]'); this.success = root.querySelector('[data-order-success]');
@@ -51,3 +56,10 @@ class OrderTruck {
   destroy() { this.destroyed = true; this.operation++; clearTimeout(this.timer); this.button.removeEventListener('click', this.onClick); delete this.root.jdOrderTruck; }
 }
 window.OrderTruck = OrderTruck;
+
+// Copy HTML + CSS + this script once: every button is ready without another script.
+function mountOrderTrucks() {
+  document.querySelectorAll('[data-order-truck]').forEach(root => new OrderTruck(root));
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountOrderTrucks, {once:true});
+else mountOrderTrucks();

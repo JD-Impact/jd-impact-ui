@@ -10,7 +10,19 @@ Ein Bestell-Button: LKW kommt mit geschlossener Heckklappe an, hält, öffnet un
 
 1. `order-truck.css` laden.
 2. `component.html` an der gewünschten Stelle einfügen.
-3. `order-truck.js` laden und initialisieren:
+3. `order-truck.js` mit `defer` laden. Die Buttons starten automatisch; kein weiterer Aufruf nötig:
+
+```html
+<link rel="stylesheet" href="order-truck.css">
+<!-- Hier den vollständigen Inhalt von component.html einfügen. -->
+<script src="order-truck.js" defer></script>
+```
+
+Alternativ `preview.html` öffnen: Sie enthält HTML, CSS und JavaScript in einer Datei. Die Code-Tabs auf der Webseite enthalten dieselben drei Originaldateien wie das ZIP. Mehrere Buttons werden unabhängig voneinander aktiviert. Die Komponente braucht keine Bibliothek, keine Website-Styles von JD-Impact und keinen Server für die Animation.
+
+## Eigenes Bestellsystem verbinden
+
+Optional nach dem Script für den gewünschten Button einen `confirm`-Callback setzen. Derselbe Button behält dabei genau eine Instanz und einen Klick-Listener:
 
 ```html
 <script src="order-truck.js"></script>
@@ -34,4 +46,4 @@ Die Animation startet erst, wenn `confirm` erfolgreich aufgelöst wurde. Ablehne
 
 `order.reset()` setzt den Effekt zurück, `order.setMotion(false)` reduziert Bewegung, `order.destroy()` entfernt Listener und Timer. Events: `orderanimationstart`, `ordercomplete` (`detail.demo`, `detail.result`), `ordererror`. Während der Bestätigung und Animation werden weitere Klicks blockiert. Die reine Vorschau ist nach Abschluss direkt erneut anklickbar. Mit `confirm` bleibt eine bestätigte Bestellung gesperrt, damit kein zweiter Kauf ausgelöst wird. Reset verwirft verspätete UI-Antworten, storniert aber keine bereits an deinen Server gesendete Bestellung.
 
-Breite über `.jd-order`, Akzentfarbe über `--order-accent` anpassen. Tastatur und reduzierte Bewegung sind berücksichtigt.
+Breite über `.jd-order`, Akzentfarbe über `--order-accent` anpassen. Tastatur und reduzierte Bewegung sind berücksichtigt. Wenn das HTML später dynamisch eingefügt wird, den neuen Button mit `new OrderTruck(element)` aktivieren.

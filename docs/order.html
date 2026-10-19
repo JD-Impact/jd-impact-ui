@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-jd-motion="full">
+<html lang="de" data-jd-motion="full" data-component="ORDER TRUCK">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -7,8 +7,8 @@
   <meta name="description" content="JD-Impact Order Truck: animierter Bestell-Button mit Paket und LKW. Interaktive Demo und Originalcode für deine Website.">
   <title>Order Truck — JD-Impact</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="site.css?v=9">
-  <script src="order-source.js?v=14" defer></script>
+  <link rel="stylesheet" href="site.css?v=10">
+  <script src="order-source.js?v=15" defer></script>
   <link rel="stylesheet" href="components/download-forge/forge.css?v=5">
   <script src="components/download-forge/forge.js?v=8" defer></script>
   <script src="matrix.js?v=5" defer></script>
@@ -31,9 +31,9 @@
   <main>
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot"></span> COMPONENT 005 <span class="eyebrow-divider">/</span> ORDER TRUCK</p>
+        <p class="eyebrow"><span class="status-dot"></span> COMPONENT 003 <span class="eyebrow-divider">/</span> ORDER TRUCK</p>
         <h1 id="hero-title">Paket rein.<br><span>LKW los.</span></h1>
-        <p class="intro">Der LKW hält an. Die Heckklappe wird zur Ladebühne, nimmt das Paket auf und schließt sich wieder. Erst dann geht es los. Eine kleine Lieferung direkt in deinem Bestell-Button.</p>
+        <p class="intro">Ein Klick: Der LKW hält, lädt das Paket ein und fährt los. Probiere den Bestell-Button aus und übernimm denselben Code in deine Website.</p>
         <a class="primary-link" href="#code">Code ansehen &amp; kopieren <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
         <div class="tech-list" aria-label="Technologien"><span>HTML</span><span>CSS</span><span>JAVASCRIPT</span></div>
         <div class="hero-detail"><span class="detail-line" aria-hidden="true"></span><p>Ein kleiner Effekt.<br><strong>Ein ganz anderer erster Eindruck.</strong></p></div>
@@ -45,7 +45,7 @@
           <iframe id="component-preview" title="Order Truck ausprobieren" loading="eager"></iframe>
         </div>
         <p class="preview-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v11h14m-5-5 5 5-5 5"/></svg><span id="preview-instruction" role="status" aria-live="polite">Anklicken: Anfahren, Heckklappe öffnen, einladen, schließen und losfahren. Keine echte Bestellung.</span></p>
-        <span class="corner-mark" aria-hidden="true">JD / 005</span>
+        <span class="corner-mark" aria-hidden="true">JD / 003</span>
       </div>
     </section>
 
@@ -88,15 +88,12 @@
 <section class="instagram-band wrap" aria-labelledby="instagram-title"><div class="instagram-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></div><div><p class="eyebrow">@JD_IMPACT</p><h2 id="instagram-title">Der nächste Effekt?<br>Auf Instagram.</h2><p>Die Komponenten in Bewegung. Neue Ideen für dein Projekt.<br>Schau dir die Reels an und bleib dabei.</p></div><a class="instagram-link" href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer">JD-Impact auf Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></section>
     <section class="guide wrap" aria-labelledby="guide-title">
       <div class="guide-heading"><p class="eyebrow">KOPIEREN. EINBAUEN. DEINS.</p><h2 id="guide-title">Ein kleiner Einbau.<br>Eine große Wirkung.</h2><p>Die Optik kommt von uns.<br>Dein Projekt macht den Rest.</p></div>
-      <ol class="steps"><li><span class="step-number">01</span><div><h3>Button platzieren</h3><p><code>order-truck.css</code> laden und das HTML-Snippet einfügen.</p><pre><code>&lt;link rel="stylesheet" href="order-truck.css"&gt;</code></pre></div></li><li><span class="step-number">02</span><div><h3>Animation aktivieren</h3><p>Script einbinden und den Button initialisieren. Ohne Callback ist es eine reine Demo.</p><pre><code>&lt;script src="order-truck.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-const order = new OrderTruck(document.querySelector('[data-order-truck]'));
-&lt;/script&gt;</code></pre></div></li><li><span class="step-number">03</span><div><h3>Deine Bestellung verbinden</h3><p>Dein Bestellsystem im <code>confirm</code>-Callback aufrufen. Erst bei Erfolg startet die Szene; Fehler erlauben einen neuen Versuch.</p><pre><code>const order = new OrderTruck(element, {
+      <ol class="steps"><li><span class="step-number">01</span><div><h3>Button platzieren</h3><p><code>order-truck.css</code> laden und das HTML-Snippet einfügen.</p><pre><code>&lt;link rel="stylesheet" href="order-truck.css"&gt;</code></pre></div></li><li><span class="step-number">02</span><div><h3>Animation aktivieren</h3><p>Script einbinden. Alle Buttons werden automatisch aktiviert. Ohne Callback läuft die Animation als Demo.</p><pre><code>&lt;script src="order-truck.js" defer&gt;&lt;/script&gt;</code></pre></div></li><li><span class="step-number">03</span><div><h3>Deine Bestellung verbinden</h3><p>Dein Bestellsystem im <code>confirm</code>-Callback aufrufen. Erst bei Erfolg startet die Szene; Fehler erlauben einen neuen Versuch.</p><pre><code>const order = new OrderTruck(element, {
   confirm: () =&gt; deinBestellsystem.bestellen()
 });</code></pre></div></li><li><span class="step-number">04</span><div><h3>Deins machen</h3><p>Text, Breite und Farben anpassen. Mit <code>order.reset()</code> erneut abspielen. Tastatur und reduzierte Bewegung sind eingebaut.</p></div></li></ol>
     </section>
   </main>
 
-  <footer class="footer wrap"><div><strong>JD—IMPACT</strong><p>UI, die du weiterbauen kannst.</p></div><div><a href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer">Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a><a href="https://github.com/JD-Impact/jd-impact-ui/tree/main/components/order-truck" target="_blank" rel="noopener noreferrer">Code auf GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div><span class="footer-index">END OF FILE / 005</span></footer>
+  <footer class="footer wrap"><div><strong>JD—IMPACT</strong><p>UI, die du weiterbauen kannst.</p></div><div><a href="https://www.instagram.com/jd_impact/" target="_blank" rel="noopener noreferrer">Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a><a href="https://github.com/JD-Impact/jd-impact-ui/tree/main/components/order-truck" target="_blank" rel="noopener noreferrer">Code auf GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div><span class="footer-index">END OF FILE / 003</span></footer>
 </body>
 </html>
