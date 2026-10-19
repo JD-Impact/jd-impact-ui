@@ -43,7 +43,8 @@ class OrderTruck {
     this.success.textContent = 'Bestellung bestätigt';
     this.status.textContent = ''; void this.root.offsetWidth; this.setState('running');
     this.root.dispatchEvent(new CustomEvent('orderanimationstart', {bubbles:true}));
-    const reduced = this.root.dataset.jdMotion === 'reduced' || matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const motion = this.root.dataset.jdMotion;
+    const reduced = motion === 'reduced' || (motion !== 'full' && matchMedia('(prefers-reduced-motion: reduce)').matches);
     this.finish = () => {
       if (this.destroyed || operation !== this.operation) return;
       this.setState('complete'); this.status.textContent = '';

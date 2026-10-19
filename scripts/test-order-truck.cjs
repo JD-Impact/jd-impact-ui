@@ -79,7 +79,7 @@ const {execFileSync}=require('node:child_process');
           const box=await button.boundingBox();
           assert(box.y+box.height<=viewport.height,'Button must be visible in the first mobile viewport');
         }else{
-          assert((await button.boundingBox()).width>=460,'Desktop preview should present the button at a readable size');
+          assert(Math.abs((await button.boundingBox()).width-360)<1,'Desktop preview must use the native 360px width');
         }
         assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
         assert.equal(await frame.locator('body').evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);

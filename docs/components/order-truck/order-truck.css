@@ -37,4 +37,4 @@
 @keyframes jd-order-light{0%,70%{opacity:0}74%,100%{opacity:1}}
 @keyframes jd-order-wheel{0%{transform:rotate(0)}15%,73%{transform:rotate(1760deg)}77%{transform:rotate(1789deg)}95%,100%{transform:rotate(3940deg)}}
 @keyframes jd-order-road{0%,73%{transform:translateX(0)}95%,100%{transform:translateX(-300px)}}
-@media(prefers-reduced-motion:reduce){.jd-order *{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){.jd-order:not([data-jd-motion="full"]) *{animation:none!important;transition:none!important}}
