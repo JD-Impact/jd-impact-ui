@@ -1,6 +1,6 @@
 # Delete Undo · Reel-Vorschau
 
-Die Karte faltet sich zu einem Blatt und fällt in einen Papierkorb. Rückgängig spielt den Ablauf zurück und setzt dieselbe Karte wieder ein. Der Matrix-Hintergrund und der Mauszeiger gehören nur zur Reel-Präsentation.
+Die mittig platzierte Karte zerknüllt sich zu Papier. Erst dann erscheint im selben Bereich der Papierkorb und fängt sie auf. Rückgängig spielt den Ablauf zurück und setzt dieselbe Karte wieder ein. Der Matrix-Hintergrund und der Mauszeiger gehören nur zur Reel-Präsentation.
 
 Diese Komponente ist die erste interaktive Vorschau für Reel 004. Die beiden Aktionen funktionieren bereits mit echten DOM-Elementen. Die Gestaltung ist noch zur Ansicht.
 

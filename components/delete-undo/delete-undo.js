@@ -13,34 +13,51 @@ class DeleteUndo {
   setState(state){this.state=state;this.root.dataset.state=state;const busy=['removing','restoring'].includes(state);this.root.setAttribute('aria-busy',String(busy));this.removeButton.disabled=state!=='idle';this.undoButton.disabled=state!=='removed';}
   animate(){
     const reduced=this.motion===false||(this.motion!==true&&matchMedia('(prefers-reduced-motion: reduce)').matches);
-    const duration=reduced?100:2100;
+    const duration=reduced?100:2800;
     const make=(selector,frames)=>this.root.querySelector(selector).animate(frames,{duration,fill:'both',easing:'linear'});
-    const end={opacity:0,transform:'translate(0,0) scale(.17,.25) rotateX(75deg)',offset:1};
+    const flat='polygon(0% 0%,33% 0%,67% 0%,100% 0%,100% 33%,100% 67%,100% 100%,67% 100%,33% 100%,0% 100%,0% 67%,0% 33%)';
+    const bent='polygon(7% 9%,35% 0%,65% 10%,94% 2%,100% 36%,91% 65%,98% 91%,63% 100%,34% 90%,2% 96%,9% 65%,0% 33%)';
+    const crushed='polygon(18% 9%,37% 3%,67% 11%,85% 5%,96% 36%,88% 62%,91% 82%,66% 96%,35% 90%,12% 95%,4% 65%,10% 36%)';
+    const appear=[{opacity:0,transform:'translateY(22px) scale(.84)',offset:0},{opacity:0,transform:'translateY(22px) scale(.84)',offset:.4},{opacity:1,transform:'translateY(-3px) scale(1.02)',offset:.54},{opacity:1,transform:'translateY(0) scale(1)',offset:.59},{opacity:1,transform:'translateY(0) scale(1)',offset:1}];
     this.animations=[
       this.card.animate([
-        {opacity:1,transform:'translate(0,0) scale(1) rotateX(0deg)',offset:0},
-        {opacity:1,transform:'translate(0,-6px) scale(.98) rotateX(12deg)',offset:.12},
-        {opacity:0,transform:'translate(0,0) scale(.17,.25) rotateX(75deg)',offset:.34},end
+        {opacity:1,transform:'translateY(0) scale(1) rotate(0deg)',clipPath:flat,offset:0},
+        {opacity:1,transform:'translateY(-4px) scale(.94,.94) rotate(-2deg)',clipPath:bent,offset:.1},
+        {opacity:1,transform:'translateY(-12px) scale(.55,.7) rotate(5deg)',clipPath:crushed,offset:.2},
+        {opacity:0,transform:'translateY(-25px) scale(.19,.3) rotate(-9deg)',clipPath:crushed,offset:.32},
+        {opacity:0,transform:'translateY(-25px) scale(.19,.3) rotate(-9deg)',clipPath:crushed,offset:1}
       ],{duration,fill:'both',easing:'linear'}),
       make('.jd-delete__paper',[
-        {opacity:0,transform:'translate(0,0) scale(.6)',offset:0},
-        {opacity:0,transform:'translate(0,0) scale(.6)',offset:.18},
-        {opacity:1,transform:'translate(0,-5px) scale(1)',offset:.32},
-        {opacity:1,transform:'translate(35px,-25px) rotate(-14deg) scale(.9)',offset:.45},
-        {opacity:1,transform:'translate(94px,60px) rotate(6deg) scale(.72)',offset:.64},
-        {opacity:1,transform:'translate(94px,142px) rotate(0deg) scale(.5)',offset:.8},
-        {opacity:0,transform:'translate(94px,168px) scale(.4)',offset:.88},
-        {opacity:0,transform:'translate(94px,168px) scale(.4)',offset:1}
+        {opacity:0,transform:'translateY(-8px) rotate(5deg) scale(1.45,.9)',clipPath:flat,offset:0},
+        {opacity:0,transform:'translateY(-8px) rotate(5deg) scale(1.45,.9)',clipPath:flat,offset:.17},
+        {opacity:1,transform:'translateY(-18px) rotate(-8deg) scale(.9,.8)',clipPath:bent,offset:.27},
+        {opacity:1,transform:'translateY(-47px) rotate(9deg) scale(.65,.59)',clipPath:crushed,offset:.37},
+        {opacity:1,transform:'translateY(-61px) rotate(-14deg) scale(.5,.48)',clipPath:crushed,offset:.45},
+        {opacity:1,transform:'translateY(-64px) rotate(-20deg) scale(.5,.48)',clipPath:crushed,offset:.6},
+        {opacity:1,transform:'translateY(-54px) rotate(-11deg) scale(.5,.48)',clipPath:crushed,offset:.65},
+        {opacity:1,transform:'translateY(-26px) rotate(7deg) scale(.48,.46)',clipPath:crushed,offset:.71},
+        {opacity:1,transform:'translateY(26px) rotate(26deg) scale(.44,.42)',clipPath:crushed,offset:.78},
+        {opacity:0,transform:'translateY(58px) rotate(34deg) scale(.4,.38)',clipPath:crushed,offset:.83},
+        {opacity:0,transform:'translateY(58px) rotate(34deg) scale(.4,.38)',clipPath:crushed,offset:1}
       ]),
-      make('.jd-delete__paper-left',[{transform:'rotateY(0deg)',offset:0},{transform:'rotateY(0deg)',offset:.25},{transform:'rotateY(52deg)',offset:.44},{transform:'rotateY(52deg)',offset:1}]),
-      make('.jd-delete__paper-right',[{transform:'rotateY(0deg)',offset:0},{transform:'rotateY(-12deg)',offset:.25},{transform:'rotateY(-52deg)',offset:.44},{transform:'rotateY(-52deg)',offset:1}]),
-      make('.jd-delete__lid',[{transform:'rotate(0deg)',offset:0},{transform:'rotate(0deg)',offset:.12},{transform:'rotate(66deg)',offset:.3},{transform:'rotate(66deg)',offset:.85},{transform:'rotate(0deg)',offset:1}])
+      make('.jd-delete__creases',[{opacity:0,offset:0},{opacity:.15,offset:.2},{opacity:1,offset:.43},{opacity:1,offset:1}]),
+      make('.jd-delete__paper-lines',[{opacity:1,offset:0},{opacity:.8,offset:.27},{opacity:0,offset:.42},{opacity:0,offset:1}]),
+      make('.jd-delete__bin-back',appear),make('.jd-delete__bin-front',appear),
+      make('.jd-delete__lid',[
+        {opacity:0,transform:'translateY(22px) scale(.84) rotate(0deg)',offset:0},
+        {opacity:0,transform:'translateY(22px) scale(.84) rotate(0deg)',offset:.4},
+        {opacity:1,transform:'translateY(0) scale(1) rotate(0deg)',offset:.51},
+        {opacity:1,transform:'translateY(0) scale(1) rotate(105deg)',offset:.59},
+        {opacity:1,transform:'translateY(0) scale(1) rotate(105deg)',offset:.84},
+        {opacity:1,transform:'translateY(0) scale(1) rotate(-4deg)',offset:.96},
+        {opacity:1,transform:'translateY(0) scale(1) rotate(0deg)',offset:1}
+      ])
     ];
     return this.animations;
   }
   async remove(){
     if(this.state!=='idle')return false;
-    const version=++this.version;this.setState('removing');this.status.textContent='Falten. Einwerfen. Deckel zu.';
+    const version=++this.version;this.setState('removing');this.status.textContent='Zerknüllen. Einwerfen. Deckel zu.';
     this.card.setAttribute('aria-hidden','true');
     this.animate();
     try{await Promise.all(this.animations.map(a=>a.finished));}catch{return false;}
