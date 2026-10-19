@@ -49,6 +49,8 @@ def request_data(release, account_id, profile_id):
         'isDraft': True, 'publishNow': False, 'timezone': release['timezone'],
         'metadata': {'source': 'jd-impact-ui', 'releaseId': release['releaseId'], 'codeUrl': release['codeUrl']}
     }
+    if release.get('firstComment'):
+        draft['platforms'][0]['platformSpecificData']['firstComment'] = release['firstComment']
     automation = {
         'profileId': object_id(profile_id), 'accountId': account_id, 'postId': POST_TOKEN,
         'name': 'JD-Impact / ' + release['releaseId'], 'trigger': 'comment',

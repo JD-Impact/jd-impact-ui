@@ -1,6 +1,6 @@
 # JD-Impact · Instagram-Veröffentlichung
 
-Stand: Direkte Zernio-Integration eingerichtet und gegen die echte API geprüft. Das Order-Truck-Reel liegt mit Video, Cover und Caption als Entwurf vor; die zugehörige Kommentar-/DM-Regel ist pausiert. Es wurde kein Reel auf Instagram veröffentlicht und keine DM verschickt. Make ist für diesen direkten Ablauf nicht erforderlich; die zuvor vorbereitete Make-Variante bleibt optional.
+Stand: Das Order-Truck-Reel wurde am 19.10.2026 auf [@jd_impact veröffentlicht](https://www.instagram.com/reel/Dep_6RiCkQ1/). Video, Cover, Caption und eigener Code-Kommentar sind geprüft. Die gebundene ORDER-/BESTELLEN-Regel ist aktiv und beantwortet passende Kommentare sowie eingehende Stichwort-DMs. Eine tatsächliche Zustellung an einen externen Empfänger wurde noch nicht ausgelöst. Das Anpinnen des Kommentars unterstützt die Instagram-API nicht; das erfolgt in Instagram. Make bleibt optional.
 
 ## Direkter Ablauf mit Zernio
 
@@ -25,7 +25,7 @@ Erst nach der Freigabe des konkreten Reels veröffentlichen:
 python scripts/zernio_instagram.py publish --confirm-publish order-truck-v4
 ```
 
-Dieser Schritt prüft das gespeicherte Zielkonto, den Entwurf, das Cover und die gebundene Regel erneut, aktiviert die DM-Regel und veröffentlicht anschließend den vorhandenen Entwurf. `publishing`, `partial` oder `failed` sind keine erfolgreiche Veröffentlichung. Ein erneuter Aufruf veröffentlicht einen Beitrag in diesen Zuständen nicht nochmals; den bestehenden Beitrag mit `status` prüfen. Erfolg erfordert `published` und einen Instagram-Permalink. Die tatsächliche Veröffentlichung und Zustellung von Kommentar-/DM-Antworten wurden noch nicht live getestet.
+Dieser Schritt prüft das gespeicherte Zielkonto, den Entwurf, das Cover und die gebundene Regel erneut, aktiviert die DM-Regel und veröffentlicht anschließend den vorhandenen Entwurf. `publishing`, `partial` oder `failed` sind keine erfolgreiche Veröffentlichung. Ein erneuter Aufruf veröffentlicht einen Beitrag in diesen Zuständen nicht nochmals; den bestehenden Beitrag mit `status` prüfen. Erfolg erfordert `published` und einen Instagram-Permalink. Die Veröffentlichung und der eigene erste Kommentar wurden live geprüft. Für den Test der tatsächlichen DM-Zustellung muss ein Empfänger selbst das Stichwort kommentieren oder senden.
 
 Tests mit lokaler HTTP-API, ohne Instagram-Aufrufe:
 

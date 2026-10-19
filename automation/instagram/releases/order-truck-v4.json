@@ -8,7 +8,7 @@
   "videoSha256": "4b31ebabc608b4f1ceec8f127bf695e040fb138c6d7045b35ed94f97cb3d87da",
   "coverSha256": "b02fa7611f8ba321344d13dce4dc1adbe3b5b01307ca0e3a86c95d33bad6d52d",
   "caption": "Dieser Bestell-Button liefert ab. 📦🚚\n\nEin Klick – und aus dem Button wird eine kleine Ladeszene: Der LKW hält, öffnet die Ladebühne und senkt sie zum Paket. Paket aufnehmen, hochheben, einladen. Dann schließt sich die Heckklappe, und der LKW fährt los.\n\nEin UI-Effekt für deinen Onlineshop, gebaut mit HTML, CSS & JavaScript. Ohne Libraries. Den Button kannst du an deine eigene Bestellbestätigung hängen.\n\n💬 Kommentiere „ORDER“ oder schick mir das Wort per DM. Ich sende dir den kompletten Code kostenlos.\n\nSpeichern für dein nächstes Webprojekt.\nFolge @jd_impact für weitere UI-Effekte zum Einbauen.\n\n#webdesign #cssanimation #javascript #frontend #uidesign",
-  "codeUrl": "https://jd-impact.github.io/jd-impact-ui/order.html?v=15",
+  "codeUrl": "https://jd-impact.github.io/jd-impact-ui/order.html?v=17",
   "keywords": [
     "ORDER",
     "BESTELLEN"
@@ -26,12 +26,21 @@
   "shareToFeed": true,
   "timezone": "Europe/Berlin",
   "authorization": {
-    "publicationApproved": false,
+    "publicationApproved": true,
     "connectionConfigured": true
   },
   "localAssets": {
     "video": "docs/reels/order-truck/v5/reel.mp4",
     "cover": "docs/reels/order-truck/v5/cover.png"
   },
-  "reelNumber": "003"
+  "reelNumber": "003",
+  "firstComment": "Paket rein. Klappe zu. LKW los. 📦🚚 Willst du den Button in deinem Projekt? Kommentiere ORDER – oder schick mir das Wort per DM.",
+  "publication": {
+    "status": "published",
+    "url": "https://www.instagram.com/reel/Dep_6RiCkQ1/",
+    "publishedAt": "2026-10-19T00:44:39.391Z",
+    "automationActive": true,
+    "firstCommentVerified": true,
+    "commentPinned": false
+  }
 }
