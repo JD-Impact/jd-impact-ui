@@ -3,12 +3,12 @@
   "releaseId": "order-truck-v4",
   "title": "Order Truck · Paket rein. LKW los.",
   "instagramUsername": "jd_impact",
-  "videoUrl": "https://jd-impact.github.io/jd-impact-ui/reels/order-truck/v4/reel.mp4",
-  "coverUrl": "https://jd-impact.github.io/jd-impact-ui/reels/order-truck/v4/cover.png",
-  "videoSha256": "a21ad821f0f561891239f37c0c79c6f12474aef187129d1925ba3d6d92017f0a",
-  "coverSha256": "109dd14c44884ece9dcc8f90cca7b0f98de31bbfcced19e65238513b7174a8c3",
+  "videoUrl": "https://jd-impact.github.io/jd-impact-ui/reels/order-truck/v5/reel.mp4",
+  "coverUrl": "https://jd-impact.github.io/jd-impact-ui/reels/order-truck/v5/cover.png",
+  "videoSha256": "4b31ebabc608b4f1ceec8f127bf695e040fb138c6d7045b35ed94f97cb3d87da",
+  "coverSha256": "b02fa7611f8ba321344d13dce4dc1adbe3b5b01307ca0e3a86c95d33bad6d52d",
   "caption": "Dieser Bestell-Button liefert ab. 📦🚚\n\nEin Klick – und aus dem Button wird eine kleine Ladeszene: Der LKW hält, öffnet die Ladebühne und senkt sie zum Paket. Paket aufnehmen, hochheben, einladen. Dann schließt sich die Heckklappe, und der LKW fährt los.\n\nEin UI-Effekt für deinen Onlineshop, gebaut mit HTML, CSS & JavaScript. Ohne Libraries. Den Button kannst du an deine eigene Bestellbestätigung hängen.\n\n💬 Kommentiere „ORDER“ oder schick mir das Wort per DM. Ich sende dir den kompletten Code kostenlos.\n\nSpeichern für dein nächstes Webprojekt.\nFolge @jd_impact für weitere UI-Effekte zum Einbauen.\n\n#webdesign #cssanimation #javascript #frontend #uidesign",
-  "codeUrl": "https://jd-impact.github.io/jd-impact-ui/order.html?v=14",
+  "codeUrl": "https://jd-impact.github.io/jd-impact-ui/order.html?v=15",
   "keywords": [
     "ORDER",
     "BESTELLEN"
@@ -30,7 +30,8 @@
     "connectionConfigured": true
   },
   "localAssets": {
-    "video": "docs/reels/order-truck/v4/reel.mp4",
-    "cover": "docs/reels/order-truck/v4/cover.png"
-  }
+    "video": "docs/reels/order-truck/v5/reel.mp4",
+    "cover": "docs/reels/order-truck/v5/cover.png"
+  },
+  "reelNumber": "003"
 }
